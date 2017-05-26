@@ -1,0 +1,170 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2016-07-20 16:02+0200\n"
+"PO-Revision-Date: 2016-07-20 16:03+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: hu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.7\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: KinstaCache.php:50
+msgid "Cache cleared successfully"
+msgstr "Gyorsítótár Törölve"
+
+#: KinstaCacheAdmin.php:23 KinstaCacheAdmin.php:24
+msgid "Kinsta Cache"
+msgstr "Kinsta Cache"
+
+#: KinstaCacheAdmin.php:43 KinstaCacheAdmin.php:44 KinstaCacheAdmin.php:74
+#: KinstaCacheAdmin.php:76 pages/partials/sidebar-purge-no-object-cache.php:2
+msgid "Clear Cache"
+msgstr "Gyorsítótár Törlése"
+
+#: pages/kinsta-cache.php:6
+msgid "Cache Control"
+msgstr "Gyorsítótár Kezelése"
+
+#: pages/kinsta-cache.php:16
+msgid "Cache Settings"
+msgstr "Gyorsítótár Beállítások"
+
+#: pages/kinsta-cache.php:21
+msgid ""
+"Your site is uses our full page and object caching technology to remain "
+"lightning fast. We recommend setting all options to yes to make sure the "
+"cache is cleared whenever content is posted or modified."
+msgstr ""
+"Ez a weboldal alkalmazza a teljes oldal és objektum cache technológiánkat a "
+"gyorsabb betöltés érdekben. Ajánljuk, hogy minden beállítást igenre "
+"állítsanak, így minden esetben frissülni fog a gyorsítótár."
+
+#: pages/partials/cache-settings-form.php:6
+msgid "Clear Homepage Cache"
+msgstr "Főolddal Gyorsítótárának Űrítése"
+
+#: pages/partials/cache-settings-form.php:12
+#: pages/partials/cache-settings-form.php:35
+#: pages/partials/cache-settings-form.php:74
+#: pages/partials/cache-settings-form.php:95
+msgid "when a post (or page/custom post) is <strong>published</strong>"
+msgstr "amikor egy bejegyzés <strong>publikálódik</strong>"
+
+#: pages/partials/cache-settings-form.php:17
+#: pages/partials/cache-settings-form.php:40
+#: pages/partials/cache-settings-form.php:79
+#: pages/partials/cache-settings-form.php:100
+msgid ""
+"when a <strong>published post</strong> (or page/custom post) is "
+"<strong>updated</strong>"
+msgstr ""
+"amikor egy <strong>publikált</strong> bejegyzés <strong>módosul</strong>"
+
+#: pages/partials/cache-settings-form.php:22
+#: pages/partials/cache-settings-form.php:45
+#: pages/partials/cache-settings-form.php:84
+#: pages/partials/cache-settings-form.php:105
+msgid "when a post is <strong>unpublished</strong> (trashed, drafted, etc.)"
+msgstr "Amikor egy bejegyzés lekerül a publikáltak listájából"
+
+#: pages/partials/cache-settings-form.php:29
+msgid "Clear Singular Page Cache"
+msgstr "Egyedi Oldalak Gyorsítótárának Törlése"
+
+#: pages/partials/cache-settings-form.php:50
+msgid "when a comment is <strong>published</strong>"
+msgstr "amikor egy hozzászólás <strong>publikálódik</strong>"
+
+#: pages/partials/cache-settings-form.php:55
+msgid "when a comment is <strong>updated</strong>"
+msgstr "aikor egy hozzászólás <strong>módosul</strong>"
+
+#: pages/partials/cache-settings-form.php:60
+msgid ""
+"when a comment is <strong>unpublished</strong> (marked as spam, deleted, "
+"etc.)"
+msgstr "amikor egy hozzászólás <strong>törlődik</strong>"
+
+#: pages/partials/cache-settings-form.php:68
+msgid "Clear Archive Caches"
+msgstr "Archív Oldalak Gyorsítótárának Törlése"
+
+#: pages/partials/cache-settings-form.php:89
+msgid "Clear RSS Feeds"
+msgstr "RSS Feed Gyorsítótár Űrítése"
+
+#: pages/partials/cache-settings-form.php:115
+msgid "Save Changes"
+msgstr "Változások Mentése"
+
+#: pages/partials/cache-settings-form.php:115
+msgid "Saving..."
+msgstr "Mentés…"
+
+#: pages/partials/cache-settings-form.php:115
+msgid "Saved"
+msgstr "Elmentve"
+
+#: pages/partials/sidebar-purge-has-object-cache.php:3
+msgid "Clear Caches"
+msgstr "Gyorsítótárak Törlése"
+
+#: pages/partials/sidebar-purge-has-object-cache.php:6
+msgid "Clearing Caches..."
+msgstr "Törlése Folyamatban…"
+
+#: pages/partials/sidebar-purge-has-object-cache.php:6
+msgid "Caches Cleared"
+msgstr "Gyorsítótár Törölve"
+
+#: pages/partials/sidebar-purge-has-object-cache.php:6
+msgid "Clear All Caches"
+msgstr "Minden Gyorsítótár Törlése"
+
+#: pages/partials/sidebar-purge-has-object-cache.php:8
+msgid "Clearing Full Page Cache..."
+msgstr "Törlés Folyamatban…"
+
+#: pages/partials/sidebar-purge-has-object-cache.php:8
+#: pages/partials/sidebar-purge-has-object-cache.php:10
+#: pages/partials/sidebar-purge-no-object-cache.php:2
+msgid "Cache Cleared"
+msgstr "Gyorsítótár Törölve"
+
+#: pages/partials/sidebar-purge-has-object-cache.php:8
+msgid "Clear Full Page Cache Only"
+msgstr "Teljes Oldal Gyorsítótár Törlés"
+
+#: pages/partials/sidebar-purge-has-object-cache.php:10
+msgid "Clearing Object Cache..."
+msgstr "Törlés Folyamatban…"
+
+#: pages/partials/sidebar-purge-has-object-cache.php:10
+msgid "Clear Object Cache Only"
+msgstr "Objektum Gyorsítótár Törlése"
+
+#: pages/partials/sidebar-purge-no-object-cache.php:2
+msgid "Clearing Cache..."
+msgstr "Törlés Folyamatban…"
+
+#: pages/partials/sidebar-support.php:4
+msgid "Need Help?"
+msgstr "Segítségre Van Szüksége?"
+
+#: pages/partials/sidebar-support.php:8
+msgid ""
+"If you need some help contact us through your <a href=\"https://my.kinsta."
+"com/\">Kinsta Dashboard</a>."
+msgstr ""
+"Amennyiben bármilyen segítsgre van szüksége küldjön nekünk üzenetet a <a "
+"href=\"https://my.kinsta.com/\">My Kinsta</a> oldalról."
+
+#~ msgid "When a post is <strong>unpublished</strong> (trashed, drafted, etc.)"
+#~ msgstr "Amikor egy bejegyzés lekerül a publikáltak listájából"
