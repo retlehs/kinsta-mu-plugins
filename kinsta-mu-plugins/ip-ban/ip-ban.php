@@ -46,6 +46,10 @@ class IPBan {
      *
      */
     function sendFailedIP() {
+        if( empty( $_POST ) ) {
+            return;
+        }
+
         $data = array(
             'ip' => $_SERVER['REMOTE_ADDR'],
             'secret' => 'kinstaipbanning'

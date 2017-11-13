@@ -11,6 +11,7 @@
  *
  */
 namespace Kinsta;
+defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
 /**
  * Admin Text modifications
@@ -31,7 +32,9 @@ class AdminTextModifications {
      */
     function __construct() {
         add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
-        add_filter( 'admin_footer_text', array( $this, 'modify_admin_footer_text' ), 99 );
+        if( KINSTAMU_WHITELABEL === false ) {
+            add_filter( 'admin_footer_text', array( $this, 'modify_admin_footer_text' ), 99 );
+        }
     }
 
     /**

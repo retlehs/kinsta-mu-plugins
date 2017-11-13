@@ -28,11 +28,13 @@ class KinstaCache {
     var $config;
     var $settings;
     var $default_settings;
+    var $has_object_cache;
 
     function __construct( $config, $default_settings ) {
         $this->config = $config;
         $this->default_settings = $default_settings;
         $this->set_settings();
+        $this->set_has_object_cache();
         $this->KinstaCachePurge = new KinstaCachePurge( $this );
         $this->KinstaCacheAdmin = new KinstaCacheAdmin( $this );
         add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
@@ -41,6 +43,18 @@ class KinstaCache {
         add_action( 'wp_ajax_kinsta_clear_cache_object', array( $this, 'action_kinsta_clear_cache_object' ) );
         add_action( 'admin_notices', array( $this, 'cleared_cache_notice' ) );
 
+        add_action( 'wp_ajax_kinsta_save_custom_path', array( $this, 'action_kinsta_save_custom_path') );
+        add_action( 'wp_ajax_kinsta_remove_custom_path', array( $this, 'action_kinsta_remove_custom_path') );
+        // Removing other cache systems
+        add_filter( 'do_rocket_generate_caching_files', '__return_false', 999 ); // Disable WP rocket caching
+    }
+
+
+    function set_has_object_cache() {
+        $this->has_object_cache = false;
+        if( file_exists( WP_CONTENT_DIR . '/object-cache.php') ) {
+            $this->has_object_cache = true;
+        }
     }
 
     function cleared_cache_notice() {
@@ -146,7 +160,7 @@ class KinstaCache {
 
     function action_kinsta_clear_cache_all() {
         check_ajax_referer( 'kinsta-clear-cache-all', 'kinsta_nonce' );
-        $this->KinstaCachePurge->purge_all();
+        $this->KinstaCachePurge->purge_complete_caches();
         if( $_GET['source'] == 'adminbar' ) {
             header( "Location: " . add_query_arg( 'kinsta-cache-cleared', 'true', $_SERVER['HTTP_REFERER'] ) );
         }
@@ -154,8 +168,8 @@ class KinstaCache {
     }
 
     function action_kinsta_clear_cache_full_page() {
-        check_ajax_referer( 'kinsta-clear-cache-full-page', 'kinsta_nonce' );
-        $this->KinstaCachePurge->purge_full_page_cache();
+        echo "<pre>"; print_r('wefwef'); echo "</pre>";
+        $this->KinstaCachePurge->purge_complete_full_page_cache();
         if( $_GET['source'] == 'adminbar' ) {
             header( "Location: " . add_query_arg( 'kinsta-cache-cleared', 'true', $_SERVER['HTTP_REFERER'] ) );
         }
@@ -164,11 +178,56 @@ class KinstaCache {
 
     function action_kinsta_clear_cache_object() {
         check_ajax_referer( 'kinsta-clear-cache-object', 'kinsta_nonce' );
-        $this->KinstaCachePurge->purge_object_cache();
+        $this->KinstaCachePurge->purge_complete_object_cache();
         if( $_GET['source'] == 'adminbar' ) {
             header( "Location: " . add_query_arg( 'kinsta-cache-cleared', 'true', $_SERVER['HTTP_REFERER'] ) );
         }
         die();
+    }
+
+    function action_kinsta_save_custom_path() {
+        if ( ! isset( $_POST['kinsta_nonce'] ) || ! wp_verify_nonce( $_POST['kinsta_nonce'], 'save_plugin_options' ) ) {
+           die();
+        }
+
+        $paths = get_option( 'kinsta-cache-additional-paths' );
+        if( empty( $paths ) ) {
+            $paths = array();
+        }
+
+        $paths[] = array(
+            'path' => $_POST['path'],
+            'type' => $_POST['type']
+        );
+
+        $paths = array_values( $paths );
+        update_option( 'kinsta-cache-additional-paths', $paths );
+        die();
+
+    }
+
+
+    function action_kinsta_remove_custom_path() {
+        if ( ! isset( $_POST['kinsta_nonce'] ) || ! wp_verify_nonce( $_POST['kinsta_nonce'], 'save_plugin_options' ) ) {
+           die();
+        }
+
+
+        $paths = get_option( 'kinsta-cache-additional-paths' );
+
+        if( !empty( $paths[$_POST['index']]) ) {
+            unset($paths[$_POST['index']]);
+        }
+
+        if( count( $paths ) === 0 ) {
+            delete_option( 'kinsta-cache-additional-paths' );
+        } else {
+            $paths = array_values( $paths );
+            update_option( 'kinsta-cache-additional-paths', $paths );
+        }
+
+        die();
+
     }
 
 }

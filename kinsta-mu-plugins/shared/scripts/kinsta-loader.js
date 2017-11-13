@@ -25,12 +25,12 @@ jQuery.each( jQuery( '.kinsta-loader' ), function( key, loader ){
         progressBar.animate({ width: '100%' }, speed, 'linear', function(){
             if( type != 'reload') {
                 text.fadeOut( function() {
-                    loader.animate( {backgroundColor: '#8DE382'} )
+                    loader.animate( {backgroundColor: '#8DE382', borderColor: '#8DE382'} )
                     text.text(completedText).fadeIn();
                     window.setTimeout( function() {
                         progress.animate( { bottom: "-20px"} )
                         text.fadeOut( function() {
-                            loader.animate( {backgroundColor: originalColor}, function(){
+                            loader.animate( {backgroundColor: originalColor, borderColor: originalColor}, function(){
                                 loader.removeClass('loading');
                                 loader.removeAttr( 'style' )
                             })
