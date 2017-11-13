@@ -4,139 +4,115 @@
     <div class='kinsta-box'>
 
         <fieldset class='mb22'>
-            <legend class='kinsta-box-title-bar kinsta-box-title-bar__small mb22'><h3><?php _e( 'General Options', 'kinsta-cache' ) ?></h3></legend>
+            <legend class='kinsta-box-title-bar kinsta-box-title-bar__small mb22'><h3><?php _e( 'Custom URLs To Purge', 'kinsta-cache' ) ?></h3></legend>
+
+            <p>
+                <?php echo sprintf( __('You can add custom paths to purge whenever your site is updated. Please see our <a href="%s">documentation</a> for more information on how to use this feature effectively.', 'kinsta-cache' ), KINSTA_CACHE_DOCS_URL ) ?>
+            </p>
+
+            <div id="custom-url-form">
+                <h3>Add A Custom URL</h3>
+                <div id="custom-url-form-fields">
+                    <?php KinstaTools::kinsta_select_field( 'custom-url-type', 'custom-url-type', 'single', '', false, false, array(
+                        'single' => 'Single Path',
+                        'group' => 'Group Path'
+                    ) ) ?>
+
+                    <span onClick="jQuery('#addURLField').focus()" class="prefix"><?php echo home_url() ?>/</span><input  id="addURLField" type="text" placeholder="Enter a Path" />
+                    <input id="addURLSubmit" type="submit" value="Add URL">
+                </div>
+            </div>
 
             <?php
-                KinstaTools::kinsta_number_field(
-                    'options[page_depth_blog]',
-                    $this->KinstaCache->settings['options']['page_depth_blog'],
-                    __( 'Clear blog page depth', 'kinsta-cache')
-                );
-                KinstaTools::kinsta_number_field(
-                    'options[page_depth_archives]',
-                    $this->KinstaCache->settings['options']['page_depth_archives'],
-                    __( 'Clear archive page depth', 'kinsta-cache')
-                );
-                KinstaTools::kinsta_switch(
-                    'options[purge_blog_feeds]',
-                    $this->KinstaCache->settings['options']['purge_blog_feeds'],
-                    __( 'Clear blog feeds', 'kinsta-cache')
-                );
-                KinstaTools::kinsta_switch(
-                    'options[purge_static_home]',
-                    $this->KinstaCache->settings['options']['purge_static_home'],
-                    __( 'Clear static home page', 'kinsta-cache')
-                );
-                KinstaTools::kinsta_switch(
-                    'options[purge_archive_feeds]',
-                    $this->KinstaCache->settings['options']['purge_archive_feeds'],
-                    __( 'Clear archive feeds', 'kinsta-cache')
-                );
-
-                KinstaTools::kinsta_switch(
-                    'options[purge_date_archives]',
-                    $this->KinstaCache->settings['options']['purge_date_archives'],
-                    __( 'Clear date archives', 'kinsta-cache')
-                );
-
-                KinstaTools::kinsta_switch(
-                    'options[has_mobile_plugin]',
-                    $this->KinstaCache->settings['options']['has_mobile_plugin'],
-                    __( 'Do you use a dedicated plugin to make your site\'s mobile version?', 'kinsta-cache')
-                );
-            ?>
-
-        </fieldset>
 
 
-        <fieldset class='mb22'>
-            <legend class='kinsta-box-title-bar kinsta-box-title-bar__small mb22'><h3><?php _e( 'Clear Blog Cache', 'kinsta-cache' ) ?></h3></legend>
+                $additional_paths = get_option( 'kinsta-cache-additional-paths' );
+                $display = ( empty($additional_paths) ) ? 'none' : 'table';
+                echo '<table id="additionalURLTable" class="kinsta-table" style="margin-top:22px; display:'.$display.'">';
+                echo '<thead><tr><th>Type</th><th>Path</th><th></th></tr></thead>';
+                echo '<tbody>';
 
-            <?php
-                KinstaTools::kinsta_switch(
-                    'rules[blog][post_added]',
-                    $this->KinstaCache->settings['rules']['blog']['post_added'],
-                    __( 'when a post (or page/custom post) is <strong>published</strong>', 'kinsta-cache')
-                );
-                KinstaTools::kinsta_switch(
-                    'rules[blog][post_modified]',
-                    $this->KinstaCache->settings['rules']['blog']['post_modified'],
-                    __( 'when a <strong>published post</strong> (or page/custom post) is <strong>updated</strong>', 'kinsta-cache')
-                );
-                KinstaTools::kinsta_switch(
-                    'rules[blog][post_unpublished]',
-                    $this->KinstaCache->settings['rules']['blog']['post_unpublished'],
-                    __( 'when a post is <strong>unpublished</strong> (trashed, drafted, etc.)', 'kinsta-cache')
-                );
-            ?>
-
-        </fieldset>
-
-        <fieldset class='mb22'>
-            <legend class='kinsta-box-title-bar kinsta-box-title-bar__small mb22'><h3><?php _e( 'Clear Singular Page Cache', 'kinsta-cache' ) ?></h3></legend>
-
-            <?php
-                KinstaTools::kinsta_switch(
-                    'rules[post][post_added]',
-                    $this->KinstaCache->settings['rules']['post']['post_added'],
-                    __( 'when a post (or page/custom post) is <strong>published</strong>', 'kinsta-cache')
-                );
-                KinstaTools::kinsta_switch(
-                    'rules[post][post_modified]',
-                    $this->KinstaCache->settings['rules']['post']['post_modified'],
-                    __( 'when a <strong>published post</strong> (or page/custom post) is <strong>updated</strong>', 'kinsta-cache')
-                );
-                KinstaTools::kinsta_switch(
-                    'rules[post][post_unpublished]',
-                    $this->KinstaCache->settings['rules']['post']['post_unpublished'],
-                    __( 'when a post is <strong>unpublished</strong> (trashed, drafted, etc.)', 'kinsta-cache' )
-                );
-                KinstaTools::kinsta_switch(
-                    'rules[post][comment_added]',
-                    $this->KinstaCache->settings['rules']['post']['comment_added'],
-                    __( 'when a comment is <strong>published</strong>', 'kinsta-cache' )
-                );
-                KinstaTools::kinsta_switch(
-                    'rules[post][comment_modified]',
-                    $this->KinstaCache->settings['rules']['post']['comment_modified'],
-                    __( 'when a comment is <strong>updated</strong>', 'kinsta-cache' )
-                );
-                KinstaTools::kinsta_switch(
-                    'rules[post][comment_unpublished]',
-                    $this->KinstaCache->settings['rules']['post']['comment_unpublished'],
-                    __( 'when a comment is <strong>unpublished</strong> (marked as spam, deleted, etc.)', 'kinsta-cache' )
-                );
+                if( !empty( $additional_paths ) ) {
+                    foreach( $additional_paths as $path ) {
+                        echo '<tr>';
+                        echo '<td>' . $path['type'] . '</td>';
+                        echo '<td>/' . $path['path'] . '</td>';
+                        echo '<td><a class="removePath" href="#">remove</a></td>';
+                        echo '</tr>';
+                    }
+                }
+                echo '</tbody>';
+                echo '</table>';
 
             ?>
 
+
+
+
         </fieldset>
 
-        <fieldset class='mb22'>
-            <legend class='kinsta-box-title-bar kinsta-box-title-bar__small mb22'><h3><?php _e( 'Clear Archive Caches', 'kinsta-cache' ) ?></h3></legend>
-
-            <?php
-                KinstaTools::kinsta_switch(
-                    'rules[archive][post_added]',
-                    $this->KinstaCache->settings['rules']['archive']['post_added'],
-                    __( 'when a post (or page/custom post) is <strong>published</strong>', 'kinsta-cache')
-                );
-                KinstaTools::kinsta_switch(
-                    'rules[archive][post_modified]',
-                    $this->KinstaCache->settings['rules']['archive']['post_modified'],
-                    __( 'when a <strong>published post</strong> (or page/custom post) is <strong>updated</strong>', 'kinsta-cache')
-                );
-                KinstaTools::kinsta_switch(
-                    'rules[archive][post_unpublished]',
-                    $this->KinstaCache->settings['rules']['archive']['post_unpublished'],
-                    __( 'when a post is <strong>unpublished</strong> (trashed, drafted, etc.)', 'kinsta-cache')
-                );
-            ?>
-        </fieldset>
 
     </div>
 
     <?php wp_nonce_field( 'save_plugin_options', 'kinsta_nonce' ); ?>
     <input type="hidden" name="action" value='save_plugin_options'>
-    <button type="submit" class='kinsta-button kinsta-loader' value='<?php _e( 'Save Changes', 'kinsta-cache' ) ?>' data-progressText='<?php _e( 'Saving...', 'kinsta-cache' ) ?>' data-completedText='<?php _e( 'Saved', 'kinsta-cache' ) ?>' data-type='reload'><?php _e( 'Save Changes', 'kinsta-cache' ) ?></button>
+
+
+    <script type="text/javascript">
+        jQuery(document).on('click', '#addURLSubmit', function() {
+            var path = jQuery('#addURLField').val();
+            var type = jQuery('select[name="custom-url-type"]').val()
+            if( path === '' || path === null || typeof path === 'undefined' ) {
+                return false
+            }
+            jQuery.ajax({
+                url: ajaxurl,
+                method: 'post',
+                data: {
+                    action: 'kinsta_save_custom_path',
+                    kinsta_nonce: jQuery('#kinsta_nonce').val(),
+                    path: path,
+                    type: type
+                },
+                success: function( result ) {
+                    jQuery('#addURLField').val('')
+                    if( jQuery('#additionalURLTable tbody tr').length === 0 ) {
+                        jQuery('#additionalURLTable').show();
+                    }
+
+                    var row = jQuery('<tr></tr>');
+                    row.append('<td>'+type+'</td>')
+                    row.append('<td>/'+path+'</td>')
+                    row.append('<td><a class="removePath" href="#">remove</a></td>')
+                    jQuery('#additionalURLTable').append(row)
+                }
+            })
+            return false;
+        })
+
+        jQuery(document).on('click', '.removePath', function() {
+            var row = jQuery(this).parents('tr:first')
+            var index = row.index()
+            jQuery.ajax({
+                url: ajaxurl,
+                method: 'post',
+                data: {
+                    action: 'kinsta_remove_custom_path',
+                    kinsta_nonce: jQuery('#kinsta_nonce').val(),
+                    index: index,
+                },
+                success: function( result ) {
+                    row.fadeOut( function() {
+                        row.remove();
+                        if( jQuery('#additionalURLTable tbody tr').length === 0 ) {
+                            jQuery('#additionalURLTable').hide();
+                        }
+
+                    })
+
+                }
+            })
+        })
+    </script>
 
 </form>

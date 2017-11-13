@@ -1,4 +1,30 @@
 /**
+ * BASIC LINK STYLE
+ * Link styles to match the website
+*/
+
+.kinsta-page-wrapper a {
+  color: #5333ed;
+  text-decoration: none;
+  border-bottom: 2px solid #2cd4d9;
+  position: relative;
+}
+
+.kinsta-page-wrapper a:before {
+  width:0px;
+  position: absolute;
+  content:' ';
+  border-bottom: 2px solid #5333ed;
+  transition: all 120ms linear;
+  height:100%;
+  top:0px;
+}
+.kinsta-page-wrapper a:hover:before {
+  width:100%;
+}
+
+
+/**
  *  KINSTA PAGE BAR
  *  Shown at the top of all admin pages
 */
@@ -23,7 +49,15 @@
         border-left:1px solid rgba(0,0,0,0.1);
         padding: 0 0 0 11px;
         font-size:15px;
-        margin-left:11px;
+    }
+
+    .kinsta-page-bar .logo {
+      margin-right:11px;
+    }
+
+    .kinstamu-whitelabel .kinsta-page-bar h3 {
+      border-left:0px;
+      padding-left:0px;
     }
 
     /**
@@ -131,16 +165,24 @@
         margin-bottom:33px;
     }
 
+    /**
+     * KINSTA FORM GENERAL
+     */
+
+     .kinsta-control-container {
+         position: relative;
+         padding-right:22px;
+     }
 
     /**
      * KINSTA NUMBER FIELD
      */
 
-     .kinsta-number-field-container {
+     .kinsta-number-field {
          padding:3px 0;
      }
 
-     .kinsta-number-field-container input {
+     .kinsta-number-field .kinsta-control {
         width: 68px;
         color: #888;
         text-align:Center;
@@ -151,19 +193,39 @@
         margin-right:11px;
      }
 
+
+     /**
+      * KINSTA SELECT FIELD
+      */
+
+      .kinsta-select-field {
+          padding:3px 0;
+      }
+
+      .kinsta-select-field .kinsta-control {
+         color: #888;
+         text-align:Center;
+         box-sizing: border-box;
+         background: linear-gradient(to bottom, #eeeeee, #FFFFFF 25px);
+         background-image: -webkit-linear-gradient(top, #eeeeee, #FFFFFF 25px);
+         box-shadow: inset 0 -1px white, inset 0 1px 1px rgba(0, 0, 0, 0.05);
+         margin-right:11px;
+      }
+
+
     /**
      *  ANIMATED SWITCH CHECKBOX
      *  Full CSS animated sliding yes/no indicator
     */
 
-    .kinsta-switch-container {
+    .kinsta-switch {
         display: flex;
         align-items: center;
         padding:6px 0;
     }
 
 
-    .kinsta-switch {
+    .kinsta-switch .kinsta-control-ui {
     	position: relative;
     	display: inline-block;
     	vertical-align: top;
@@ -178,7 +240,7 @@
     	cursor: pointer;
     }
 
-    .kinsta-switch-input {
+    .kinsta-switch .kinsta-control {
     	position: absolute;
     	top: 0;
     	left: 0;
@@ -223,16 +285,16 @@
     	opacity: 0;
     }
 
-    .kinsta-switch-input:checked ~ .kinsta-switch-label {
+    .kinsta-switch .kinsta-control:checked ~ .kinsta-switch-label {
     	background: #8ce196;
     	box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15), inset 0 0 3px rgba(0, 0, 0, 0.2);
     }
 
-    .kinsta-switch-input:checked ~ .kinsta-switch-label:before {
+    .kinsta-switch .kinsta-control:checked ~ .kinsta-switch-label:before {
     	opacity: 0;
     }
 
-    .kinsta-switch-input:checked ~ .kinsta-switch-label:after {
+    .kinsta-switch .kinsta-control:checked ~ .kinsta-switch-label:after {
     	opacity: 1;
     }
 
@@ -262,7 +324,7 @@
     	box-shadow: inset 0 1px rgba(0, 0, 0, 0.02);
     }
 
-    .kinsta-switch-input:checked ~ .kinsta-switch-handle {
+    .kinsta-switch .kinsta-control:checked ~ .kinsta-switch-handle {
     	left: 40px;
     	box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.2);
     }
@@ -285,8 +347,8 @@
         box-sizing: border-box;
         padding: 11px 22px;
         outline: none;
-        border: none;
-        background-color: #5DC0C0;
+        border: 2px solid #5333ed;
+        background-color: #5333ed;
         color: #fff;
         font-weight:400;
         text-transform: uppercase;
@@ -299,10 +361,12 @@
         cursor:pointer;
         transition: background 200ms linear;
         font-weight: 300;
+        border-radius:100px;
     }
 
     .kinsta-button:hover {
-        background: #70D3D3;
+        background: #fff;
+        color: #5333ed;
     }
 
     .kinsta-button__full {
@@ -371,7 +435,7 @@
     .kinsta-dropdown > .kinsta-button {
         background-image: url('../images/arrow-down.svg');
         background-repeat: no-repeat;
-        background-position: calc( 100% - 14px ) calc( 50% - 1px );
+        background-position: calc( 100% - 20px ) calc( 50% - 1px );
         background-size: 13px;
         padding-right:44px;
     }
@@ -392,6 +456,11 @@
         cursor:pointer;
     }
 
+    .kinsta-dropdown-content button {
+      border-radius: 0px !important;
+      border:0px !important;
+    }
+    
     .kinsta-dropdown-content > a:hover, .kinsta-dropdown-content > span:hover {
         background-color: #f1f1f1;
     }
@@ -401,5 +470,156 @@
     }
 
     .kinsta-dropdown:hover > .kinsta-button {
-        background-color: #70D3D3;
+        background-color: #5333ed;
+        color: #fff;
+    }
+
+    /**
+     *  KINSTA QUICKSAVE
+     *  Styles for the quicksave functionality
+    */
+
+    .kinsta-quicksave-message {
+        margin-left:11px;
+        display:inline-block;
+        color: #ffffff;
+        padding:4px 11px;
+    }
+    .kinsta-quicksave-success {
+        background:#78DB7B;
+    }
+    .kinsta-quicksave-error {
+        background:#FB8686;
+    }
+
+
+    /**
+     *  KINSTA MESSAGE
+     *  Styles for error and success messages
+    */
+
+    .kinsta-message {
+        display:block;
+        color: #ffffff;
+        padding:11px;
+        margin-bottom:22px;
+    }
+    .kinsta-message-success {
+        background:#78DB7B;
+    }
+    .kinsta-message-error {
+        background:#FB8686;
+    }
+
+    /**
+     *  KINSTA TOOLTIPS
+     *  Styles for the tooltips
+    */
+
+    .kinsta-tooltip {
+        position: absolute;
+        top:11px;
+        right:0px;
+        opacity:0.4;
+    }
+
+    .kinsta-tooltip:hover {
+        opacity:1
+    }
+
+    .kinsta-tooltip-content {
+        display:none;
+    }
+
+    /**
+     *  KINSTA TABLE
+     *  Simple Table Layout
+    */
+
+    .kinsta-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .kinsta-table th {
+        padding: 11px;
+        text-align:left;
+        border-bottom:1px solid #ddd;
+    }
+
+    .kinsta-table td {
+        padding: 11px
+    }
+
+    .kinsta-table tbody tr:nth-of-type( odd ) {
+      background: #f1f1f1
+    }
+
+    /**
+     *  CACHE PURGE FORM
+    */
+    #custom-url-form {
+      padding:22px;
+      background: #f1f1f1;
+    }
+
+    #custom-url-form h3 {
+      margin: 0 0 11px 0;
+      font-size:14px;
+    }
+
+    #custom-url-form-fields {
+      display: flex;
+      align-items:center;
+    }
+
+    #custom-url-form select {
+      margin-right:4px;
+      background: #fff;
+      font-size:13px;
+      line-height:22px;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      padding:3px 33px 3px 14px;
+      box-sizing:content-box;
+      background-repeat: no-repeat;
+      background-position: calc(100% - 11px) center;
+      background-image: url('data:image/svg+xml;utf8,<svg height="10px" id="Livello_1" style="enable-background:new 0 0 50 50;" version="1.1" viewBox="0 0 50 50" width="10px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M44.27,15.401c-0.068-0.165-0.229-0.272-0.407-0.272H6.139c-0.18,0-0.34,0.107-0.408,0.272  c-0.068,0.164-0.03,0.355,0.096,0.48l18.861,18.861c0.086,0.086,0.199,0.129,0.312,0.129c0.112,0,0.225-0.043,0.312-0.129  l18.862-18.861C44.301,15.756,44.338,15.565,44.27,15.401z"/></svg>');
+
+    }
+
+    #custom-url-form .prefix {
+      background: #ffffff;
+      padding: 6px 0px 6px 11px;
+      border:1px solid #ddd;
+      border-right:0px;
+      font-size:13px;
+      line-height:22px;
+      margin-right: -2px;
+      box-shadow:none;
+    }
+
+    #custom-url-form input[type="text"] {
+      background: #fff;
+      box-shadow:none;
+      font-size:13px;
+      width:100%;
+      line-height:22px;
+      padding: 6px 6px 6px 2px;
+      border:1px solid #ddd;
+      border-left:0px;
+    }
+
+    #custom-url-form input[type="submit"] {
+      background: #fff;
+      font-size:13px;
+      line-height:22px;
+      padding: 6px 11px;
+      background:#5333ed;
+      color: #fff;
+      border:0px;
+      cursor:pointer;
+      margin:0px;
+      margin-left:-2px;
     }

@@ -1,6 +1,7 @@
 <?php
 
 namespace Kinsta;
+defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
 class KinstaCacheAdmin {
 
@@ -11,7 +12,9 @@ class KinstaCacheAdmin {
         $this->KinstaCache = $KinstaCache;
         $this->KinstaCachePurge = $this->KinstaCache->KinstaCachePurge;
         add_action( 'admin_menu', array( $this, 'admin_menu_item' ) );
-        add_action( 'admin_head', array( $this, 'menu_icon_style' ) );
+        if( KINSTAMU_WHITELABEL === false ) {
+            add_action( 'admin_head', array( $this, 'menu_icon_style' ) );
+        }
         add_action( 'admin_bar_menu', array( $this, 'admin_bar_item' ), 100 );
     }
 
@@ -19,13 +22,16 @@ class KinstaCacheAdmin {
      * Add main Kinsta Tools menu item
      */
     function admin_menu_item() {
+        $icon = ( KINSTAMU_WHITELABEL === false ) ? 'none' : 'dashicons-admin-generic';
+        $title = ( KINSTAMU_WHITELABEL === false ) ? __( 'Kinsta Cache', 'kinsta-tools' ) : __( 'Cache Settings', 'kinsta-tools' );
+
         add_menu_page(
-            __( 'Kinsta Cache', 'kinsta-tools' ),
-            __( 'Kinsta Cache', 'kinsta-tools' ),
+            $title,
+            $title,
             'manage_options',
             'kinsta-tools',
             array( $this, 'admin_menu_page' ),
-            'none',
+            $icon,
             '3.19992919'
         );
     }
@@ -36,7 +42,7 @@ class KinstaCacheAdmin {
         }
 
 
-        if( $this->KinstaCachePurge->has_object_cache ) {
+        if( $this->KinstaCache->has_object_cache ) {
 
             $wp_admin_bar->add_node( array(
                 'id' => 'kinsta-cache',
@@ -89,13 +95,12 @@ class KinstaCacheAdmin {
          include( 'pages/kinsta-cache.php' );
      }
 
-
      function menu_icon_style() { ?>
          <style>
              #adminmenu .toplevel_page_kinsta-tools .wp-menu-image {
                  background-repeat:no-repeat;
                  background-position: 50% -28px;
-                 background-image: url( '<?php echo plugin_dir_url( __FILE__ ) ?>../shared/images/menu-icon.svg' )
+                 background-image: url( '<?php echo KinstaTools::shared_resource_url() ?>shared/images/menu-icon.svg' )
              }
              #adminmenu .toplevel_page_kinsta-tools:hover .wp-menu-image,  #adminmenu .toplevel_page_kinsta-tools.wp-has-current-submenu .wp-menu-image, #adminmenu .toplevel_page_kinsta-tools.current .wp-menu-image {
                  background-position: 50% 6px;
