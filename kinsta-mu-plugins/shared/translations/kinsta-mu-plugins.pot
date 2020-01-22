@@ -1,0 +1,262 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Project-Id-Version: Kinsta Must-use Plugins\n"
+"POT-Creation-Date: 2018-10-30 22:30+0700\n"
+"PO-Revision-Date: 2018-03-07 12:47+0700\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.7\n"
+"X-Poedit-Basepath: ../../..\n"
+"X-Poedit-WPHeader: kinsta-mu-plugins.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: kinsta-mu-plugins\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: kinsta-mu-plugins/cache/class-cache-admin.php:68
+#: kinsta-mu-plugins/cache/pages/pages.php:43
+msgid "Kinsta Cache"
+msgstr ""
+
+#: kinsta-mu-plugins/cache/class-cache-admin.php:68
+msgid "Cache Settings"
+msgstr ""
+
+#: kinsta-mu-plugins/cache/class-cache-admin.php:97
+#: kinsta-mu-plugins/cache/class-cache-admin.php:98
+#: kinsta-mu-plugins/cache/class-cache-admin.php:133
+#: kinsta-mu-plugins/cache/class-cache-admin.php:135
+#: kinsta-mu-plugins/cache/pages/partials/sidebar-purge-no-object-cache.php:15
+msgid "Clear Cache"
+msgstr ""
+
+#: kinsta-mu-plugins/cache/class-cache.php:152
+msgid "Cache cleared successfully"
+msgstr ""
+
+#: kinsta-mu-plugins/cache/pages/pages.php:23
+msgid "Cache Control"
+msgstr ""
+
+#: kinsta-mu-plugins/cache/pages/pages.php:45
+msgid "Cache"
+msgstr ""
+
+#: kinsta-mu-plugins/cache/pages/pages.php:51
+msgid ""
+"Your site uses our full page and object caching technology to remain "
+"lightning fast. We purge single pages and key pages such as the home page "
+"immediately and impose a minimal throttle time on archive pages. This "
+"ensures high availability at all times."
+msgstr ""
+
+#: kinsta-mu-plugins/cache/pages/pages.php:53
+msgid ""
+"Your site uses our full page caching technology to remain lightning fast. We "
+"purge single pages and key pages such as the home page immediately and "
+"impose a minimal throttle time on archive pages. This ensures high "
+"availability at all times."
+msgstr ""
+
+#: kinsta-mu-plugins/cache/pages/pages.php:58
+msgid "Automatic cache purging has been disabled."
+msgstr ""
+
+#: kinsta-mu-plugins/cache/pages/pages.php:60
+#, php-format
+msgid ""
+"This means that the page cache stored on the server will not be cleared "
+"automatically after a post or page is updated, deleted, or published. If you "
+"would like to enable automatic cache purging please remove the %1$s constant "
+"from your site's wp-config.php file or set its value to %2$s."
+msgstr ""
+
+#: kinsta-mu-plugins/cache/pages/partials/settings-form.php:16
+msgid "Custom URLs To Purge"
+msgstr ""
+
+#: kinsta-mu-plugins/cache/pages/partials/settings-form.php:21
+#, php-format
+msgid ""
+"You can add custom paths to purge whenever your site is updated. Please see "
+"our %s for more information on how to use this feature effectively."
+msgstr ""
+
+#: kinsta-mu-plugins/cache/pages/partials/settings-form.php:33
+msgid "documentation"
+msgstr ""
+
+#: kinsta-mu-plugins/cache/pages/partials/settings-form.php:36
+msgid "You can add custom paths to purge whenever your site is updated."
+msgstr ""
+
+#: kinsta-mu-plugins/cache/pages/partials/sidebar-purge-has-object-cache.php:16
+msgid "Clear Caches"
+msgstr ""
+
+#: kinsta-mu-plugins/cache/pages/partials/sidebar-purge-has-object-cache.php:18
+msgid "Clearing Caches..."
+msgstr ""
+
+#: kinsta-mu-plugins/cache/pages/partials/sidebar-purge-has-object-cache.php:18
+msgid "Caches Cleared"
+msgstr ""
+
+#: kinsta-mu-plugins/cache/pages/partials/sidebar-purge-has-object-cache.php:18
+msgid "Clear All Caches"
+msgstr ""
+
+#: kinsta-mu-plugins/cache/pages/partials/sidebar-purge-has-object-cache.php:20
+msgid "Clearing Full Page Cache..."
+msgstr ""
+
+#: kinsta-mu-plugins/cache/pages/partials/sidebar-purge-has-object-cache.php:20
+#: kinsta-mu-plugins/cache/pages/partials/sidebar-purge-has-object-cache.php:23
+#: kinsta-mu-plugins/cache/pages/partials/sidebar-purge-no-object-cache.php:15
+msgid "Cache Cleared"
+msgstr ""
+
+#: kinsta-mu-plugins/cache/pages/partials/sidebar-purge-has-object-cache.php:21
+msgid "Clear Full Page Cache Only"
+msgstr ""
+
+#: kinsta-mu-plugins/cache/pages/partials/sidebar-purge-has-object-cache.php:23
+msgid "Clearing Object Cache..."
+msgstr ""
+
+#: kinsta-mu-plugins/cache/pages/partials/sidebar-purge-has-object-cache.php:23
+msgid "Clear Object Cache Only"
+msgstr ""
+
+#: kinsta-mu-plugins/cache/pages/partials/sidebar-purge-no-object-cache.php:15
+msgid "Clearing Cache..."
+msgstr ""
+
+#: kinsta-mu-plugins/cache/pages/partials/sidebar-support.php:16
+msgid "Need Help?"
+msgstr ""
+
+#: kinsta-mu-plugins/cache/pages/partials/sidebar-support.php:23
+#, php-format
+msgid "If you need some help contact us through your %s"
+msgstr ""
+
+#: kinsta-mu-plugins/cache/pages/partials/sidebar-support.php:23
+#: kinsta-mu-plugins/cdn/class-cdn-enabler.php:104
+msgid "MyKinsta Dashboard"
+msgstr ""
+
+#: kinsta-mu-plugins/cdn/class-cdn-enabler.php:102
+#, php-format
+msgid ""
+"Kinsta CDN enabler is optimized for WordPress %1$s. Please disable CDN via "
+"%2$s or upgrade your WordPress installation (recommended)."
+msgstr ""
+
+#: kinsta-mu-plugins/compat/class-banned-plugins.php:252
+#: kinsta-mu-plugins/compat/class-banned-plugins.php:288
+#: kinsta-mu-plugins/compat/class-banned-plugins.php:392
+#: kinsta-mu-plugins/compat/class-banned-plugins.php:395
+msgid "Banned"
+msgstr ""
+
+#: kinsta-mu-plugins/compat/class-banned-plugins.php:357
+msgid "Kinsta detected a banned plugin"
+msgid_plural "Kinsta detected banned plugins"
+msgstr[0] ""
+msgstr[1] ""
+
+#: kinsta-mu-plugins/compat/class-banned-plugins.php:363
+#, php-format
+msgid ""
+"Please deactivate %s as soon as possible. Using a banned plugin can cause "
+"performance issues for your site or compatibility issues with our hosting "
+"platform."
+msgstr ""
+
+#: kinsta-mu-plugins/compat/class-banned-plugins.php:363
+#: kinsta-mu-plugins/compat/class-banned-plugins.php:379
+msgid "this plugin"
+msgid_plural "these plugins"
+msgstr[0] ""
+msgstr[1] ""
+
+#: kinsta-mu-plugins/compat/class-banned-plugins.php:366
+msgid "Learn more about banned plugins"
+msgstr ""
+
+#: kinsta-mu-plugins/compat/class-banned-plugins.php:371
+msgid "Banned plugin detected"
+msgid_plural "Banned plugins detected"
+msgstr[0] ""
+msgstr[1] ""
+
+#: kinsta-mu-plugins/compat/class-banned-plugins.php:376
+msgid ""
+"Using a banned plugin can cause performance issues for your site or "
+"compatibility issues with the hosting platform."
+msgstr ""
+
+#: kinsta-mu-plugins/compat/class-banned-plugins.php:379
+#, php-format
+msgid "Please deactivate %s as soon as possible."
+msgstr ""
+
+#: kinsta-mu-plugins/compat/class-banned-plugins.php:408
+msgid "Why?"
+msgstr ""
+
+#: kinsta-mu-plugins/compat/class-security.php:103
+msgid ""
+"For your security, the WordPress version has been hidden from your website's "
+"source code."
+msgstr ""
+
+#: kinsta-mu-plugins/compat/class-security.php:106
+#, php-format
+msgid ""
+"%s, the WordPress version has been hidden from your website's source code."
+msgstr ""
+
+#: kinsta-mu-plugins/compat/class-security.php:106
+msgid "For your security"
+#: kinsta-mu-plugins/compat/wp-cli/class-cache-purge-command.php:126
+msgid "The Object Cache was purged."
+msgstr ""
+
+#: kinsta-mu-plugins/compat/wp-cli/class-cache-purge-command.php:128
+msgid "Something went wrong! the Object Cache was note purged."
+msgstr ""
+
+#: kinsta-mu-plugins/shared/class-shared.php:282
+#, php-format
+msgid "Thanks for creating with %1$s and hosting with %2$s"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "Kinsta Must-use Plugins"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "https://kinsta.com/kinsta-tools/kinsta-mu-plugins.zip"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Handles the purge of the server level caching."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Kinsta Team"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://kinsta.com/about-us/"
+msgstr ""

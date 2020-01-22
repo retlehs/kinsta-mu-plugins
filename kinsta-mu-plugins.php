@@ -1,26 +1,27 @@
 <?php
-/*
-Plugin Name: Kinsta Mu-Plugins
-Plugin URI: https://kinsta.com/kinsta-tools/kinsta-mu-plugins.zip
-Description: Handles the purge of the server level caching. 
-Version: 2.0.2
-Author: Kinsta Team
-Author URI: https://kinsta.com/about-us/
-Text Domain: KinstaMUPlugins
-*/
-defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
+/**
+ * Plugin Name: Kinsta Must-use Plugins
+ * Plugin URI: https://kinsta.com/kinsta-tools/kinsta-mu-plugins.zip
+ * Description: The plugin designed to work on Kinsta's managed WordPress hosting platform.
+ * Version: 2.3.2
+ * Author: Kinsta Team
+ * Author URI: https://kinsta.com/about-us/
+ * Text Domain: kinsta-mu-plugins
+ * Domain Path: /kinsta-mu-plugins/shared/translations
+ *
+ * @package KinstaMUPlugins
+ */
 
-define( 'KINSTAMU_VERSION', '2.0.2' );
-if( !defined('KINSTAMU_WHITELABEL') ) { define('KINSTAMU_WHITELABEL', false); }
-
-/* Include the required parts */
-require_once( 'kinsta-mu-plugins/admin-text-modifications/admin-text-modifications.php' );
-//require( 'kinsta-mu-plugins/ip-ban/ip-ban.php' ); //handled on server level
-require_once( 'kinsta-mu-plugins/shared/KinstaTools.php' );
-require_once( 'kinsta-mu-plugins/kinsta-cache/kinsta-cache.php' );
-require_once( 'kinsta-mu-plugins/cdn/__InitCDN.php' );
-
-/* For testing and developing purpose */
-if( defined('KINSTAMU_TESTING') && KINSTAMU_TESTING === true ) {
-    require( 'kinsta-mu-plugins/kinstamu-testing/kinstamu-testing.php' );
+if ( ! defined( 'ABSPATH' ) ) { // If this file is called directly.
+	die( 'No script kiddies please!' );
 }
+
+define( 'KINSTAMU_VERSION', '2.3.2' );
+if ( ! defined( 'KINSTAMU_WHITELABEL' ) ) {
+	define( 'KINSTAMU_WHITELABEL', false );
+}
+
+require_once plugin_dir_path( __FILE__ ) . 'kinsta-mu-plugins/shared/class-shared.php';
+require_once plugin_dir_path( __FILE__ ) . 'kinsta-mu-plugins/compat/compat.php';
+require_once plugin_dir_path( __FILE__ ) . 'kinsta-mu-plugins/cache/cache.php';
+require_once plugin_dir_path( __FILE__ ) . 'kinsta-mu-plugins/cdn/cdn.php';
