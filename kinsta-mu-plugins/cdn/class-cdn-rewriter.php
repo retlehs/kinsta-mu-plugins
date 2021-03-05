@@ -219,7 +219,7 @@ class CDN_Rewriter {
 
 		$regex_rule .= '/(?:';
 			$regex_rule .= '(?:' . $dirs . ')[^\"\')]+\.';
-				$regex_rule .= '(?:ogg|ogv|svg|svgz|eot|otf|woff|woff2|mp4|mp3|ttf|css|js|jpg|jpeg|gif|png|ico|webp|zip|tgz|gz|rar|bz2|doc|xls|exe|ppt|tar|mid|midi|wav|bmp|rtf|pdf)';
+				$regex_rule .= '(?:ogg|ogv|svg|svgz|eot|otf|woff|woff2|mp4|mp3|ttf|css|js|jpg|jpeg|gif|png|ico|webp|zip|tgz|gz|rar|bz2|doc|xls|exe|ppt|tar|mid|midi|wav|bmp|rtf|pdf|mov)';
 				$regex_rule .= '(?:(?:/?\?| )[^/\"\')]*)?';
 			$regex_rule .= ')';
 		$regex_rule .= '(?=[\"\')])#';

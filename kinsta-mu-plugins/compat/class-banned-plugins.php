@@ -24,17 +24,14 @@ class Banned_Plugins {
 	private $warning_list = [
 		'all-in-one-wp-migration/all-in-one-wp-migration.php',
 		'allow-php-execute/allow-php-execute.php',
-		'backwpup/backwpup.php',
 		'cache-enabler/cache-enabler.php',
 		'dynamic-widgets/dynamic-widgets.php',
-		'ewww-image-optimizer/ewww-image-optimizer.php',
 		'inactive-user-deleter/inactive-user-deleter.php',
 		'jch-optimize/jch-optimize.php',
 		'p3-profiler/p3-profiler.php',
 		'pagefrog/pagefrog.php',
 		'rvg-optimize-database/rvg-optimize-database.php',
 		'updraft/updraft.php',
-		'updraftplus/updraftplus.php',
 		'wonderm00ns-simple-facebook-open-graph-tags/wonderm00n-open-graph.php',
 		'wordpress-gzip-compression/ezgz.php',
 		'wordpress-popular-posts/wordpress-popular-posts.php',
@@ -58,6 +55,8 @@ class Banned_Plugins {
 		'snapshot/snapshot.php',
 		'sg-cachepress/sg-cachepress.php',
 		'litespeed-cache/litespeed-cache.php',
+		'backwpup/backwpup.php',
+		'backwpup-pro/backwpup.php',
 		'p3/p3.php', // Pipdig Power Pack plugin.
 	];
 
@@ -613,8 +612,12 @@ class Banned_Plugins {
 	 * @return bool
 	 */
 	private static function is_admin_plugin_page() {
-		$current_screen = get_current_screen();
-		return isset( $current_screen ) && is_object( $current_screen ) && isset( $current_screen->base ) && ( 'plugins' === $current_screen->base || 'plugin-install' === $current_screen->base );
+		$current_screen = function_exists( 'get_current_screen' ) ? \get_current_screen() : null;
+		if ( ! is_object( $current_screen ) ) {
+			return false;
+		}
+
+		return isset( $current_screen->base ) && ( 'plugins' === $current_screen->base || 'plugin-install' === $current_screen->base );
 	}
 
 	/**
