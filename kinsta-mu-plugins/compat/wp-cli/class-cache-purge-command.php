@@ -40,7 +40,7 @@ class Cache_Purge_Command extends WP_CLI_Command {
 	 * The Constructor.
 	 */
 	public function __construct() {
-		add_action( 'kinsta_cache_init', [ $this, 'set_kinsta_cache' ] );
+		add_action( 'kinsta_cache_init', array( $this, 'set_kinsta_cache' ) );
 	}
 
 	/**

@@ -21,7 +21,7 @@ class Banned_Plugins {
 	 *
 	 * @var array
 	 */
-	private $warning_list = [
+	private $warning_list = array(
 		'all-in-one-wp-migration/all-in-one-wp-migration.php',
 		'allow-php-execute/allow-php-execute.php',
 		'cache-enabler/cache-enabler.php',
@@ -36,21 +36,21 @@ class Banned_Plugins {
 		'wordpress-gzip-compression/ezgz.php',
 		'wordpress-popular-posts/wordpress-popular-posts.php',
 		'wp-db-backup/wp-db-backup.php',
-		'wp-optimize/wp-optimize.php',
 		'wp-db-backup-made/wpa-wp.php',
 		'bwp-minify/bwp-minify.php',
 		'exec-php/exec-php.php',
 		'loginwall/loginwall.php',
 		'wp-rss-multi-importer/wp-rss-multi-importer.php',
 		'wp-db-backup-made/wpa-wp.php',
-	];
+		'duplicator-pro/duplicator-pro.php', // Duplicator Pro
+	);
 
 	/**
 	 * List of plugins that will be forcibly disabled.
 	 *
 	 * @var array
 	 */
-	private $disabled_list = [
+	private $disabled_list = array(
 		'backupbuddy/backupbuddy.php',
 		'snapshot/snapshot.php',
 		'sg-cachepress/sg-cachepress.php',
@@ -58,21 +58,21 @@ class Banned_Plugins {
 		'backwpup/backwpup.php',
 		'backwpup-pro/backwpup.php',
 		'p3/p3.php', // Pipdig Power Pack plugin.
-	];
+	);
 
 	/**
 	 * List of plugins in the Banned category.
 	 *
 	 * @var array
 	 */
-	private $banned_list = [];
+	private $banned_list = array();
 
 	/**
 	 * Lists of active plugins on the site.
 	 *
 	 * @var array
 	 */
-	private $active_plugins = [];
+	private $active_plugins = array();
 
 	/**
 	 * The Constructor.
@@ -82,7 +82,7 @@ class Banned_Plugins {
 		$this->check_server_banned_plugin_lists();
 
 		$this->banned_list = array_merge( $this->warning_list, $this->disabled_list );  // Full list of Banned Plugins.
-		$this->active_plugins = get_option( 'active_plugins', [] );
+		$this->active_plugins = get_option( 'active_plugins', array() );
 	}
 
 	/**
@@ -120,29 +120,29 @@ class Banned_Plugins {
 	public function run() {
 		global $wp_version;
 
-		add_action( 'admin_init', [ $this, 'deactivate_disabled_plugins' ], PHP_INT_MAX );
-		add_action( 'activated_plugin', [ $this, 'deactivate_disabled_plugin' ], PHP_INT_MAX );
+		add_action( 'admin_init', array( $this, 'deactivate_disabled_plugins' ), PHP_INT_MAX );
+		add_action( 'activated_plugin', array( $this, 'deactivate_disabled_plugin' ), PHP_INT_MAX );
 
-		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts' ], PHP_INT_MAX );
-		add_action( 'admin_print_scripts', [ $this, 'add_plugin_page_scripts' ], PHP_INT_MAX );
-		add_action( 'admin_print_styles', [ $this, 'add_plugin_page_styles' ], PHP_INT_MAX );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ), PHP_INT_MAX );
+		add_action( 'admin_print_scripts', array( $this, 'add_plugin_page_scripts' ), PHP_INT_MAX );
+		add_action( 'admin_print_styles', array( $this, 'add_plugin_page_styles' ), PHP_INT_MAX );
 
-		add_filter( 'plugin_install_action_links', [ $this, 'plugin_install_action_links' ], PHP_INT_MAX, 2 );
-		add_filter( 'install_plugin_complete_actions', [ $this, 'install_plugin_complete_actions' ], PHP_INT_MAX, 3 );
+		add_filter( 'plugin_install_action_links', array( $this, 'plugin_install_action_links' ), PHP_INT_MAX, 2 );
+		add_filter( 'install_plugin_complete_actions', array( $this, 'install_plugin_complete_actions' ), PHP_INT_MAX, 3 );
 
 		foreach ( $this->disabled_list as $plugin_file ) {
-			add_filter( "plugin_action_links_{$plugin_file}", [ $this, 'disabled_plugin_action_links' ], PHP_INT_MAX );
+			add_filter( "plugin_action_links_{$plugin_file}", array( $this, 'disabled_plugin_action_links' ), PHP_INT_MAX );
 		}
 
 		foreach ( $this->warning_list as $plugin_file ) {
-			add_filter( "plugin_action_links_{$plugin_file}", [ $this, 'warning_plugin_action_links' ], PHP_INT_MAX );
+			add_filter( "plugin_action_links_{$plugin_file}", array( $this, 'warning_plugin_action_links' ), PHP_INT_MAX );
 		}
 
 		if ( self::shall_display_admin_notice() && version_compare( $wp_version, '4.3', '>' ) ) {
-			add_action( 'admin_print_scripts', [ $this, 'add_notice_scripts' ], PHP_INT_MAX );
-			add_action( 'admin_print_styles', [ $this, 'add_notice_styles' ], PHP_INT_MAX );
-			add_action( 'admin_notices', [ $this, 'admin_notices' ], PHP_INT_MAX );
-			add_action( 'wp_ajax_kinsta_dismiss_banned_plugins_nag', [ $this, 'dismiss_banned_plugins_nag' ], PHP_INT_MAX );
+			add_action( 'admin_print_scripts', array( $this, 'add_notice_scripts' ), PHP_INT_MAX );
+			add_action( 'admin_print_styles', array( $this, 'add_notice_styles' ), PHP_INT_MAX );
+			add_action( 'admin_notices', array( $this, 'admin_notices' ), PHP_INT_MAX );
+			add_action( 'wp_ajax_kinsta_dismiss_banned_plugins_nag', array( $this, 'dismiss_banned_plugins_nag' ), PHP_INT_MAX );
 		}
 	}
 
@@ -207,7 +207,7 @@ class Banned_Plugins {
 		$banned_action_link = $this->get_banned_plugin_action_link();
 
 		if ( is_string( $banned_action_link ) && ! empty( $banned_action_link ) ) {
-			$warning_actions = array_merge( [ 'kinsta_banned' => $banned_action_link ], $warning_actions );
+			$warning_actions = array_merge( array( 'kinsta_banned' => $banned_action_link ), $warning_actions );
 		}
 
 		return $warning_actions;
@@ -222,13 +222,13 @@ class Banned_Plugins {
 	 */
 	public function disabled_plugin_action_links( $actions ) {
 
-		$disabled_actions = [
+		$disabled_actions = array(
 			'delete' => $actions['delete'],
-		];
+		);
 
 		$banned_action_link = $this->get_banned_plugin_action_link();
 		if ( is_string( $banned_action_link ) && ! empty( $banned_action_link ) ) {
-			$disabled_actions = array_merge( [ 'kinsta_banned' => $banned_action_link ], $disabled_actions );
+			$disabled_actions = array_merge( array( 'kinsta_banned' => $banned_action_link ), $disabled_actions );
 		}
 
 		return $disabled_actions;
@@ -247,13 +247,13 @@ class Banned_Plugins {
 			$banned_slug = self::parse_plugin_slug( $banned );
 			if ( $plugin['slug'] === $banned_slug ) {
 
-				$action_links = [
+				$action_links = array(
 					'<button type="button" class="button button-disabled" disabled="disabled">' . __( 'Banned', 'kinsta-mu-plugins' ) . '</button>',
-				];
+				);
 
 				$banned_action_link = $this->get_banned_plugin_install_action_link();
 				if ( is_string( $banned_action_link ) && ! empty( $banned_action_link ) ) {
-					$action_links = array_merge( $action_links, [ 'kinsta_banned_why' => $banned_action_link ] );
+					$action_links = array_merge( $action_links, array( 'kinsta_banned_why' => $banned_action_link ) );
 				}
 			}
 		}
@@ -283,13 +283,13 @@ class Banned_Plugins {
 				unset( $install_actions['network_activate'] );
 			}
 
-			$install_actions = [
+			$install_actions = array(
 				'kinsta_banned_plugin' => '<button type="button" class="button button-disabled" disabled="disabled">' . __( 'Banned', 'kinsta-mu-plugins' ) . '</button>',
-			];
+			);
 
 			$banned_action_link = $this->get_banned_plugin_install_action_link();
 			if ( is_string( $banned_action_link ) && ! empty( $banned_action_link ) ) {
-				$install_actions = array_merge( $install_actions, [ 'kinsta_banned_why' => $banned_action_link ] );
+				$install_actions = array_merge( $install_actions, array( 'kinsta_banned_why' => $banned_action_link ) );
 			}
 		}
 
@@ -309,7 +309,7 @@ class Banned_Plugins {
 			$file_js_path = plugin_dir_path( __FILE__ ) . $file_js;
 			$file_js_url = plugin_dir_url( __FILE__ ) . $file_js;
 
-			wp_enqueue_script( 'kinsta-banned-plugins', $file_js_url, [ 'plugin-install' ], filemtime( $file_js_path ), true );
+			wp_enqueue_script( 'kinsta-banned-plugins', $file_js_url, array( 'plugin-install' ), filemtime( $file_js_path ), true );
 		}
 	}
 
@@ -336,7 +336,7 @@ class Banned_Plugins {
 		$installed_plugins = get_plugins();
 		$active_banned_plugins = array_intersect( (array) $this->active_plugins, (array) $this->banned_list );
 
-		$notifiable_plugins = [];
+		$notifiable_plugins = array();
 		foreach ( $active_banned_plugins as $plugin_file ) {
 			$notifiable_plugins[ $plugin_file ] = $installed_plugins[ $plugin_file ];
 		}
@@ -484,23 +484,21 @@ class Banned_Plugins {
 
 		if ( self::is_admin_plugin_page() ) {
 
-			$warning_slugs = [];
+			$warning_slugs = array();
 			foreach ( $this->warning_list as $warning ) {
 				$warning_slugs[] = self::parse_plugin_slug( $warning );
 			}
 
-			// phpcs:ignore WordPress.WP.AlternativeFunctions.json_encode_json_encode
 			$warning_data = 'var kinstaWarningPlugins = ' . json_encode( $warning_slugs ) . ';';
 
-			$disabled_slugs = [];
+			$disabled_slugs = array();
 			foreach ( $this->disabled_list as $disabled ) {
 				$disabled_slugs[] = self::parse_plugin_slug( $disabled );
 			}
 
-			// phpcs:ignore WordPress.WP.AlternativeFunctions.json_encode_json_encode
 			$disabled_data = 'var kinstaDisabledPlugins = ' . json_encode( $disabled_slugs ) . ';';
 
-			echo '<script type="text/javascript">' . wp_kses( $warning_data . $disabled_data, [] ) . '</script>';
+			echo '<script type="text/javascript">' . wp_kses( $warning_data . $disabled_data, array() ) . '</script>';
 		}
 	}
 
@@ -513,7 +511,7 @@ class Banned_Plugins {
 
 		if ( self::is_admin_plugin_page() ) {
 			$styles = $this->get_list_tables_styles();
-			echo '<style type="text/css">' . wp_kses( $styles, [] ) . '</style>';
+			echo '<style type="text/css">' . wp_kses( $styles, array() ) . '</style>';
 		}
 	}
 

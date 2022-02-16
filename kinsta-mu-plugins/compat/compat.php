@@ -33,5 +33,5 @@ $kinsta_commands->add_commands();
 // Roll WordPress security utitlity.
 $security = new Security();
 
-add_action( 'init', [ $banned_plugins, 'run' ] );
-add_action( 'init', [ $security, 'run' ] );
+add_action( 'init', array( $banned_plugins, 'run' ) );
+add_action( 'init', array( $security, 'run' ) );

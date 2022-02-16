@@ -137,7 +137,7 @@ class CDN_Enabler {
 	 */
 	public static function get_options() {
 
-		$custom = [];
+		$custom = array();
 
 		if ( defined( 'KINSTA_CDN_USERDIRS' ) && ! empty( KINSTA_CDN_USERDIRS ) ) {
 			$custom['dirs'] = 'wp-content,wp-includes,images,' . KINSTA_CDN_USERDIRS;
@@ -150,7 +150,7 @@ class CDN_Enabler {
 		}
 		if ( isset( $_SERVER['KINSTA_CDN_EXCLUDE_TYPES'] ) && '' !== $_SERVER['KINSTA_CDN_EXCLUDE_TYPES'] ) {
 			$exclude_types = sanitize_exclude_types( $_SERVER['KINSTA_CDN_EXCLUDE_TYPES'] );
-			$exclude_types = array_merge( [ '.php' ], $exclude_types );
+			$exclude_types = array_merge( array( '.php' ), $exclude_types );
 
 			$custom['exclude_types'] = $exclude_types;
 		}
@@ -160,13 +160,13 @@ class CDN_Enabler {
 
 		return wp_parse_args(
 			$custom,
-			[
+			array(
 				'url' => get_option( 'home' ),
 				'dirs' => 'wp-content,wp-includes,images',
-				'exclude_types' => [ '.php' ],
+				'exclude_types' => array( '.php' ),
 				'relative' => 1,
 				'https' => 1,
-			]
+			)
 		);
 	}
 
@@ -246,7 +246,7 @@ class CDN_Enabler {
 		 * Check if it doesn't need to run.
 		 * If it does not, return the image src immediately.
 		 */
-		if ( ! $this->options || $home_url == $this->options['url'] ) { // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
+		if ( ! $this->options || $home_url == $this->options['url'] ) {
 			return $image;
 		}
 
@@ -263,7 +263,7 @@ class CDN_Enabler {
 			list( $src, $width, $height ) = $image;
 
 			// Value passed to the `rewrite_url` method must be an array.
-			return array( $rewriter->rewrite_url( [ $src ] ), $width, $height );
+			return array( $rewriter->rewrite_url( array( $src ) ), $width, $height );
 		}
 
 		return $image;
@@ -313,7 +313,7 @@ class CDN_Enabler {
 		 * Check if it doesn't need to run.
 		 * If it does not, return the image srcset immediately.
 		 */
-		if ( ! $this->options || $home_url == $this->options['url'] ) { // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
+		if ( ! $this->options || $home_url == $this->options['url'] ) {
 			return $sources;
 		}
 
@@ -330,7 +330,7 @@ class CDN_Enabler {
 			$sources = array_map(
 				function( $source ) use ( $rewriter ) {
 					$src = $source['url'];
-					$source['url'] = $rewriter->rewrite_url( [ $src ] );
+					$source['url'] = $rewriter->rewrite_url( array( $src ) );
 					return $source;
 				},
 				$sources
@@ -415,4 +415,4 @@ class CDN_Enabler {
  * Backward compatible.
  * WP Rocket plugin's 3.0.1 version caused fatal error without this.
  */
-class CDNEnabler extends CDN_Enabler {} // phpcs:ignore Generic.Files.OneClassPerFile.MultipleFound
+class CDNEnabler extends CDN_Enabler {}

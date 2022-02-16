@@ -117,13 +117,13 @@ class CDN_Rewriter {
 		 * The `wp_parse_url` is only added in WordPress 4.4.0 and some
 		 * client site's may still be using older WordPress version.
 		 */
-		$home_url_host = parse_url( $home_url, PHP_URL_HOST ); // phpcs:ignore WordPress.WP.AlternativeFunctions.parse_url_parse_url
+		$home_url_host = parse_url( $home_url, PHP_URL_HOST );
 
 		if ( ! is_string( $home_url_host ) || empty( $home_url_host ) ) {
 			return false;
 		}
 
-		$src_url_host = parse_url( $src_url, PHP_URL_HOST ); // phpcs:ignore
+		$src_url_host = parse_url( $src_url, PHP_URL_HOST );
 		if ( substr( $src_url, 0, 1 ) === '/' || $src_url_host === $home_url_host ) {
 			return true;
 		}
@@ -147,13 +147,13 @@ class CDN_Rewriter {
 		}
 
 		$site_url = $this->relative_url( $this->site_url );
-		$subst_urls = [ 'http:' . $site_url ];
+		$subst_urls = array( 'http:' . $site_url );
 
 		if ( $this->https ) {
-			$subst_urls = [
+			$subst_urls = array(
 				'http:' . $site_url,
 				'https:' . $site_url,
-			];
+			);
 		}
 
 		if ( strpos( $asset[0], '//' ) === 0 ) {

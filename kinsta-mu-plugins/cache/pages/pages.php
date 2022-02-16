@@ -63,10 +63,10 @@ if ( ! defined( 'ABSPATH' ) ) { // If this file is called directly.
 							<?php
 								echo wp_kses(
 									$warning_msg,
-									[
+									array(
 										'strong' => true,
 										'code' => true,
-									]
+									)
 								);
 							?>
 						</div>

@@ -47,11 +47,11 @@ class Kinsta_Commands {
 		$banned_plugins = $this->get_banned_plugins();
 
 		if ( $this->banned_plugins instanceof Banned_Plugins ) {
-			$banned_plugins_args = [
+			$banned_plugins_args = array(
 				'banned_list'   => $banned_plugins->get_banned_list(),
 				'warning_list'  => $banned_plugins->get_warning_list(),
 				'disabled_list' => $banned_plugins->get_disabled_list(),
-			];
+			);
 			WP_CLI::add_command( 'kinsta plugin list', new Plugin_List_Command( $banned_plugins_args ) );
 		}
 

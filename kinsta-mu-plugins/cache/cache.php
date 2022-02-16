@@ -35,6 +35,7 @@ $default_settings = array(
 			'single' => array(),
 		),
 	),
+	'rules' => array(),
 );
 
 $kinsta_cache = new Cache( $config, $default_settings );
@@ -42,4 +43,4 @@ $kinsta_cache = new Cache( $config, $default_settings );
 /**
  * Backward compatible, WP Rocket plugin's 3.0.1 version caused fatal error without this.
  */
-$KinstaCache = $kinsta_cache; // phpcs:ignore WordPress.NamingConventions.ValidVariableName.NotSnakeCase
+$KinstaCache = $kinsta_cache; // phpcs:ignore

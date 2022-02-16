@@ -24,28 +24,28 @@ class Plugin_List_Command extends WP_CLI_Command {
 	 *
 	 * @var array
 	 */
-	private $installed_plugins = [];
+	private $installed_plugins = array();
 
 	/**
 	 * List of plugins that we encourage our users to deactivate.
 	 *
 	 * @var array
 	 */
-	private $warning_plugins = [];
+	private $warning_plugins = array();
 
 	/**
 	 * List of plugins that will be forcibly disabled.
 	 *
 	 * @var array
 	 */
-	private $disabled_plugins = [];
+	private $disabled_plugins = array();
 
 	/**
 	 * List of plugins in the Banned category.
 	 *
 	 * @var array
 	 */
-	private $banned_plugins = [];
+	private $banned_plugins = array();
 
 	/**
 	 * The Constructor.
@@ -59,11 +59,11 @@ class Plugin_List_Command extends WP_CLI_Command {
 
 		$args = wp_parse_args(
 			$args,
-			[
-				'warning_list' => [],
-				'disabled_list' => [],
-				'banned_list' => [],
-			]
+			array(
+				'warning_list' => array(),
+				'disabled_list' => array(),
+				'banned_list' => array(),
+			)
 		);
 
 		$this->installed_plugins = get_plugins();
@@ -125,12 +125,12 @@ class Plugin_List_Command extends WP_CLI_Command {
 		$status = isset( $assoc_args['status'] ) ? $assoc_args['status'] : 'all';
 
 		$plugins = $this->get_plugins(
-			[
+			array(
 				'status' => $status,
-			]
+			)
 		);
 
-		WP_CLI\Utils\format_items( $format, $plugins, [ 'slug', 'name', 'status', 'update', 'banned', 'version' ] );
+		WP_CLI\Utils\format_items( $format, $plugins, array( 'slug', 'name', 'status', 'update', 'banned', 'version' ) );
 	}
 
 	/**
@@ -139,9 +139,9 @@ class Plugin_List_Command extends WP_CLI_Command {
 	 * @param array $args Plugins arguments.
 	 * @return array
 	 */
-	private function get_plugins( $args = [] ) {
+	private function get_plugins( $args = array() ) {
 
-		$plugins = [];
+		$plugins = array();
 		$status = $args['status'];
 
 		foreach ( $this->installed_plugins as $plugin_file => $data ) {
@@ -149,7 +149,7 @@ class Plugin_List_Command extends WP_CLI_Command {
 			$plugin_status = $this->get_status( $plugin_file );
 			$plugin_banned = $this->is_banned( $plugin_file );
 
-			if ( in_array( $status, [ 'active', 'inactive' ], true ) && $status !== $plugin_status ) {
+			if ( in_array( $status, array( 'active', 'inactive' ), true ) && $status !== $plugin_status ) {
 				continue;
 			}
 
@@ -157,14 +157,14 @@ class Plugin_List_Command extends WP_CLI_Command {
 				continue;
 			}
 
-			$plugins[] = [
+			$plugins[] = array(
 				'slug'    => self::parse_plugin_slug( $plugin_file ),
 				'name'    => $this->installed_plugins[ $plugin_file ]['Name'],
 				'status'  => $plugin_status,
 				'banned'  => $plugin_banned,
 				'update'  => $this->is_update_available( $plugin_file ),
 				'version' => $this->installed_plugins[ $plugin_file ]['Version'],
-			];
+			);
 		}
 
 		return $plugins;
