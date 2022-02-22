@@ -55,7 +55,7 @@ For more info, refer to the [official docs here](https://kinsta.com/help/white-l
 ## Bedrock + Kinsta
 The following constants may be required to fix issues with CDN paths + shared plugin asset URLs.
 
-```
+```php
 /**
  * Kinsta CDN fix for Bedrock
  */
