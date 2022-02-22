@@ -50,3 +50,20 @@ define('KINSTAMU_LOGO', 'https://mylogo.com/mylogo.jpg');
 ```
 
 For more info, refer to the [official docs here](https://kinsta.com/help/white-label-kinsta-wordpress-admin/)
+
+
+## Bedrock + Kinsta
+The following constants may be required to fix issues with CDN paths + shared plugin asset URLs.
+
+```
+/**
+ * Kinsta CDN fix for Bedrock
+ */
+define('KINSTA_CDN_USERDIRS', 'app');
+
+/**
+ * Fix Kinsta MU Plugins URL path with Bedrock
+ */
+$mu_plugins_url = Config::get('WP_CONTENT_URL') . '/mu-plugins';
+define('KINSTAMU_CUSTOM_MUPLUGIN_URL', "{$mu_plugins_url}/kinsta-mu-plugins");
+```
