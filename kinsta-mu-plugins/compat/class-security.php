@@ -57,11 +57,11 @@ class Security {
 
 		remove_action( 'wp_head', 'wp_generator' ); // Remove version from head.
 
-		add_action( 'admin_notices', [ __CLASS__, 'hide_wp_version_admin_notice' ], PHP_INT_MAX );
+		add_action( 'admin_notices', array( __CLASS__, 'hide_wp_version_admin_notice' ), PHP_INT_MAX );
 
 		add_filter( 'the_generator', '__return_empty_string' ); // Remove version from RSS.
-		add_filter( 'style_loader_src', [ __CLASS__, 'hide_wp_version_loader_src' ], PHP_INT_MAX );
-		add_filter( 'script_loader_src', [ __CLASS__, 'hide_wp_version_loader_src' ], PHP_INT_MAX );
+		add_filter( 'style_loader_src', array( __CLASS__, 'hide_wp_version_loader_src' ), PHP_INT_MAX );
+		add_filter( 'script_loader_src', array( __CLASS__, 'hide_wp_version_loader_src' ), PHP_INT_MAX );
 	}
 
 	/**
@@ -75,7 +75,7 @@ class Security {
 		$wp_version = get_bloginfo( 'version' );
 		if ( strpos( $src, "ver={$wp_version}" ) ) {
 
-			$src_path = parse_url( $src, PHP_URL_PATH ); // phpcs:ignore WordPress.WP.AlternativeFunctions.parse_url_parse_url
+			$src_path = parse_url( $src, PHP_URL_PATH );
 			$src_file = ABSPATH . $src_path;
 
 			$src = remove_query_arg( 'ver', $src );
@@ -111,12 +111,12 @@ class Security {
 
 			echo wp_kses(
 				$notice,
-				[
-					'a' => [
+				array(
+					'a' => array(
 						'href' => true,
 						'target' => true,
-					],
-				]
+					),
+				)
 			);
 			?>
 			</p>

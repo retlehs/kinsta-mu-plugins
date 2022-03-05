@@ -95,7 +95,10 @@ class Cache_Admin {
 				array(
 					'id' => 'kinsta-cache',
 					'title' => __( 'Clear Cache', 'kinsta-mu-plugins' ),
-					'meta' => array( 'title' => __( 'Clear Cache', 'kinsta-mu-plugins' ) ),
+					'meta' => array(
+						'title' => __( 'Clear Cache', 'kinsta-mu-plugins' ),
+						'tabindex' => 0,
+					),
 					'parent' => 'top-secondary',
 				)
 			);
@@ -104,7 +107,7 @@ class Cache_Admin {
 				array(
 					'id' => 'kinsta-cache-all',
 					'title' => 'Clear All Caches',
-					'href' => wp_nonce_url( admin_url( 'admin-ajax.php?action=kinsta_clear_cache_all&source=adminbar' ), 'kinsta-clear-cache-all', 'kinsta_nonce' ),
+					'href' => wp_nonce_url( admin_url( 'admin.php?page=kinsta-tools&clear-cache=kinsta-clear-cache-all' ), 'kinsta-clear-cache-admin-bar', 'kinsta_nonce' ),
 					'parent' => 'kinsta-cache',
 				)
 			);
@@ -113,7 +116,7 @@ class Cache_Admin {
 				array(
 					'id' => 'kinsta-cache-full-page',
 					'title' => 'Clear Full Page Cache',
-					'href' => wp_nonce_url( admin_url( 'admin-ajax.php?action=kinsta_clear_cache_full_page&source=adminbar' ), 'kinsta-clear-cache-full-page', 'kinsta_nonce' ),
+					'href' => wp_nonce_url( admin_url( 'admin.php?page=kinsta-tools&clear-cache=kinsta-clear-cache-full-page' ), 'kinsta-clear-cache-admin-bar', 'kinsta_nonce' ),
 					'parent' => 'kinsta-cache',
 				)
 			);
@@ -122,7 +125,7 @@ class Cache_Admin {
 				array(
 					'id' => 'kinsta-cache-object',
 					'title' => 'Clear Object Cache',
-					'href' => wp_nonce_url( admin_url( 'admin-ajax.php?action=kinsta_clear_cache_object&source=adminbar' ), 'kinsta-clear-cache-object', 'kinsta_nonce' ),
+					'href' => wp_nonce_url( admin_url( 'admin.php?page=kinsta-tools&clear-cache=kinsta-clear-cache-object' ), 'kinsta-clear-cache-admin-bar', 'kinsta_nonce' ),
 					'parent' => 'kinsta-cache',
 				)
 			);
@@ -131,7 +134,7 @@ class Cache_Admin {
 				array(
 					'id' => 'kinsta-cache',
 					'title' => __( 'Clear Cache', 'kinsta-mu-plugins' ),
-					'href' => wp_nonce_url( admin_url( 'admin-ajax.php?action=kinsta_clear_cache_full_page&source=adminbar' ), 'kinsta-clear-cache-full-page', 'kinsta_nonce' ),
+					'href' => wp_nonce_url( admin_url( 'admin.php?page=kinsta-tools&clear-cache=kinsta-clear-cache-full-page' ), 'kinsta-clear-cache-admin-bar', 'kinsta_nonce' ),
 					'meta' => array( 'title' => __( 'Clear Cache', 'kinsta-mu-plugins' ) ),
 					'parent' => 'top-secondary',
 				)

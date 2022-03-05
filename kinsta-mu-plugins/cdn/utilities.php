@@ -15,7 +15,7 @@ namespace Kinsta\CDN;
  */
 function sanitize_exclude_types( $types = '' ) {
 
-	$sanitized_types = [];
+	$sanitized_types = array();
 
 	if ( ! empty( $types ) ) {
 		$sanitized_types = explode( ',', $types );
@@ -79,7 +79,6 @@ function is_doing_ajax() {
 function is_rest_api() {
 	$prefix = rest_get_url_prefix();
 
-	// phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification
 	if ( defined( 'REST_REQUEST' ) && REST_REQUEST || isset( $_GET['rest_route'] ) && strpos( trim( $_GET['rest_route'], '\\/' ), $prefix, 0 ) === 0 ) {
 		return true;
 	}
@@ -90,7 +89,7 @@ function is_rest_api() {
 	 * client site's may still be using older WordPress version.
 	 */
 	$rest_url = parse_url( site_url( $prefix ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions.parse_url_parse_url
-	$current_url = parse_url( add_query_arg( [] ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions.parse_url_parse_url
+	$current_url = parse_url( add_query_arg( array() ) );
 
 	return strpos( $current_url['path'], $rest_url['path'], 0 ) === 0;
 }

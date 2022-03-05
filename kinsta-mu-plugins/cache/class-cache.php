@@ -46,7 +46,7 @@ class Cache {
 	 *
 	 * @var Cache_Purge
 	 */
-	public $KinstaCachePurge; // phpcs:ignore WordPress.NamingConventions.ValidVariableName.MemberNotSnakeCase
+	public $KinstaCachePurge; // phpcs:ignore
 
 	/**
 	 * The cache configuration
@@ -102,6 +102,8 @@ class Cache {
 		add_action( 'wp_ajax_kinsta_save_custom_path', array( $this, 'action_kinsta_save_custom_path' ) );
 		add_action( 'wp_ajax_kinsta_remove_custom_path', array( $this, 'action_kinsta_remove_custom_path' ) );
 
+		add_action( 'admin_init', array( $this, 'clear_cache_admin_bar' ) );
+
 		// Removing other cache systems.
 		add_filter( 'do_rocket_generate_caching_files', '__return_false', 999 ); // Disable WP rocket caching.
 	}
@@ -118,8 +120,7 @@ class Cache {
 		$this->kinsta_cache_purge = new Cache_Purge( $this );
 		$this->kinsta_cache_admin = new Cache_Admin( $this );
 
-		// phpcs:ignore WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar
-		$this->KinstaCachePurge = $this->kinsta_cache_purge;
+		$this->KinstaCachePurge = $this->kinsta_cache_purge; // phpcs:ignore
 
 		do_action( 'kinsta_cache_init', $this );
 	}
@@ -146,7 +147,7 @@ class Cache {
 	 * @return void
 	 */
 	public function cleared_cache_notice() {
-		if ( ! empty( $_GET['kinsta-cache-cleared'] ) && 'true' == $_GET['kinsta-cache-cleared'] ) : // WPCS: CSRF ok, loose comparison ok.
+		if ( ! empty( $_GET['kinsta-cache-cleared'] ) && 'true' === $_GET['kinsta-cache-cleared'] ) :
 			?>
 		<div class="notice notice-success is-dismissible">
 			<p><?php esc_html_e( 'Cache cleared successfully', 'kinsta-mu-plugins' ); ?></p>
@@ -244,6 +245,38 @@ class Cache {
 	}
 
 	/**
+	 * * Function to handle Admin Bar cache clear requests.
+	 * *
+	 * * @return void
+	 */
+	public function clear_cache_admin_bar() {
+		if ( empty( $_GET['page'] ) || empty( $_GET['clear-cache'] ) || ( ! empty( $_GET['page'] ) && 'kinsta-tools' !== $_GET['page'] ) ) {
+			return;
+		}
+		check_admin_referer( 'kinsta-clear-cache-admin-bar', 'kinsta_nonce' );
+		if ( 'kinsta-clear-cache-all' === $_GET['clear-cache'] ) {
+			$this->kinsta_cache_purge->purge_complete_caches();
+		} elseif ( 'kinsta-clear-cache-object' === $_GET['clear-cache'] ) {
+			$this->kinsta_cache_purge->purge_complete_object_cache();
+		} elseif ( 'kinsta-clear-cache-full-page' === $_GET['clear-cache'] ) {
+			$this->kinsta_cache_purge->purge_complete_full_page_cache();
+		} else {
+			return;
+		}
+		if ( empty( wp_get_referer() ) ) {
+			$query_vars = array(
+				'page' => 'kinsta-tools',
+				'kinsta-cache-cleared' => 'true',
+			);
+			$redirect_url = add_query_arg( $query_vars, admin_url( 'admin.php' ) );
+		} else {
+			$redirect_url = add_query_arg( 'kinsta-cache-cleared', 'true', wp_get_referer() );
+		}
+		wp_safe_redirect( $redirect_url );
+		exit;
+	}
+
+	/**
 	 * AJAX Action to clear all cache
 	 *
 	 * @return void
@@ -252,9 +285,6 @@ class Cache {
 
 		check_ajax_referer( 'kinsta-clear-cache-all', 'kinsta_nonce' );
 		$this->kinsta_cache_purge->purge_complete_caches();
-		if ( isset( $_GET ) && isset( $_GET['source'] ) && 'adminbar' == $_GET['source'] ) { // WPCS: loose comparison ok.
-			header( 'Location: ' . add_query_arg( 'kinsta-cache-cleared', 'true', $_SERVER['HTTP_REFERER'] ) );
-		}
 		die();
 	}
 
@@ -267,9 +297,6 @@ class Cache {
 
 		check_ajax_referer( 'kinsta-clear-cache-full-page', 'kinsta_nonce' );
 		$this->kinsta_cache_purge->purge_complete_full_page_cache();
-		if ( isset( $_GET ) && isset( $_GET['source'] ) && 'adminbar' == $_GET['source'] ) { // WPCS: CSRF ok, loose comparison ok.
-			header( 'Location: ' . add_query_arg( 'kinsta-cache-cleared', 'true', $_SERVER['HTTP_REFERER'] ) );
-		}
 		die();
 	}
 
@@ -282,9 +309,6 @@ class Cache {
 
 		check_ajax_referer( 'kinsta-clear-cache-object', 'kinsta_nonce' );
 		$this->kinsta_cache_purge->purge_complete_object_cache();
-		if ( 'adminbar' == $_GET['source'] ) { // WPCS: CSRF ok, loose comparison ok.
-			header( 'Location: ' . add_query_arg( 'kinsta-cache-cleared', 'true', $_SERVER['HTTP_REFERER'] ) );
-		}
 		die();
 	}
 

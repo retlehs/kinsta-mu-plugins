@@ -29,4 +29,5 @@ function wordfence_compatibility_admin_notices() {
 		<?php
 	}
 }
-if( function_exists('add_action') ) { add_action( 'admin_notices', __NAMESPACE__ . '\\wordfence_compatibility_admin_notices', PHP_INT_MAX ); }
+if ( function_exists( 'add_action' ) ) {
+	add_action( 'admin_notices', __NAMESPACE__ . '\\wordfence_compatibility_admin_notices', PHP_INT_MAX ); }
