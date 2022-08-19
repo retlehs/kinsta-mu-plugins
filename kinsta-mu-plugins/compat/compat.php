@@ -20,6 +20,7 @@ require_once plugin_dir_path( __FILE__ ) . 'third-party/swift-performance.php';
 require_once plugin_dir_path( __FILE__ ) . 'utilities.php';
 require_once plugin_dir_path( __FILE__ ) . 'class-banned-plugins.php';
 require_once plugin_dir_path( __FILE__ ) . 'class-kinsta-commands.php';
+require_once plugin_dir_path( __FILE__ ) . 'class-wp-kinsta.php';
 require_once plugin_dir_path( __FILE__ ) . 'class-security.php';
 
 // Roll the "Banned Plugins" feature.
@@ -29,6 +30,9 @@ $banned_plugins = new Banned_Plugins();
 $kinsta_commands = new Kinsta_Commands();
 $kinsta_commands->set_banned_plugins( $banned_plugins );
 $kinsta_commands->add_commands();
+
+// Roll WP Kinsta.
+$wp_kinsta = new WP_Kinsta();
 
 // Roll WordPress security utitlity.
 $security = new Security();
