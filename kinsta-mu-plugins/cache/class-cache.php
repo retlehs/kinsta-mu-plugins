@@ -1,9 +1,8 @@
 <?php
 /**
- * Cache classes
+ * Cache classes.
  *
- * This module allows users to fine tune their cache clearing settings and
- * initiates cache clearing when necessary
+ * This module allows users to fine tune their cache clearing settings and initiates cache clearing when necessary.
  *
  * @package KinstaMUPlugins
  * @subpackage Cache
@@ -17,39 +16,38 @@ if ( ! defined( 'ABSPATH' ) ) { // If this file is called directly.
 }
 
 /**
- * Cache class
+ * Cache class.
  *
- * Offers users cache settings and initiates full page and object cache
- * clearing
+ * Offers users cache settings and initiates full page and object cache clearing.
  *
  * @since 1.0.0
  */
 class Cache {
 
 	/**
-	 * Cache_Admin instance
+	 * Cache_Admin instance.
 	 *
 	 * @var Cache_Admin
 	 */
 	public $kinsta_cache_admin;
 
 	/**
-	 * Cache_Purge instance
+	 * Cache_Purge instance.
 	 *
 	 * @var Cache_Purge
 	 */
 	public $kinsta_cache_purge;
 
 	/**
-	 * Backward compatible Cache_Purge instance
-	 * WP Rocket plugin's 3.0.1 version caused fatal error without this
+	 * Backward compatible Cache_Purge instance.
+	 * WP Rocket version 3.0.1 caused fatal error without this.
 	 *
 	 * @var Cache_Purge
 	 */
 	public $KinstaCachePurge; // phpcs:ignore
 
 	/**
-	 * The cache configuration
+	 * The cache configuration.
 	 *
 	 * @see ./cache.php
 	 * @var array
@@ -57,7 +55,7 @@ class Cache {
 	public $config;
 
 	/**
-	 * The cache settings
+	 * The cache settings.
 	 *
 	 * @see Kinsta/Cache()->set_settings()
 	 * @var array
@@ -65,7 +63,7 @@ class Cache {
 	public $settings;
 
 	/**
-	 * The cache default settings
+	 * The cache default settings.
 	 *
 	 * @see ./cache.php
 	 * @var array
@@ -73,55 +71,53 @@ class Cache {
 	public $default_settings;
 
 	/**
-	 * Whether the Object cache is enabled
+	 * Whether the Object cache is enabled.
 	 *
 	 * @var bool
 	 */
 	public $has_object_cache;
 
 	/**
-	 * Class constructor
+	 * Class constructor.
 	 *
 	 * @param array $config           The cache configuration.
 	 * @param array $default_settings The cache default settings.
 	 */
-	public function __construct( $config, $default_settings ) {
+	public function __construct( $config = false, $default_settings = false ) {
+		if ( empty( $config ) || empty( $default_settings ) ) {
+			return;
+		}
 
+		// Set our class variables.
 		$this->config = $config;
 		$this->default_settings = $default_settings;
 		$this->set_settings();
 		$this->set_has_object_cache();
 
+		// Init the cache classes.
 		add_action( 'init', array( $this, 'init_cache' ), 5 );
-
-		add_action( 'wp_ajax_kinsta_clear_cache_all', array( $this, 'action_kinsta_clear_cache_all' ) );
-		add_action( 'wp_ajax_kinsta_clear_cache_full_page', array( $this, 'action_kinsta_clear_cache_full_page' ) );
-		add_action( 'wp_ajax_kinsta_clear_cache_object', array( $this, 'action_kinsta_clear_cache_object' ) );
-		add_action( 'admin_notices', array( $this, 'cleared_cache_notice' ) );
-
-		add_action( 'wp_ajax_kinsta_save_custom_path', array( $this, 'action_kinsta_save_custom_path' ) );
-		add_action( 'wp_ajax_kinsta_remove_custom_path', array( $this, 'action_kinsta_remove_custom_path' ) );
-
-		add_action( 'admin_init', array( $this, 'clear_cache_admin_bar' ) );
 
 		// Removing other cache systems.
 		add_filter( 'do_rocket_generate_caching_files', '__return_false', 999 ); // Disable WP rocket caching.
 	}
 
 	/**
-	 * Init the Caching when the WP is initialised, this is to ensure that the classes, global variables and WordPress core functions are ready.
+	 * Init the Caching when the WP is initialised, this is to ensure that the classes, global variables, and WordPress core functions are ready.
 	 *
 	 * @since 2.0.16
 	 *
 	 * @return void
 	 */
 	public function init_cache() {
-
 		$this->kinsta_cache_purge = new Cache_Purge( $this );
+$this->KinstaCachePurge = $this->kinsta_cache_purge; // phpcs:ignore
 		$this->kinsta_cache_admin = new Cache_Admin( $this );
 
-		$this->KinstaCachePurge = $this->kinsta_cache_purge; // phpcs:ignore
-
+		/**
+		 * Hook that fires after cache classes are initialized.
+		 *
+		 * @param Cache $this Instance of the Cache class.
+		 */
 		do_action( 'kinsta_cache_init', $this );
 	}
 
@@ -140,51 +136,36 @@ class Cache {
 	}
 
 	/**
-	 * [cleared_cache_notice description]
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return void
-	 */
-	public function cleared_cache_notice() {
-		if ( ! empty( $_GET['kinsta-cache-cleared'] ) && 'true' === $_GET['kinsta-cache-cleared'] ) :
-			?>
-		<div class="notice notice-success is-dismissible">
-			<p><?php esc_html_e( 'Cache cleared successfully', 'kinsta-mu-plugins' ); ?></p>
-		</div>
-			<?php
-		endif;
-	}
-
-	/**
 	 * Set settings
 	 *
 	 * @since 1.0.0
+	 * @return void
 	 */
 	public function set_settings() {
-
+		// Init settings array which will contain data by the end of this function.
 		$settings = array();
-		if ( ! empty( $this->default_settings ) && ! empty( $this->config['option_name'] ) ) {
 
-			// Get settings from database.
-			$settings = get_option( $this->config['option_name'] );
+		// Get settings from database.
+		$settings = get_option( $this->config['option_name'] );
 
-			// If there are no settings yet, save the default ones.
-			if ( empty( $settings ) ) {
-				$settings = $this->default_settings;
-				update_option( $this->config['option_name'], $this->default_settings );
-			}
+		// If there are no settings yet, save the default ones.
+		if ( empty( $settings ) ) {
+			// Make the settings available to the class.
+			$this->settings = $this->default_settings;
+			// Save initial settings.
+			update_option( $this->config['option_name'], $this->default_settings );
+			// Return early as there is nothing to upgrade for initial settings.
+			return;
 		}
 
-		// If there has been a version change scan settings for changes.
-		if ( empty( $settings['version'] ) || empty( $this->default_settings['version'] ) || $settings['version'] != $this->default_settings['version'] ) { // WPCS: loose comparison ok.
+		// If there has been a version change, scan settings for changes.
+		if ( empty( $settings['version'] ) || ( ! empty( $settings['version'] ) && version_compare( $settings['version'], $this->default_settings['version'], '!=' ) ) ) {
 			foreach ( $this->default_settings['rules'] as $group => $rules ) {
-				// If there is a new rule group add it with the default values.
+				// If there is a new rule group, add it with the default values.
 				if ( ! isset( $settings['rules'][ $group ] ) ) {
 					$settings['rules'][ $group ] = $rules;
 				}
-
-				// If there are new settings within groups add them with the default value.
+				// If there are new settings within groups, add them with the default value.
 				foreach ( $rules as $name => $value ) {
 					if ( ! isset( $settings['rules'][ $group ][ $name ] ) ) {
 						$settings['rules'][ $group ][ $name ] = $this->default_settings['rules'][ $group ][ $name ];
@@ -192,175 +173,16 @@ class Cache {
 				}
 			}
 
-			// Add the new version to the settings.
+			// Add version defined in default settings to settings now that the upgrade is complete.
 			$settings['version'] = $this->default_settings['version'];
-
-			// Add options.
+			// Add modified settings.
 			$settings['options'] = $this->default_settings['options'];
-
 			// Save the modified settings.
 			update_option( $this->config['option_name'], $settings );
 		}
 
+		// Make the settings available to the class.
 		$this->settings = $settings;
 	}
 
-	/**
-	 * Save plugin options to the database
-	 *
-	 * @return void
-	 */
-	public function save_plugin_options() {
-		if ( ! isset( $_POST['kinsta_nonce'] ) || ! wp_verify_nonce( $_POST['kinsta_nonce'], 'save_plugin_options' ) ) {
-			die();
-		}
-
-		$new_rules = $_POST['rules'];
-
-		foreach ( $this->default_settings['rules'] as $group => $data ) {
-			foreach ( $data as $rule => $value ) {
-				if ( empty( $new_rules[ $group ][ $rule ] ) ) {
-					$new_rules[ $group ][ $rule ] = false;
-				} else {
-					$new_rules[ $group ][ $rule ] = true;
-				}
-			}
-		}
-
-		$this->settings['rules'] = $new_rules;
-
-		$new_options = $_POST['options'];
-
-		foreach ( $this->default_settings['options'] as $option => $value ) {
-			if ( ! isset( $new_options[ $option ] ) ) {
-				$new_options[ $option ] = false;
-			} elseif ( 'on' === $new_options[ $option ] ) {
-				$new_options[ $option ] = true;
-			}
-		}
-
-		$this->settings['options'] = $new_options;
-
-		update_option( $this->config['option_name'], $this->settings );
-	}
-
-	/**
-	 * * Function to handle Admin Bar cache clear requests.
-	 * *
-	 * * @return void
-	 */
-	public function clear_cache_admin_bar() {
-		if ( empty( $_GET['page'] ) || empty( $_GET['clear-cache'] ) || ( ! empty( $_GET['page'] ) && 'kinsta-tools' !== $_GET['page'] ) ) {
-			return;
-		}
-		check_admin_referer( 'kinsta-clear-cache-admin-bar', 'kinsta_nonce' );
-		if ( 'kinsta-clear-cache-all' === $_GET['clear-cache'] ) {
-			$this->kinsta_cache_purge->purge_complete_caches();
-		} elseif ( 'kinsta-clear-cache-object' === $_GET['clear-cache'] ) {
-			$this->kinsta_cache_purge->purge_complete_object_cache();
-		} elseif ( 'kinsta-clear-cache-full-page' === $_GET['clear-cache'] ) {
-			$this->kinsta_cache_purge->purge_complete_full_page_cache();
-		} else {
-			return;
-		}
-		if ( empty( wp_get_referer() ) ) {
-			$query_vars = array(
-				'page' => 'kinsta-tools',
-				'kinsta-cache-cleared' => 'true',
-			);
-			$redirect_url = add_query_arg( $query_vars, admin_url( 'admin.php' ) );
-		} else {
-			$redirect_url = add_query_arg( 'kinsta-cache-cleared', 'true', wp_get_referer() );
-		}
-		wp_safe_redirect( $redirect_url );
-		exit;
-	}
-
-	/**
-	 * AJAX Action to clear all cache
-	 *
-	 * @return void
-	 */
-	public function action_kinsta_clear_cache_all() {
-
-		check_ajax_referer( 'kinsta-clear-cache-all', 'kinsta_nonce' );
-		$this->kinsta_cache_purge->purge_complete_caches();
-		die();
-	}
-
-	/**
-	 * AJAX action to clear page cache
-	 *
-	 * @return void
-	 */
-	public function action_kinsta_clear_cache_full_page() {
-
-		check_ajax_referer( 'kinsta-clear-cache-full-page', 'kinsta_nonce' );
-		$this->kinsta_cache_purge->purge_complete_full_page_cache();
-		die();
-	}
-
-	/**
-	 * AJAX action to clear Object Cache
-	 *
-	 * @return void
-	 */
-	public function action_kinsta_clear_cache_object() {
-
-		check_ajax_referer( 'kinsta-clear-cache-object', 'kinsta_nonce' );
-		$this->kinsta_cache_purge->purge_complete_object_cache();
-		die();
-	}
-
-	/**
-	 * AJAX Action to save custom path
-	 *
-	 * @return void
-	 */
-	public function action_kinsta_save_custom_path() {
-
-		if ( ! isset( $_POST['kinsta_nonce'] ) || ! wp_verify_nonce( $_POST['kinsta_nonce'], 'save_plugin_options' ) ) {
-			die();
-		}
-
-		$paths = get_option( 'kinsta-cache-additional-paths' );
-		if ( empty( $paths ) ) {
-			$paths = array();
-		}
-
-		$paths[] = array(
-			'path' => $_POST['path'],
-			'type' => $_POST['type'],
-		);
-
-		$paths = array_values( $paths );
-		update_option( 'kinsta-cache-additional-paths', $paths );
-		die();
-	}
-
-	/**
-	 * AJAX action to remove custom path
-	 *
-	 * @return void
-	 */
-	public function action_kinsta_remove_custom_path() {
-
-		if ( ! isset( $_POST['kinsta_nonce'] ) || ! wp_verify_nonce( $_POST['kinsta_nonce'], 'save_plugin_options' ) ) {
-			die();
-		}
-
-		$paths = get_option( 'kinsta-cache-additional-paths' );
-
-		if ( ! empty( $paths[ $_POST['index'] ] ) ) {
-			unset( $paths[ $_POST['index'] ] );
-		}
-
-		if ( count( $paths ) === 0 ) {
-			delete_option( 'kinsta-cache-additional-paths' );
-		} else {
-			$paths = array_values( $paths );
-			update_option( 'kinsta-cache-additional-paths', $paths );
-		}
-		die();
-	}
 }

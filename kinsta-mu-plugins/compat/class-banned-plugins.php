@@ -42,7 +42,7 @@ class Banned_Plugins {
 		'loginwall/loginwall.php',
 		'wp-rss-multi-importer/wp-rss-multi-importer.php',
 		'wp-db-backup-made/wpa-wp.php',
-		'duplicator-pro/duplicator-pro.php', // Duplicator Pro
+		'duplicator-pro/duplicator-pro.php', // Duplicator Pro.
 	);
 
 	/**
@@ -338,7 +338,9 @@ class Banned_Plugins {
 
 		$notifiable_plugins = array();
 		foreach ( $active_banned_plugins as $plugin_file ) {
-			$notifiable_plugins[ $plugin_file ] = $installed_plugins[ $plugin_file ];
+			if ( array_key_exists( $plugin_file, $installed_plugins ) ) {
+				$notifiable_plugins[ $plugin_file ] = $installed_plugins[ $plugin_file ];
+			}
 		}
 
 		return array_column( $notifiable_plugins, 'Name' );
@@ -584,9 +586,20 @@ class Banned_Plugins {
 
 		$shall = false;
 		$dismissed = get_transient( 'kinsta_dismiss_banned_plugins_nag' );
+		if ( ! function_exists( 'get_plugins' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
+		$installed_plugins = get_plugins();
 		$active_banned_plugins = array_intersect( (array) $this->active_plugins, (array) $this->banned_list );
 
-		if ( current_user_can( 'activate_plugins' ) && ! empty( $active_banned_plugins ) && 1 !== absint( $dismissed ) ) {
+		$active_banned_plugin_count = 0;
+		foreach ( $active_banned_plugins as $plugin_file ) {
+			if ( array_key_exists( $plugin_file, $installed_plugins ) ) {
+				$active_banned_plugin_count += 1;
+			}
+		}
+
+		if ( current_user_can( 'activate_plugins' ) && 0 < $active_banned_plugin_count && 1 !== absint( $dismissed ) ) {
 			$shall = true;
 		}
 

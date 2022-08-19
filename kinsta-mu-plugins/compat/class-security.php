@@ -26,7 +26,7 @@ class Security {
 	/**
 	 * The Constructor.
 	 *
-	 * @return null
+	 * @return void
 	 */
 	public function __construct() {
 		$this->security = get_server_var( 'KINSTA_PLUGIN_OP', 'security' );

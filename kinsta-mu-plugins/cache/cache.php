@@ -1,8 +1,8 @@
 <?php
 /**
- * Kinsta Cache
+ * Kinsta Cache.
  *
- * Main file to load Kinsta Cache
+ * Main file to load Kinsta Cache.
  *
  * @package KinstaMUPlugins
  * @subpackage Cache
@@ -40,7 +40,5 @@ $default_settings = array(
 
 $kinsta_cache = new Cache( $config, $default_settings );
 
-/**
- * Backward compatible, WP Rocket plugin's 3.0.1 version caused fatal error without this.
- */
+// Backward compatible, WP Rocket plugin version 3.0.1 caused fatal error without this.
 $KinstaCache = $kinsta_cache; // phpcs:ignore
