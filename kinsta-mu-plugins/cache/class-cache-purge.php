@@ -37,11 +37,11 @@ class Cache_Purge {
 	public $posts_page_url;
 
 	/**
-	 * Kinsta Cache Object.
+	 * KMP Object.
 	 *
 	 * @var object
 	 */
-	public $kinsta_cache;
+	public $kmp;
 
 	/**
 	 * Number of pages at home or archive page to purge.
@@ -69,10 +69,10 @@ class Cache_Purge {
 	 *
 	 * Detect actions that causes content to changes root.
 	 *
-	 * @param object $kinsta_cache Kinsta Cache object.
+	 * @param object $kmp KMP object.
 	 */
-	public function __construct( $kinsta_cache = false ) {
-		if ( false === $kinsta_cache ) {
+	public function __construct( $kmp = false ) {
+		if ( false === $kmp ) {
 			return;
 		}
 
@@ -80,7 +80,8 @@ class Cache_Purge {
 		global $wp_rewrite;
 		global $wp_version;
 
-		$this->kinsta_cache = $kinsta_cache;
+		$this->kmp = $kmp;
+		$this->kinsta_cache = $kmp->kinsta_cache;
 		$this->posts_page_id = get_option( 'page_for_posts' );
 		$this->posts_page_url = ( ! empty( $this->posts_page_id ) && ! empty( $wp_rewrite ) && null !== $wp_rewrite ) ? get_permalink( $this->posts_page_id ) : false;
 		$this->immediate_depth = 3;
@@ -88,12 +89,13 @@ class Cache_Purge {
 		$this->purge_all_happened = false;
 
 		// Ajax actions for cache clearing.
-		add_action( 'wp_ajax_kinsta_clear_cache_all', array( $this, 'action_kinsta_clear_cache_all' ) );
-		add_action( 'wp_ajax_kinsta_clear_cache_full_page', array( $this, 'action_kinsta_clear_cache_full_page' ) );
-		add_action( 'wp_ajax_kinsta_clear_cache_object', array( $this, 'action_kinsta_clear_cache_object' ) );
+		add_action( 'wp_ajax_kinsta_clear_all_cache', array( $this, 'action_kinsta_clear_all_cache' ) );
+		add_action( 'wp_ajax_kinsta_clear_site_cache', array( $this, 'action_kinsta_clear_site_cache' ) );
+		add_action( 'wp_ajax_kinsta_clear_object_cache', array( $this, 'action_kinsta_clear_object_cache' ) );
 
 		// Cache clear for Admin Toolbar.
 		add_action( 'admin_init', array( $this, 'clear_cache_admin_bar' ) );
+		add_action( 'admin_init', array( $this, 'set_autopurge_option' ) );
 
 		// Comment actions.
 		add_action( 'edit_comment', array( $this, 'comment_edit_actions' ), 10, 2 );
@@ -230,11 +232,12 @@ class Cache_Purge {
 	 * Figures out if a comment is edited/updated and initiates a cache purge with the post.
 	 *
 	 * @param  int        $comment_id The comment's ID.
-	 * @param WP_Comment $comment The comment data.
+	 * @param array $data The comment data.
 	 *
 	 * @return void
 	 */
-	public function comment_edit_actions( $comment_id, $comment ) {
+	public function comment_edit_actions( $comment_id, $data ) {
+		$comment = get_comment( $comment_id );
 		if ( 1 === (int) $comment->comment_approved ) {
 			$this->initiate_purge( $comment->comment_post_ID );
 		}
@@ -247,6 +250,7 @@ class Cache_Purge {
 	 */
 	public function purge_complete_object_cache() {
 		$response = wp_cache_flush();
+		opcache_reset();
 		return $response;
 	}
 
@@ -255,7 +259,7 @@ class Cache_Purge {
 	 *
 	 * @return void
 	 **/
-	public function purge_complete_full_page_cache() {
+	public function purge_complete_site_cache() {
 		if ( $this->purge_all_happened ) {
 			return;
 		}
@@ -279,11 +283,8 @@ class Cache_Purge {
 	 * @return void
 	 */
 	public function purge_complete_caches() {
-		if ( defined( 'KINSTAMU_DISABLE_AUTOPURGE' ) && KINSTAMU_DISABLE_AUTOPURGE === true ) {
-			return;
-		}
 		$this->purge_complete_object_cache();
-		$this->purge_complete_full_page_cache();
+		$this->purge_complete_site_cache();
 
 		// Hook that fires after page and object cache is cleared.
 		do_action( 'kinsta_purge_complete_caches_happened' );
@@ -297,7 +298,7 @@ class Cache_Purge {
 	 * @return array the result of the wp_remote_post action
 	 **/
 	public function initiate_purge( $post_id ) {
-		if ( defined( 'KINSTAMU_DISABLE_AUTOPURGE' ) && KINSTAMU_DISABLE_AUTOPURGE === true ) {
+		if ( ( defined( 'KINSTAMU_DISABLE_AUTOPURGE' ) && KINSTAMU_DISABLE_AUTOPURGE === true ) || get_option( 'kinsta-autopurge-status') === 'disabled' ) {
 			return false;
 		}
 
@@ -315,12 +316,9 @@ class Cache_Purge {
 			),
 		);
 
-		// Immediately remove first three pages of archives.
+		// Immediately remove first page of archives.
 		foreach ( $archives['group'] as $key => $url ) {
 			$purge_list['immediate']['single'][ $key ] = $url;
-			for ( $i = 2; $i <= $this->immediate_depth; $i++ ) {
-				$purge_list['immediate']['single'][ $key . '_' . $i ] = $url . 'page/' . $i . '/';
-			}
 		}
 
 		$purge_list['immediate']['group']['singular_post'] = get_permalink( $post_id );
@@ -328,18 +326,8 @@ class Cache_Purge {
 		if ( ! empty( $this->posts_page_url ) ) {
 			$purge_list['immediate']['single']['home_page'] = home_url() . '/';
 			$purge_list['immediate']['single']['blog_page'] = $this->posts_page_url;
-			for ( $i = 2; $i <= $this->immediate_depth; $i++ ) {
-				$purge_list['immediate']['single'][ 'blog_page_' . $i ] = $this->posts_page_url . '/page/' . $i . '/';
-			}
-
-			$purge_list['throttled']['group']['blog_page'] = $purge_list['immediate']['single']['home_page'] . '/page/';
 		} else {
 			$purge_list['immediate']['single']['home_blog_page'] = home_url() . '/';
-			for ( $i = 2; $i <= $this->immediate_depth; $i++ ) {
-				$purge_list['immediate']['single'][ 'home_blog_page_' . $i ] = home_url() . '/page/' . $i . '/';
-			}
-
-			$purge_list['throttled']['group']['home_blog_page'] = $purge_list['immediate']['single']['home_blog_page'] . '/page/';
 		}
 
 		if ( ! empty( $purge_list['throttled']['single']['post_type'] ) ) {
@@ -363,11 +351,7 @@ class Cache_Purge {
 		// Add related sitemaps.
 		$purge_list['throttled']['group']['sitemap'] = home_url() . '/sitemap';
 		// Add feed purging.
-		$purge_list['immediate']['single']['feed'] = home_url() . '/feed/';
-		$purge_list['immediate']['single']['feed_rss'] = home_url() . '/feed/rss/';
-		$purge_list['immediate']['single']['feed_rss2'] = home_url() . '/feed/rss2/';
-		$purge_list['immediate']['single']['feed_rdf'] = home_url() . '/feed/rdf/';
-		$purge_list['immediate']['single']['feed_atom'] = home_url() . '/feed/atom/';
+		$purge_list['immediate']['group']['feed'] = home_url() . '/feed/';
 
 		// Add AMP immediate single requests.
 		foreach ( $purge_list['immediate']['single'] as $key => $value ) {
@@ -390,8 +374,6 @@ class Cache_Purge {
 
 		$result['requests'] = $purge_request;
 
-		$is_cache_debug = ( defined( 'KINSTA_CACHE_DEBUG' ) ) ? KINSTA_CACHE_DEBUG : false;
-
 		$result['response'] = array(
 			'immediate' => $this->send_cache_purge_request( $this->kinsta_cache->config['immediate_path'], $purge_request['immediate'] ),
 			'throttled' => $this->send_cache_purge_request( $this->kinsta_cache->config['throttled_path'], $purge_request['throttled'] ),
@@ -400,12 +382,8 @@ class Cache_Purge {
 		// Hook that fires after specific event purges cache.
 		do_action( 'kinsta_initiate_purge_happened' );
 
-		if ( $is_cache_debug ) {
-			echo '<pre>';
-			print_r( $purge_request );
-			var_dump( $result['response'] );
-			echo '</pre>';
-			exit();
+		if ( defined( 'KINSTA_CACHE_DEBUG' ) && KINSTA_CACHE_DEBUG === true ) {
+			$testing = file_put_contents('request-debug.log', json_encode( $purge_request ), FILE_APPEND);
 		}
 		return $result;
 	}
@@ -499,17 +477,13 @@ class Cache_Purge {
 		$year = get_the_date( 'Y', $post );
 		$month = get_the_date( 'm', $post );
 		$day = get_the_date( 'd', $post );
-		$purge['single']['year'] = get_year_link( $year );
-		$purge['single']['month'] = get_month_link( $year, $month );
-		$purge['single']['day'] = get_day_link( $year, $month, $day );
-		$purge['group']['year'] = $purge['single']['year'] . 'page/';
-		$purge['group']['month'] = $purge['single']['month'] . 'page/';
-		$purge['group']['day'] = $purge['single']['day'] . 'page/';
+		$purge['group']['year'] = get_year_link( $year );
+		$purge['group']['month'] = get_month_link( $year, $month );
+		$purge['group']['day'] = get_day_link( $year, $month, $day );
 
 		$post_type_archive = get_post_type_archive_link( $post->post_type );
 		if ( ! ( home_url() === $post_type_archive || $post_type_archive === $this->posts_page_url ) ) {
-			$purge['single']['post_type'] = $post_type_archive;
-			$purge['group']['post_type'] = $post_type_archive . 'page/';
+			$purge['group']['post_type'] = $post_type_archive;
 		}
 
 		return array_filter( $purge );
@@ -520,8 +494,8 @@ class Cache_Purge {
 	 *
 	 * @return void
 	 */
-	public function action_kinsta_clear_cache_all() {
-		check_ajax_referer( 'kinsta-clear-cache-all', 'kinsta_nonce' );
+	public function action_kinsta_clear_all_cache() {
+		check_ajax_referer( 'kinsta-clear-all-cache', 'kinsta_nonce' );
 
 		$this->purge_complete_caches();
 
@@ -533,10 +507,10 @@ class Cache_Purge {
 	 *
 	 * @return void
 	 */
-	public function action_kinsta_clear_cache_full_page() {
-		check_ajax_referer( 'kinsta-clear-cache-full-page', 'kinsta_nonce' );
+	public function action_kinsta_clear_site_cache() {
+		check_ajax_referer( 'kinsta-clear-site-cache', 'kinsta_nonce' );
 
-		$this->purge_complete_full_page_cache();
+		$this->purge_complete_site_cache();
 
 		die();
 	}
@@ -546,8 +520,8 @@ class Cache_Purge {
 	 *
 	 * @return void
 	 */
-	public function action_kinsta_clear_cache_object() {
-		check_ajax_referer( 'kinsta-clear-cache-object', 'kinsta_nonce' );
+	public function action_kinsta_clear_object_cache() {
+		check_ajax_referer( 'kinsta-clear-object-cache', 'kinsta_nonce' );
 
 		$this->purge_complete_object_cache();
 
@@ -565,12 +539,12 @@ class Cache_Purge {
 		}
 		check_admin_referer( 'kinsta-clear-cache-admin-bar', 'kinsta_nonce' );
 
-		if ( 'kinsta-clear-cache-all' === $_GET['clear-cache'] ) {
+		if ( 'kinsta-clear-all-cache' === $_GET['clear-cache'] ) {
 			$this->purge_complete_caches();
-		} elseif ( 'kinsta-clear-cache-object' === $_GET['clear-cache'] ) {
+		} elseif ( 'kinsta-clear-object-cache' === $_GET['clear-cache'] ) {
 			$this->purge_complete_object_cache();
-		} elseif ( 'kinsta-clear-cache-full-page' === $_GET['clear-cache'] ) {
-			$this->purge_complete_full_page_cache();
+		} elseif ( 'kinsta-clear-site-cache' === $_GET['clear-cache'] ) {
+			$this->purge_complete_site_cache();
 		} else {
 			return;
 		}
@@ -589,4 +563,70 @@ class Cache_Purge {
 		exit;
 	}
 
+	/**
+	 * * Function to handle Admin page cache clear requests.
+	 * *
+	 * * @return void
+	 */
+	public function clear_cache_admin_page() {
+		if ( empty( $_GET['page'] ) || empty( $_GET['clear-cache'] ) || ( ! empty( $_GET['page'] ) && 'kinsta-tools' !== $_GET['page'] ) ) {
+			return;
+		}
+		check_admin_referer( 'kinsta-clear-cache-admin-bar', 'kinsta_nonce' );
+
+		if ( 'kinsta-clear-all-cache' === $_GET['clear-cache'] ) {
+			$this->purge_complete_caches();
+		} elseif ( 'kinsta-clear-object-cache' === $_GET['clear-cache'] ) {
+			$this->purge_complete_object_cache();
+		} elseif ( 'kinsta-clear-site-cache' === $_GET['clear-cache'] ) {
+			$this->purge_complete_site_cache();
+		} else {
+			return;
+		}
+
+		if ( empty( wp_get_referer() ) ) {
+			$query_vars = array(
+				'page' => 'kinsta-tools',
+				'kinsta-cache-cleared' => 'true',
+			);
+			$redirect_url = add_query_arg( $query_vars, admin_url( 'admin.php' ) );
+		} else {
+			$redirect_url = add_query_arg( 'kinsta-cache-cleared', 'true', wp_get_referer() );
+		}
+
+		wp_safe_redirect( $redirect_url );
+		exit;
+	}
+	/**
+	 * * Function to handle Admin Bar cache clear requests.
+	 * *
+	 * * @return void
+	 */
+	public function set_autopurge_option() {
+		if ( empty( $_GET['page'] ) || empty( $_GET['cache-autopurge'] ) || ( ! empty( $_GET['page'] ) && 'kinsta-tools' !== $_GET['page'] ) ) {
+			return;
+		}
+		check_admin_referer( 'kinsta-autopurge-toggle', 'kinsta_nonce' );
+
+		if ( 'disable' === $_GET['cache-autopurge'] ) {
+			update_option( 'kinsta-autopurge-status', 'disabled' );
+		} elseif ( 'enable' === $_GET['cache-autopurge'] ) {
+			update_option( 'kinsta-autopurge-status', 'enabled' );
+		} else {
+			return;
+		}
+
+		if ( empty( wp_get_referer() ) ) {
+			$query_vars = array(
+				'page' => 'kinsta-tools',
+				'kinsta-autopurge-updated' => ( $_GET['cache-autopurge'] === 'enable') ? 'enabled' : 'disabled',
+			);
+			$redirect_url = add_query_arg( $query_vars, admin_url( 'admin.php' ) );
+		} else {
+			$redirect_url = add_query_arg( 'kinsta-autopurge-updated', ( $_GET['cache-autopurge'] === 'enable') ? 'enabled' : 'disabled', wp_get_referer() );
+		}
+
+		wp_safe_redirect( $redirect_url );
+		exit;
+	}
 }

@@ -15,27 +15,6 @@ if ( ! defined( 'ABSPATH' ) ) { // If this file is called directly.
 // Load files that will handle 3rd-party plugins compatibility.
 require_once plugin_dir_path( __FILE__ ) . 'third-party/wordfence.php';
 require_once plugin_dir_path( __FILE__ ) . 'third-party/swift-performance.php';
-
-// Load required files.
-require_once plugin_dir_path( __FILE__ ) . 'utilities.php';
-require_once plugin_dir_path( __FILE__ ) . 'class-banned-plugins.php';
-require_once plugin_dir_path( __FILE__ ) . 'class-kinsta-commands.php';
-require_once plugin_dir_path( __FILE__ ) . 'class-wp-kinsta.php';
-require_once plugin_dir_path( __FILE__ ) . 'class-security.php';
-
-// Roll the "Banned Plugins" feature.
-$banned_plugins = new Banned_Plugins();
-
-// Roll the custom WP CLI commands.
-$kinsta_commands = new Kinsta_Commands();
-$kinsta_commands->set_banned_plugins( $banned_plugins );
-$kinsta_commands->add_commands();
-
-// Roll WP Kinsta.
-$wp_kinsta = new WP_Kinsta();
-
-// Roll WordPress security utitlity.
-$security = new Security();
-
-add_action( 'init', array( $banned_plugins, 'run' ) );
-add_action( 'init', array( $security, 'run' ) );
+// Stub class for old WP Rocket versions.
+require_once plugin_dir_path( __FILE__ ) . 'third-party/class-cdn-enabler.php';
+require_once plugin_dir_path( __FILE__ ) . 'third-party/wp-rocket.php';
