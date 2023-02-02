@@ -1,0 +1,165 @@
+/**
+ * BASIC LINK STYLE
+ * Link styles to match the website
+*/
+
+.kinsta-wrap {
+	padding: 24px 16px 16px 16px;
+}
+
+.kinsta-page-wrapper * {
+	box-sizing: border-box;
+}
+
+.kinsta-page-wrapper {
+	padding: 24px 32px 48px;
+	border-radius: 4px;
+	background: #fff;
+	color: #0A0A0A;
+	font-size: 14px;
+	line-height: 1.5;
+}
+
+@media screen and (max-width: 1280px) {
+	.kinsta-page-wrapper {
+		padding: 16px 24px;
+		font-size: 12px;
+	}
+}
+
+.kinsta-content-section-header {
+	margin-bottom: 24px;
+}
+
+.kinsta-content-section-body {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    justify-content: space-between;
+    grid-gap: 24px;
+}
+
+@media screen and (max-width: 700px) {
+	.kinsta-content-section-body {
+		grid-template-columns: 2fr;
+	}
+}
+
+.kinsta-content-section-body.no-grid {
+	display: block;
+}
+
+.kinsta-button {
+	box-shadow: 0 4px 12px 0 rgb(83 51 237 / 32%), 0 0 0 2px #2a0fab;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 12px;
+	height: 40px;
+	padding: 0 32px;
+	outline: none;
+	border: none;
+	white-space: nowrap;
+	cursor: pointer;
+	transition: all .25s;
+	background-image: linear-gradient(99deg, #336aed 0%, #5333ED 50%, #5333ED 100%);
+	background-position: center center;
+	background-size: 200% auto;
+	color: white;
+	justify-self: end;
+	text-decoration: none;
+}
+
+.kinsta-button:hover {
+	background-position: left center;
+    box-shadow: 0 4px 8px 0 rgb(83 51 237 / 32%);
+	color: white;
+}
+
+.kinsta-button-disabled {
+	border: 1px solid #D1D6DF;
+	color: #8f97a3;
+	cursor: not-allowed;
+	box-shadow: none !important;
+	background: transparent !important;
+}
+
+.kinsta-checkbox {
+
+}
+
+.kinsta-content-section-split {
+	width: calc(100% + 2 * 32px);
+    margin: 32px -24px 24px -32px;
+    border: solid 1px #F2F4F9;
+    box-sizing: border-box;
+	height: 0;
+	overflow: visible;
+}
+
+#kinsta-custom-url-form-fields {
+	display: flex;
+	align-items: center;
+}
+
+@media screen and (max-width: 800px) {
+	#kinsta-custom-url-form-fields {
+		flex-wrap: wrap;
+	}
+}
+
+#kinsta-custom-url-form-fields > .prefix, #kinsta-custom-url-form-fields .kinsta-button {
+	margin-left: 12px;
+}
+
+#kinsta-custom-url-form-fields span {
+	font-size: 14px;
+}
+
+#kinsta-custom-url-form-fields .kinsta-button {
+	padding-top: 0;
+	padding-bottom: 0;
+	height: 30px;
+}
+
+.kinsta-table {
+	min-width: 100%;
+	border-collapse: collapse;
+	display: grid;
+	overflow-x: auto;
+	align-items: center;
+	border-radius: 0 0 16px 16px;
+	font-size: 14px;
+	grid-template-columns: repeat(3, minmax(auto, 1fr));
+	margin-top: 20px;
+}
+
+.kinsta-table thead, .kinsta-table tbody, .kinsta-table tr {
+	display: contents;
+}
+
+.kinsta-table th {
+	padding: 16px;
+	height: 100%;
+	color: #5A6372;
+	text-align: left;
+	position: sticky;
+	background-color: #f8fafc;
+}
+
+.kinsta-table th:first-of-type {
+	border-radius: 12px 0 0 12px;
+	padding-left: 24px;
+}
+
+.kinsta-table th:last-of-type {
+	border-radius: 0 12px 12px 0;
+}
+
+.kinsta-table td {
+	padding: 16px;
+}
+
+.kinsta-table td:first-of-type {
+	border-radius: 12px 0 0 12px;
+	padding-left: 24px;
+}

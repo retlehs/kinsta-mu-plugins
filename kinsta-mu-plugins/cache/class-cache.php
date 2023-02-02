@@ -25,26 +25,11 @@ if ( ! defined( 'ABSPATH' ) ) { // If this file is called directly.
 class Cache {
 
 	/**
-	 * Cache_Admin instance.
+	 * The kmp class.
 	 *
-	 * @var Cache_Admin
+	 * @var \Kinsta\KMP
 	 */
-	public $kinsta_cache_admin;
-
-	/**
-	 * Cache_Purge instance.
-	 *
-	 * @var Cache_Purge
-	 */
-	public $kinsta_cache_purge;
-
-	/**
-	 * Backward compatible Cache_Purge instance.
-	 * WP Rocket version 3.0.1 caused fatal error without this.
-	 *
-	 * @var Cache_Purge
-	 */
-	public $KinstaCachePurge; // phpcs:ignore
+	public $kmp;
 
 	/**
 	 * The cache configuration.
@@ -80,45 +65,28 @@ class Cache {
 	/**
 	 * Class constructor.
 	 *
-	 * @param array $config           The cache configuration.
-	 * @param array $default_settings The cache default settings.
+	 * @param \Kinsta\KMP $kmp The KMP object.
 	 */
-	public function __construct( $config = false, $default_settings = false ) {
-		if ( empty( $config ) || empty( $default_settings ) ) {
-			return;
-		}
-
+	public function __construct( \Kinsta\KMP $kmp ) {
 		// Set our class variables.
-		$this->config = $config;
-		$this->default_settings = $default_settings;
+		$this->kmp = $kmp;
+		$this->config = array(
+			'option_name' => 'kinsta-cache-settings',
+			'immediate_path' => 'https://localhost/kinsta-clear-cache/v2/immediate',
+			'throttled_path' => 'https://localhost/kinsta-clear-cache/v2/throttled',
+		);
+		$this->default_settings = array(
+			'version' => '2.0',
+			'options' => array(
+				'additional_paths' => array(
+					'group' => array(),
+					'single' => array(),
+				),
+			),
+			'rules' => array(),
+		);
 		$this->set_settings();
 		$this->set_has_object_cache();
-
-		// Init the cache classes.
-		add_action( 'init', array( $this, 'init_cache' ), 5 );
-
-		// Removing other cache systems.
-		add_filter( 'do_rocket_generate_caching_files', '__return_false', 999 ); // Disable WP rocket caching.
-	}
-
-	/**
-	 * Init the Caching when the WP is initialised, this is to ensure that the classes, global variables, and WordPress core functions are ready.
-	 *
-	 * @since 2.0.16
-	 *
-	 * @return void
-	 */
-	public function init_cache() {
-		$this->kinsta_cache_purge = new Cache_Purge( $this );
-$this->KinstaCachePurge = $this->kinsta_cache_purge; // phpcs:ignore
-		$this->kinsta_cache_admin = new Cache_Admin( $this );
-
-		/**
-		 * Hook that fires after cache classes are initialized.
-		 *
-		 * @param Cache $this Instance of the Cache class.
-		 */
-		do_action( 'kinsta_cache_init', $this );
 	}
 
 	/**
@@ -149,7 +117,7 @@ $this->KinstaCachePurge = $this->kinsta_cache_purge; // phpcs:ignore
 		$settings = get_option( $this->config['option_name'] );
 
 		// If there are no settings yet, save the default ones.
-		if ( empty( $settings ) ) {
+		if ( empty( $settings ) || gettype( $settings ) !== 'object' ) {
 			// Make the settings available to the class.
 			$this->settings = $this->default_settings;
 			// Save initial settings.
@@ -184,5 +152,4 @@ $this->KinstaCachePurge = $this->kinsta_cache_purge; // phpcs:ignore
 		// Make the settings available to the class.
 		$this->settings = $settings;
 	}
-
 }

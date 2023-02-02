@@ -5,7 +5,7 @@
  * @package KinstaMUPlugins/Compat
  */
 
-namespace Kinsta\Compat\WP_CLI;
+namespace Kinsta\WP_CLI;
 
 if ( ! defined( 'ABSPATH' ) ) { // If this file is called directly.
 	die( 'No script kiddies please!' );
@@ -14,20 +14,12 @@ if ( ! defined( 'ABSPATH' ) ) { // If this file is called directly.
 use WP_CLI;
 use WP_CLI_Command;
 
-use Kinsta\Cache;
 use Kinsta\Cache_Purge;
 
 /**
  * Class to register to register a custom Kinsta WP-CLI command .
  */
 class Cache_Purge_Command extends WP_CLI_Command {
-
-	/**
-	 * The Kinsta\Cache instance.
-	 *
-	 * @var Cache
-	 */
-	private $kinsta_cache;
 
 	/**
 	 * The Kinsta\Cache_Purge instance.
@@ -38,20 +30,11 @@ class Cache_Purge_Command extends WP_CLI_Command {
 
 	/**
 	 * The Constructor.
-	 */
-	public function __construct() {
-		add_action( 'kinsta_cache_init', array( $this, 'set_kinsta_cache' ) );
-	}
-
-	/**
-	 * Set the Kinsta\Cache class instance.
 	 *
-	 * @param Cache $kinsta_cache The Cache instance.
-	 * @return void
+	 * @param Cache_Purge $kinsta_cache_purge the kinsta_cache_purge class.
 	 */
-	public function set_kinsta_cache( Cache $kinsta_cache ) {
-		$this->kinsta_cache = $kinsta_cache;
-		$this->kinsta_cache_purge = $kinsta_cache->kinsta_cache_purge;
+	public function __construct( Cache_Purge $kinsta_cache_purge ) {
+		$this->kinsta_cache_purge = $kinsta_cache_purge;
 	}
 
 	/**
@@ -83,7 +66,7 @@ class Cache_Purge_Command extends WP_CLI_Command {
 		if ( isset( $assoc_args['object'] ) ) {
 			$this->purge_object_cache();
 		} else {
-			$this->purge_full_page_cache();
+			$this->purge_site_cache();
 		}
 	}
 
@@ -92,9 +75,9 @@ class Cache_Purge_Command extends WP_CLI_Command {
 	 *
 	 * @return void
 	 **/
-	private function purge_full_page_cache() {
+	private function purge_site_cache() {
 
-		$response = $this->kinsta_cache_purge->purge_complete_full_page_cache();
+		$response = $this->kinsta_cache_purge->purge_complete_site_cache();
 
 		if ( is_wp_error( $response ) ) {
 			WP_CLI::error( $response->get_error_message() );
@@ -125,7 +108,7 @@ class Cache_Purge_Command extends WP_CLI_Command {
 		if ( true === $response ) {
 			WP_CLI::success( __( 'The Object Cache was purged.', 'kinsta-mu-plugins' ) );
 		} else {
-			WP_CLI::error( __( 'Something went wrong! the Object Cache was note purged.', 'kinsta-mu-plugins' ) );
+			WP_CLI::error( __( 'Something went wrong! The Object Cache was not purged.', 'kinsta-mu-plugins' ) );
 		}
 	}
 }
