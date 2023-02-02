@@ -5,7 +5,7 @@
  * @package KinstaMUPlugins/Compat
  */
 
-namespace Kinsta\Compat\WP_CLI;
+namespace Kinsta\WP_CLI;
 
 if ( ! defined( 'ABSPATH' ) ) { // If this file is called directly.
 	die( 'No script kiddies please!' );

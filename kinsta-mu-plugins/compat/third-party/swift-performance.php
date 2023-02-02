@@ -17,7 +17,7 @@ if ( ! defined( 'SWIFT_PERFORMANCE_DISABLE_CACHE' ) ) {
  *
  * @return void
  */
-function swift_performanc_compatibility_admin_notices() {
+function swift_performance_compatibility_admin_notices() {
 
 	// Check if the WORDFENCE_DISABLE_LIVE_TRAFFIC is set to "false".
 	if ( ! SWIFT_PERFORMANCE_DISABLE_CACHE ) {
@@ -31,4 +31,4 @@ function swift_performanc_compatibility_admin_notices() {
 	}
 }
 if ( function_exists( 'add_action' ) ) {
-	add_action( 'admin_notices', __NAMESPACE__ . '\\swift_performanc_compatibility_admin_notices', PHP_INT_MAX ); }
+	add_action( 'admin_notices', __NAMESPACE__ . '\\swift_performance_compatibility_admin_notices', PHP_INT_MAX ); }

@@ -5,7 +5,7 @@
  * @package KinstaMUPlugins/Compat
  */
 
-namespace Kinsta\Compat;
+namespace Kinsta;
 
 if ( ! defined( 'ABSPATH' ) ) { // If this file is called directly.
 	die( 'No script kiddies please!' );
@@ -83,6 +83,31 @@ class Banned_Plugins {
 
 		$this->banned_list = array_merge( $this->warning_list, $this->disabled_list );  // Full list of Banned Plugins.
 		$this->active_plugins = get_option( 'active_plugins', array() );
+		global $wp_version;
+
+		add_action( 'admin_init', array( $this, 'deactivate_disabled_plugins' ), PHP_INT_MAX );
+		add_action( 'activated_plugin', array( $this, 'deactivate_disabled_plugin' ), PHP_INT_MAX );
+
+		add_action( 'admin_print_scripts', array( $this, 'add_plugin_page_scripts' ), PHP_INT_MAX );
+		add_action( 'admin_print_styles', array( $this, 'add_plugin_page_styles' ), PHP_INT_MAX );
+
+		add_filter( 'plugin_install_action_links', array( $this, 'plugin_install_action_links' ), PHP_INT_MAX, 2 );
+		add_filter( 'install_plugin_complete_actions', array( $this, 'install_plugin_complete_actions' ), PHP_INT_MAX, 3 );
+
+		foreach ( $this->disabled_list as $plugin_file ) {
+			add_filter( "plugin_action_links_{$plugin_file}", array( $this, 'disabled_plugin_action_links' ), PHP_INT_MAX );
+		}
+
+		foreach ( $this->warning_list as $plugin_file ) {
+			add_filter( "plugin_action_links_{$plugin_file}", array( $this, 'warning_plugin_action_links' ), PHP_INT_MAX );
+		}
+
+		if ( self::shall_display_admin_notice() && version_compare( $wp_version, '4.3', '>' ) ) {
+			add_action( 'admin_print_scripts', array( $this, 'add_notice_scripts' ), PHP_INT_MAX );
+			add_action( 'admin_print_styles', array( $this, 'add_notice_styles' ), PHP_INT_MAX );
+			add_action( 'admin_notices', array( $this, 'admin_notices' ), PHP_INT_MAX );
+			add_action( 'wp_ajax_kinsta_dismiss_banned_plugins_nag', array( $this, 'dismiss_banned_plugins_nag' ), PHP_INT_MAX );
+		}
 	}
 
 	/**
@@ -110,40 +135,6 @@ class Banned_Plugins {
 	 */
 	public function get_banned_list() {
 		return $this->banned_list;
-	}
-
-	/**
-	 * Run to execute all of the hooks with WordPress.
-	 *
-	 * @return void
-	 */
-	public function run() {
-		global $wp_version;
-
-		add_action( 'admin_init', array( $this, 'deactivate_disabled_plugins' ), PHP_INT_MAX );
-		add_action( 'activated_plugin', array( $this, 'deactivate_disabled_plugin' ), PHP_INT_MAX );
-
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ), PHP_INT_MAX );
-		add_action( 'admin_print_scripts', array( $this, 'add_plugin_page_scripts' ), PHP_INT_MAX );
-		add_action( 'admin_print_styles', array( $this, 'add_plugin_page_styles' ), PHP_INT_MAX );
-
-		add_filter( 'plugin_install_action_links', array( $this, 'plugin_install_action_links' ), PHP_INT_MAX, 2 );
-		add_filter( 'install_plugin_complete_actions', array( $this, 'install_plugin_complete_actions' ), PHP_INT_MAX, 3 );
-
-		foreach ( $this->disabled_list as $plugin_file ) {
-			add_filter( "plugin_action_links_{$plugin_file}", array( $this, 'disabled_plugin_action_links' ), PHP_INT_MAX );
-		}
-
-		foreach ( $this->warning_list as $plugin_file ) {
-			add_filter( "plugin_action_links_{$plugin_file}", array( $this, 'warning_plugin_action_links' ), PHP_INT_MAX );
-		}
-
-		if ( self::shall_display_admin_notice() && version_compare( $wp_version, '4.3', '>' ) ) {
-			add_action( 'admin_print_scripts', array( $this, 'add_notice_scripts' ), PHP_INT_MAX );
-			add_action( 'admin_print_styles', array( $this, 'add_notice_styles' ), PHP_INT_MAX );
-			add_action( 'admin_notices', array( $this, 'admin_notices' ), PHP_INT_MAX );
-			add_action( 'wp_ajax_kinsta_dismiss_banned_plugins_nag', array( $this, 'dismiss_banned_plugins_nag' ), PHP_INT_MAX );
-		}
 	}
 
 	/**
@@ -294,23 +285,6 @@ class Banned_Plugins {
 		}
 
 		return $install_actions;
-	}
-
-	/**
-	 * Enqueue scripts.
-	 *
-	 * @return void
-	 */
-	public function enqueue_scripts() {
-
-		if ( self::is_admin_plugin_page() ) {
-
-			$file_js = 'assets/js/banned-plugins.js';
-			$file_js_path = plugin_dir_path( __FILE__ ) . $file_js;
-			$file_js_url = plugin_dir_url( __FILE__ ) . $file_js;
-
-			wp_enqueue_script( 'kinsta-banned-plugins', $file_js_url, array( 'plugin-install' ), filemtime( $file_js_path ), true );
-		}
 	}
 
 	/**
