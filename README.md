@@ -67,3 +67,7 @@ define('KINSTA_CDN_USERDIRS', 'app');
 $mu_plugins_url = Config::get('WP_CONTENT_URL') . '/mu-plugins';
 define('KINSTAMU_CUSTOM_MUPLUGIN_URL', "{$mu_plugins_url}/kinsta-mu-plugins");
 ```
+
+## Changelog
+
+https://kinsta.com/changelog/mu-plugin-changelog/
