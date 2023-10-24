@@ -51,6 +51,6 @@ class CDN_Enabler {
  *
  * @since 3.0.0
  */
-class CDNEnabler extends CDN_Enabler {}
+class CDNEnabler extends CDN_Enabler {} // phpcs:ignore
 
 $cdn_enabler = new CDN_Enabler();

@@ -43,13 +43,19 @@ class Cache_Purge_Command extends WP_CLI_Command {
 	 * ## EXAMPLES
 	 *
 	 *     # Clear all (Kinsta) page cache on the site.
-	 *     $ wp kinsta cache purge
-	 *     Success: Cache has been cleared.
+	 *     $ wp kinsta cache purge --site
+	 *     Success: Site Cache has been cleared.
 	 *
 	 * ## OPTIONS
 	 *
 	 * [--object]
-	 * : Whether to clear the object cache instaed.
+	 * : Clear the object cache.
+	 * [--site]
+	 * : Clear the site and Edge cache (if enabled).
+	 * [--cdn]
+	 * : Clear the CDN cache (if enabled).
+	 * [--all]
+	 * : Clear all enabled caches (site, edge, CDN, object).
 	 *
 	 * @uses absint Convert a value to non-negative integer. Introduced since WordPress 2.5.0.
 	 * @uses is_wp_error Check whether variable is a WordPress Error. Introduced since WordPress 2.1.0
@@ -65,7 +71,16 @@ class Cache_Purge_Command extends WP_CLI_Command {
 
 		if ( isset( $assoc_args['object'] ) ) {
 			$this->purge_object_cache();
+		} else if ( isset( $assoc_args['cdn'] ) ) {
+			$this->purge_cdn_cache();
+		} else if ( isset( $assoc_args['site'] ) ) {
+			$this->purge_site_cache();
+		} else if ( isset( $assoc_args['all'] ) ) {
+			$this->purge_cdn_cache();
+			$this->purge_site_cache();
+			$this->purge_object_cache();
 		} else {
+			// Backwards compatibility.
 			$this->purge_site_cache();
 		}
 	}
@@ -89,12 +104,39 @@ class Cache_Purge_Command extends WP_CLI_Command {
 		$message = wp_remote_retrieve_response_message( $response );
 
 		if ( 200 === absint( $code ) && 'Cache has been cleared.' === trim( $body ) ) {
-			WP_CLI::success( trim( $body ) );
+			WP_CLI::success( 'Site Cache has been cleared.' );
 			return;
 		}
 
 		WP_CLI::error( "{$code} {$message}" );
 	}
+
+	/**
+	 * Purge the CDN cache.
+	 *
+	 * @return void
+	 **/
+	private function purge_cdn_cache() {
+
+		$response = $this->kinsta_cache_purge->purge_complete_cdn_cache();
+
+		if ( is_wp_error( $response ) ) {
+			WP_CLI::error( $response->get_error_message() );
+			return;
+		}
+
+		$body = wp_remote_retrieve_body( $response );
+		$code = wp_remote_retrieve_response_code( $response );
+		$message = wp_remote_retrieve_response_message( $response );
+
+		if ( 200 === absint( $code ) && 'Cache has been cleared.' === trim( $body ) ) {
+			WP_CLI::success( 'CDN Cache has been cleared.' );
+			return;
+		}
+
+		WP_CLI::error( "{$code} {$message}" );
+	}
+
 
 	/**
 	 * Purge the object cache.
@@ -106,7 +148,7 @@ class Cache_Purge_Command extends WP_CLI_Command {
 		$response = $this->kinsta_cache_purge->purge_complete_object_cache();
 
 		if ( true === $response ) {
-			WP_CLI::success( __( 'The Object Cache was purged.', 'kinsta-mu-plugins' ) );
+			WP_CLI::success( __( 'Object Cache has been cleared.', 'kinsta-mu-plugins' ) );
 		} else {
 			WP_CLI::error( __( 'Something went wrong! The Object Cache was not purged.', 'kinsta-mu-plugins' ) );
 		}

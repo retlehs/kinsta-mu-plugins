@@ -48,6 +48,13 @@ class Plugin_List_Command extends WP_CLI_Command {
 	private $banned_plugins = array();
 
 	/**
+	 * List of plugins with updates.
+	 *
+	 * @var array
+	 */
+	private $update_plugins = array();
+
+	/**
 	 * The Constructor.
 	 *
 	 * @param array $args Arguments to pass additional information needed in the command line.

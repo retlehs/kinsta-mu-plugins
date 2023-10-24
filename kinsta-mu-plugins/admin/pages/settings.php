@@ -44,9 +44,11 @@ if ( ! defined( 'ABSPATH' ) ) { // If this file is called directly.
 			</div>
 		</div>
 		
-		<?php if ( KINSTAMU_WHITELABEL === false ) {
-				include plugin_dir_path( __FILE__ ) . 'partials/sidebar-support.php';
-		} ?>
+		<?php
+		if ( KINSTAMU_WHITELABEL === false ) {
+			include plugin_dir_path( __FILE__ ) . 'partials/sidebar-support.php';
+		}
+		?>
 	</div>
 </div>
 <script>

@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) { // If this file is called directly.
 			</div>
 			<div class="kinsta-content-section-body">
 				<p><?php esc_html_e( 'CDN is enabled. All static content (such as images, CSS, and JavaScript files) is loaded through our CDN. We serve all the folders of your website. The limit is 5 GB per file.', 'kinsta-mu-plugins' ); ?></p>
-				<button data-nonce='<?php echo esc_attr( wp_create_nonce( 'kinsta-clear-cdn' ) ); ?>' data-action='kinsta_clear_cdn' class='kinsta-button' data-progressText='<?php echo esc_attr( __( 'Clearing CDN...', 'kinsta-mu-plugins' ) ); ?>' data-completedText='<?php echo esc_attr( __( 'CDN Cleared', 'kinsta-mu-plugins' ) ); ?>'><?php esc_html_e( 'Clear CDN', 'kinsta-mu-plugins' ); ?></button>
+				<button class="kinsta-clear-cdn-cache" data-nonce='<?php echo esc_attr( wp_create_nonce( 'kinsta-clear-cdn-cache' ) ); ?>' data-action='kinsta_clear_cdn_cache' class='kinsta-button' data-progressText='<?php echo esc_attr( __( 'Clearing CDN...', 'kinsta-mu-plugins' ) ); ?>' data-completedText='<?php echo esc_attr( __( 'CDN Cleared', 'kinsta-mu-plugins' ) ); ?>'><?php esc_html_e( 'Clear CDN', 'kinsta-mu-plugins' ); ?></button>
 			</div>
 		</div>
 		<hr class="kinsta-content-section-split">
@@ -35,13 +35,15 @@ if ( ! defined( 'ABSPATH' ) ) { // If this file is called directly.
 			</div>
 		</div>
 		
-		<?php if ( KINSTAMU_WHITELABEL === false ) {
-				include plugin_dir_path( __FILE__ ) . 'partials/sidebar-support.php';
-			} ?>
+		<?php
+		if ( KINSTAMU_WHITELABEL === false ) {
+			include plugin_dir_path( __FILE__ ) . 'partials/sidebar-support.php';
+		}
+		?>
 	</div>
 </div>
 <script>
-jQuery(document).on('click', '.kinsta-clear-cdn', function() {
+jQuery(document).on('click', '.kinsta-clear-cdn-cache', function() {
 	var element = jQuery(this);
 	jQuery.ajax({
 		url: '<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>',

@@ -62,6 +62,13 @@ class KMP {
 	/**
 	 * Banned Plugins instance
 	 *
+	 * @var WP_CLI
+	 */
+	public $wp_cli;
+
+	/**
+	 * Banned Plugins instance
+	 *
 	 * @var string
 	 */
 	public $cdn_cacheid;
@@ -83,8 +90,8 @@ class KMP {
 	 * @return void
 	 */
 	public function init_kmp() {
-		// This doesn't work right now because we don't have the cacheid available yet
-		$this->cdn_cacheid = "";
+		// This doesn't work right now because we don't have the cacheid available yet.
+		$this->cdn_cacheid = '';
 		$this->kinsta_cache = new Cache( $this );
 		$this->kinsta_cache_purge = new Cache_Purge( $this );
 		$this->KinstaCachePurge = $this->kinsta_cache_purge; // phpcs:ignore
@@ -99,7 +106,7 @@ class KMP {
 	 * @return  string the required capability
 	 */
 	public function is_cdn_enabled() {
-		return $this->cdn_cacheid !== "";
+		return '' !== $this->cdn_cacheid;
 	}
 }
 

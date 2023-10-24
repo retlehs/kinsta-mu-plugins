@@ -72,6 +72,21 @@ class KMP_Admin {
 		// Ajax actions for cache exclusion path management.
 		add_action( 'wp_ajax_kinsta_save_custom_path', array( $this, 'action_kinsta_save_custom_path' ) );
 		add_action( 'wp_ajax_kinsta_remove_custom_path', array( $this, 'action_kinsta_remove_custom_path' ) );
+
+		/**
+		 * Filter the page cache supported cache headers
+		 * $cache_headers contains List of client caching headers and their (optional) verification callbacks.
+		 */
+		add_filter(
+			'site_status_page_cache_supported_cache_headers',
+			function( $cache_headers ) {
+				// Add new header to the existing list.
+				$cache_headers['x-kinsta-cache'] = static function ( $header_value ) {
+					return false !== strpos( strtolower( $header_value ), 'hit' );
+				};
+				return $cache_headers;
+			}
+		);
 	}
 
 	/**
@@ -85,7 +100,7 @@ class KMP_Admin {
 			return;
 		}
 
-		wp_enqueue_style( 'kinsta-shared', $this->shared_resource_url( 'admin/assets/css/common.css' ), array(), '3.0.0' );
+		wp_enqueue_style( 'kinsta-shared', $this->shared_resource_url( 'admin/assets/css/common.css' ), array(), '3.0.1' );
 	}
 
 	/**
@@ -159,7 +174,7 @@ class KMP_Admin {
 				array( $this, 'admin_cdn_page' ),
 				'3.19992919'
 			);
-	
+
 			add_submenu_page(
 				'kinsta-tools',
 				'Settings',
@@ -207,7 +222,7 @@ class KMP_Admin {
 			array(
 				'id' => 'kinsta-cache-all',
 				'title' => __( 'Clear All Caches', 'kinsta-mu-plugins' ),
-				'href' => wp_nonce_url( admin_url( 'admin.php?page=kinsta-tools&clear-cache=kinsta-clear-cache-all' ), 'kinsta-clear-cache-admin-bar', 'kinsta_nonce' ),
+				'href' => wp_nonce_url( admin_url( 'admin.php?page=kinsta-tools&clear-cache=kinsta-clear-all-cache' ), 'kinsta-clear-cache-admin-bar', 'kinsta_nonce' ),
 				'parent' => 'kinsta-cache',
 			)
 		);
@@ -221,21 +236,19 @@ class KMP_Admin {
 			)
 		);
 
-		if ( $this->kmp->is_cdn_enabled() ) {
-			$wp_admin_bar->add_node(
-				array(
-					'id' => 'kinsta-cache-cdn',
-					'title' => __( 'Clear CDN Cache', 'kinsta-mu-plugins' ),
-					'href' => wp_nonce_url( admin_url( 'admin.php?page=kinsta-tools&clear-cache=kinsta-clear-cdn' ), 'kinsta-clear-cache-admin-bar', 'kinsta_nonce' ),
-					'parent' => 'kinsta-cache',
-				)
-			);
-		}
+		$wp_admin_bar->add_node(
+			array(
+				'id' => 'kinsta-cache-cdn',
+				'title' => __( 'Clear CDN Cache', 'kinsta-mu-plugins' ),
+				'href' => wp_nonce_url( admin_url( 'admin.php?page=kinsta-tools&clear-cache=kinsta-clear-cdn-cache' ), 'kinsta-clear-cache-admin-bar', 'kinsta_nonce' ),
+				'parent' => 'kinsta-cache',
+			)
+		);
 
 		$wp_admin_bar->add_node(
 			array(
 				'id' => 'kinsta-cache-object',
-				'title' =>  __( 'Clear Object Cache', 'kinsta-mu-plugins' ),
+				'title' => __( 'Clear Object Cache', 'kinsta-mu-plugins' ),
 				'href' => wp_nonce_url( admin_url( 'admin.php?page=kinsta-tools&clear-cache=kinsta-clear-object-cache' ), 'kinsta-clear-cache-admin-bar', 'kinsta_nonce' ),
 				'parent' => 'kinsta-cache',
 			)
@@ -298,22 +311,24 @@ class KMP_Admin {
 	 * @return void
 	 */
 	public function cleared_cache_notice() {
-		if ( ! empty( $_GET['kinsta-cache-cleared'] ) && 'true' === $_GET['kinsta-cache-cleared'] ) : ?>
-			<div class="notice notice-success is-dismissible">
-				<p><?php esc_html_e( 'Cache cleared successfully', 'kinsta-mu-plugins' ); ?></p>
-			</div>
-		<?php endif;
-		if ( ! empty( $_GET['kinsta-autopurge-updated'] ) ) {
-			if (  'disabled' === $_GET['kinsta-autopurge-updated'] ) { ?>
-				<div class="notice notice-success is-dismissible">
-					<p><?php esc_html_e( 'Autopurge disabled successfully', 'kinsta-mu-plugins' ); ?></p>
-				</div>
-			<?php } else { ?>
-				<div class="notice notice-success is-dismissible">
-					<p><?php esc_html_e( 'Autopurge enabled successfully', 'kinsta-mu-plugins' ); ?></p>
-				</div>
-			<?php }
+		$output = '';
+		if ( ! empty( $_GET['kinsta-cache-cleared'] ) && 'true' === $_GET['kinsta-cache-cleared'] ) {
+			$output .= '<div class="notice notice-success is-dismissible">';
+			$output .= '<p>' . esc_html__( 'Cache cleared successfully', 'kinsta-mu-plugins' ) . '</p>';
+			$output .= '</div>';
 		}
+		if ( ! empty( $_GET['kinsta-autopurge-updated'] ) ) {
+			if ( 'disabled' === $_GET['kinsta-autopurge-updated'] ) {
+				$output .= '<div class="notice notice-success is-dismissible">';
+				$output .= '<p>' . esc_html__( 'Autopurge disabled successfully', 'kinsta-mu-plugins' ) . '</p>';
+				$output .= '</div>';
+			} else {
+				$output .= '<div class="notice notice-success is-dismissible">';
+				$output .= '<p>' . esc_html__( 'Autopurge enabled successfully', 'kinsta-mu-plugins' ) . '</p>';
+				$output .= '</div>';
+			}
+		}
+		echo $output;
 	}
 
 	/**
