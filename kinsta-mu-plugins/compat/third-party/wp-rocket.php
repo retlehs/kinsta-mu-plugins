@@ -28,7 +28,7 @@ function wprocket_upgrade_notice() {
 	?>
 	<div id="kinsta-banned-plugins-nag" class="notice notice-kinsta notice-error is-dismissible">
 		<p>
-		<?php 
+		<?php
 			$message_format = __( 'Your WP Rocket version is out-of-date and not fully compatible with Kinsta. %s', 'kinsta-mu-plugins' );
 
 			echo sprintf(
@@ -41,7 +41,7 @@ function wprocket_upgrade_notice() {
 						),
 					)
 				),
-				'<a href="' . esc_url( admin_url( 'plugins.php') ) . '">' . esc_html__( 'Please update WP Rocket on the Plugins page', 'kinsta-mu-plugins' ) . '</a>'
+				'<a href="' . esc_url( admin_url( 'plugins.php' ) ) . '">' . esc_html__( 'Please update WP Rocket on the Plugins page', 'kinsta-mu-plugins' ) . '</a>'
 			);
 		?>
 		</p>

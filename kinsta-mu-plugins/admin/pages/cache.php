@@ -48,6 +48,16 @@ if ( ! defined( 'ABSPATH' ) ) { // If this file is called directly.
 		<hr class="kinsta-content-section-split">
 		<div class='kinsta-content-section'>
 			<div class="kinsta-content-section-header">
+				<h3>CDN Caching</h3>
+			</div>
+			<div class="kinsta-content-section-body">
+				<p><?php esc_html_e( 'All static content (such as images, CSS, and JavaScript files) is loaded through our CDN, if it is enabled. We serve all the folders of your website. The limit is 5 GB per file.', 'kinsta-mu-plugins' ); ?></p>
+				<a class="kinsta-button" href="<?php echo wp_nonce_url( admin_url( 'admin.php?page=kinsta-tools&clear-cache=kinsta-clear-cdn-cache' ), 'kinsta-clear-cache-admin-bar', 'kinsta_nonce' ); ?>"><?php esc_html_e( 'Clear CDN Cache', 'kinsta-mu-plugins' ); ?></a>
+			</div>
+		</div>
+		<hr class="kinsta-content-section-split">
+		<div class='kinsta-content-section'>
+			<div class="kinsta-content-section-header">
 				<h3><?php esc_html_e( 'Custom URLs to purge', 'kinsta-mu-plugins' ); ?></h3>
 			</div>
 			<div class="kinsta-content-section-body no-grid">
@@ -186,9 +196,11 @@ if ( ! defined( 'ABSPATH' ) ) { // If this file is called directly.
 			</div>
 		</div>
 		
-		<?php if ( KINSTAMU_WHITELABEL === false ) {
-				include plugin_dir_path( __FILE__ ) . 'partials/sidebar-support.php';
-		} ?>
+		<?php
+		if ( KINSTAMU_WHITELABEL === false ) {
+			include plugin_dir_path( __FILE__ ) . 'partials/sidebar-support.php';
+		}
+		?>
 	</div>
 </div>
 <script>

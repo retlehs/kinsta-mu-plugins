@@ -44,6 +44,13 @@ class Cache_Purge {
 	public $kmp;
 
 	/**
+	 * Cache Object.
+	 *
+	 * @var object
+	 */
+	public $kinsta_cache;
+
+	/**
 	 * Number of pages at home or archive page to purge.
 	 *
 	 * @var int
@@ -231,7 +238,7 @@ class Cache_Purge {
 	/**
 	 * Figures out if a comment is edited/updated and initiates a cache purge with the post.
 	 *
-	 * @param  int        $comment_id The comment's ID.
+	 * @param int   $comment_id The comment's ID.
 	 * @param array $data The comment data.
 	 *
 	 * @return void
@@ -257,13 +264,9 @@ class Cache_Purge {
 	/**
 	 * Send the cache purge request.
 	 *
-	 * @return void
+	 * @return array
 	 **/
 	public function purge_complete_site_cache() {
-		if ( $this->purge_all_happened ) {
-			return;
-		}
-
 		$response = wp_remote_get(
 			'https://localhost/kinsta-clear-cache-all',
 			array(
@@ -272,21 +275,41 @@ class Cache_Purge {
 			)
 		);
 
-		$this->purge_all_happened = true;
+		return $response;
+	}
+
+	/**
+	 * Send the CDN cache purge request.
+	 *
+	 * @return array
+	 **/
+	public function purge_complete_cdn_cache() {
+		$response = wp_remote_get(
+			'https://localhost/kinsta-clear-cache-cdn',
+			array(
+				'sslverify' => false,
+				'timeout' => 5,
+			)
+		);
 
 		return $response;
 	}
 
 	/**
-	 * Purge object cache and page cache
+	 * Purge object, cdn and site cache
 	 *
 	 * @return void
 	 */
 	public function purge_complete_caches() {
+		if ( $this->purge_all_happened ) {
+			return;
+		}
 		$this->purge_complete_object_cache();
 		$this->purge_complete_site_cache();
+		$this->purge_complete_cdn_cache();
+		$this->purge_all_happened = true;
 
-		// Hook that fires after page and object cache is cleared.
+		// Hook that fires after all caches are cleared.
 		do_action( 'kinsta_purge_complete_caches_happened' );
 	}
 
@@ -298,7 +321,7 @@ class Cache_Purge {
 	 * @return array the result of the wp_remote_post action
 	 **/
 	public function initiate_purge( $post_id ) {
-		if ( ( defined( 'KINSTAMU_DISABLE_AUTOPURGE' ) && KINSTAMU_DISABLE_AUTOPURGE === true ) || get_option( 'kinsta-autopurge-status') === 'disabled' ) {
+		if ( ( defined( 'KINSTAMU_DISABLE_AUTOPURGE' ) && KINSTAMU_DISABLE_AUTOPURGE === true ) || get_option( 'kinsta-autopurge-status' ) === 'disabled' ) {
 			return false;
 		}
 
@@ -383,7 +406,7 @@ class Cache_Purge {
 		do_action( 'kinsta_initiate_purge_happened' );
 
 		if ( defined( 'KINSTA_CACHE_DEBUG' ) && KINSTA_CACHE_DEBUG === true ) {
-			$testing = file_put_contents('request-debug.log', json_encode( $purge_request ), FILE_APPEND);
+			$testing = file_put_contents( 'request-debug.log', json_encode( $purge_request ), FILE_APPEND );
 		}
 		return $result;
 	}
@@ -529,6 +552,19 @@ class Cache_Purge {
 	}
 
 	/**
+	 * AJAX action to clear Object Cache.
+	 *
+	 * @return void
+	 */
+	public function action_kinsta_clear_cdn_cache() {
+		check_ajax_referer( 'kinsta-clear-cdn-cache', 'kinsta_nonce' );
+
+		$this->purge_complete_cdn_cache();
+
+		die();
+	}
+
+	/**
 	 * * Function to handle Admin Bar cache clear requests.
 	 * *
 	 * * @return void
@@ -545,6 +581,8 @@ class Cache_Purge {
 			$this->purge_complete_object_cache();
 		} elseif ( 'kinsta-clear-site-cache' === $_GET['clear-cache'] ) {
 			$this->purge_complete_site_cache();
+		} elseif ( 'kinsta-clear-cdn-cache' === $_GET['clear-cache'] ) {
+			$this->purge_complete_cdn_cache();
 		} else {
 			return;
 		}
@@ -580,6 +618,8 @@ class Cache_Purge {
 			$this->purge_complete_object_cache();
 		} elseif ( 'kinsta-clear-site-cache' === $_GET['clear-cache'] ) {
 			$this->purge_complete_site_cache();
+		} elseif ( 'kinsta-clear-cdn-cache' === $_GET['clear-cache'] ) {
+			$this->purge_complete_cdn_cache();
 		} else {
 			return;
 		}
@@ -619,11 +659,11 @@ class Cache_Purge {
 		if ( empty( wp_get_referer() ) ) {
 			$query_vars = array(
 				'page' => 'kinsta-tools',
-				'kinsta-autopurge-updated' => ( $_GET['cache-autopurge'] === 'enable') ? 'enabled' : 'disabled',
+				'kinsta-autopurge-updated' => ( 'enable' === $_GET['cache-autopurge'] ) ? 'enabled' : 'disabled',
 			);
 			$redirect_url = add_query_arg( $query_vars, admin_url( 'admin.php' ) );
 		} else {
-			$redirect_url = add_query_arg( 'kinsta-autopurge-updated', ( $_GET['cache-autopurge'] === 'enable') ? 'enabled' : 'disabled', wp_get_referer() );
+			$redirect_url = add_query_arg( 'kinsta-autopurge-updated', ( 'enable' === $_GET['cache-autopurge'] ) ? 'enabled' : 'disabled', wp_get_referer() );
 		}
 
 		wp_safe_redirect( $redirect_url );

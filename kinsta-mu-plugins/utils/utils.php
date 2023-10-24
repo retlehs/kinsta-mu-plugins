@@ -58,6 +58,9 @@ function is_whitelabel_enabled() {
  * @return  string the required capability
  */
 function set_view_role_or_capability() {
+	if ( defined( 'KINSTAMU_CAPABILITY' ) && is_string( KINSTAMU_CAPABILITY ) ) {
+		return esc_attr( KINSTAMU_CAPABILITY );
+	}
 	if ( defined( 'KINSTAMU_ROLE' ) && is_string( KINSTAMU_ROLE ) ) {
 		return esc_attr( KINSTAMU_ROLE );
 	}
