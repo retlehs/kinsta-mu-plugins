@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) { // If this file is called directly.
 			</div>
 			<div class="kinsta-content-section-body">
 				<p><?php esc_html_e( 'Your site uses our full page and object caching technology to load lightning fast. We purge single pages and key pages such as the home page immediately and impose a minimal throttle time on archive pages. This ensures high availability at all times.', 'kinsta-mu-plugins' ); ?></p>
-				<a class="kinsta-button" href="<?php echo wp_nonce_url( admin_url( 'admin.php?page=kinsta-tools&clear-cache=kinsta-clear-all-cache' ), 'kinsta-clear-cache-admin-bar', 'kinsta_nonce' ); ?>"><?php esc_html_e( 'Clear All Caches', 'kinsta-mu-plugins' ); ?></a>
+				<a class="button button-primary kinsta-button" href="<?php echo wp_nonce_url( admin_url( 'admin.php?page=kinsta-tools&clear-cache=kinsta-clear-all-cache' ), 'kinsta-clear-cache-admin-bar', 'kinsta_nonce' ); ?>"><?php esc_html_e( 'Clear All Caches', 'kinsta-mu-plugins' ); ?></a>
 			</div>
 		</div>
 		<hr class="kinsta-content-section-split">
@@ -32,7 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) { // If this file is called directly.
 			</div>
 			<div class="kinsta-content-section-body">
 				<p><?php esc_html_e( 'Cache makes your site load faster by storing site data. Clear it to make sure your site shows the most recent version.', 'kinsta-mu-plugins' ); ?></p>
-				<a class="kinsta-button" href="<?php echo wp_nonce_url( admin_url( 'admin.php?page=kinsta-tools&clear-cache=kinsta-clear-site-cache' ), 'kinsta-clear-cache-admin-bar', 'kinsta_nonce' ); ?>"><?php esc_html_e( 'Clear Site Cache', 'kinsta-mu-plugins' ); ?></a>
+				<a class="button button-primary kinsta-button" href="<?php echo wp_nonce_url( admin_url( 'admin.php?page=kinsta-tools&clear-cache=kinsta-clear-site-cache' ), 'kinsta-clear-cache-admin-bar', 'kinsta_nonce' ); ?>"><?php esc_html_e( 'Clear Site Cache', 'kinsta-mu-plugins' ); ?></a>
 			</div>
 		</div>
 		<hr class="kinsta-content-section-split">
@@ -42,7 +42,7 @@ if ( ! defined( 'ABSPATH' ) ) { // If this file is called directly.
 			</div>
 			<div class="kinsta-content-section-body">
 				<p><?php esc_html_e( 'The WordPress Object Cache is used to save on trips to the database. The Object Cache stores all of the cache data to memory and makes the cache contents available by using a key, which is used to name and later retrieve the cache contents.', 'kinsta-mu-plugins' ); ?></p>
-				<a class="kinsta-button" href="<?php echo wp_nonce_url( admin_url( 'admin.php?page=kinsta-tools&clear-cache=kinsta-clear-object-cache' ), 'kinsta-clear-cache-admin-bar', 'kinsta_nonce' ); ?>"><?php esc_html_e( 'Clear Object Cache', 'kinsta-mu-plugins' ); ?></a>
+				<a class="button button-primary kinsta-button" href="<?php echo wp_nonce_url( admin_url( 'admin.php?page=kinsta-tools&clear-cache=kinsta-clear-object-cache' ), 'kinsta-clear-cache-admin-bar', 'kinsta_nonce' ); ?>"><?php esc_html_e( 'Clear Object Cache', 'kinsta-mu-plugins' ); ?></a>
 			</div>
 		</div>
 		<hr class="kinsta-content-section-split">
@@ -52,7 +52,7 @@ if ( ! defined( 'ABSPATH' ) ) { // If this file is called directly.
 			</div>
 			<div class="kinsta-content-section-body">
 				<p><?php esc_html_e( 'All static content (such as images, CSS, and JavaScript files) is loaded through our CDN, if it is enabled. We serve all the folders of your website. The limit is 5 GB per file.', 'kinsta-mu-plugins' ); ?></p>
-				<a class="kinsta-button" href="<?php echo wp_nonce_url( admin_url( 'admin.php?page=kinsta-tools&clear-cache=kinsta-clear-cdn-cache' ), 'kinsta-clear-cache-admin-bar', 'kinsta_nonce' ); ?>"><?php esc_html_e( 'Clear CDN Cache', 'kinsta-mu-plugins' ); ?></a>
+				<a class="button button-primary kinsta-button" href="<?php echo wp_nonce_url( admin_url( 'admin.php?page=kinsta-tools&clear-cache=kinsta-clear-cdn-cache' ), 'kinsta-clear-cache-admin-bar', 'kinsta_nonce' ); ?>"><?php esc_html_e( 'Clear CDN Cache', 'kinsta-mu-plugins' ); ?></a>
 			</div>
 		</div>
 		<hr class="kinsta-content-section-split">
@@ -107,7 +107,7 @@ if ( ! defined( 'ABSPATH' ) ) { // If this file is called directly.
 							$prefix_extra_class = $prefix_islong;
 						?>
 						<span onClick="jQuery('#addURLField').focus()" class="prefix<?php echo esc_attr( $prefix_extra_class ); ?>" title="<?php echo esc_attr( $prefix_title ); ?>"><?php echo esc_attr( $prefix_display ); ?></span><input id="addURLField" type="text" placeholder="Enter a Path" />
-						<input id="addURLSubmit" type="submit" class="kinsta-button" value="Add URL">
+						<input id="addURLSubmit" type="submit" class="button button-primary kinsta-button" value="Add URL">
 					</div>
 					<?php
 						$additional_paths = get_option( 'kinsta-cache-additional-paths' );
@@ -120,7 +120,7 @@ if ( ! defined( 'ABSPATH' ) ) { // If this file is called directly.
 							echo '<tr>';
 							echo '<td>' . esc_html( $additional_path['type'] ) . '</td>';
 							echo '<td>/' . esc_html( $additional_path['path'] ) . '</td>';
-							echo '<td><a class="removePath" href="#">remove</a></td>';
+							echo '<td><a class="removePath" href="#">Remove</a></td>';
 							echo '</tr>';
 						}
 					}
@@ -151,7 +151,7 @@ if ( ! defined( 'ABSPATH' ) ) { // If this file is called directly.
 									var row = jQuery('<tr></tr>');
 									row.append('<td>'+type+'</td>')
 									row.append('<td>/'+path.replace(/</g,"&lt;").replace(/>/g,"&gt;")+'</td>')
-									row.append('<td><a class="removePath" href="#">remove</a></td>')
+									row.append('<td><a class="removePath" href="#">Remove</a></td>')
 									jQuery('#additionalURLTable').append(row)
 								}
 							})
@@ -189,9 +189,9 @@ if ( ! defined( 'ABSPATH' ) ) { // If this file is called directly.
 			<div class="kinsta-content-section-body">
 				<p><?php esc_html_e( 'We purge the full page cache on every page and post update. If you are importing posts, you can disable the autopurge temporarily to avoid site slowdowns.', 'kinsta-mu-plugins' ); ?></p>
 				<?php if ( get_option( 'kinsta-autopurge-status' ) === 'disabled' ) : ?>
-					<a class="kinsta-button" href="<?php echo wp_nonce_url( admin_url( 'admin.php?page=kinsta-tools&cache-autopurge=enable' ), 'kinsta-autopurge-toggle', 'kinsta_nonce' ); ?>"><?php esc_html_e( 'Enable Autopurge', 'kinsta-mu-plugins' ); ?></a>
+					<a class="button button-primary kinsta-button" href="<?php echo wp_nonce_url( admin_url( 'admin.php?page=kinsta-tools&cache-autopurge=enable' ), 'kinsta-autopurge-toggle', 'kinsta_nonce' ); ?>"><?php esc_html_e( 'Enable Autopurge', 'kinsta-mu-plugins' ); ?></a>
 				<?php else : ?>
-					<a class="kinsta-button" href="<?php echo wp_nonce_url( admin_url( 'admin.php?page=kinsta-tools&cache-autopurge=disable' ), 'kinsta-autopurge-toggle', 'kinsta_nonce' ); ?>"><?php esc_html_e( 'Disable Autopurge', 'kinsta-mu-plugins' ); ?></a>
+					<a class="button button-secondary kinsta-button" href="<?php echo wp_nonce_url( admin_url( 'admin.php?page=kinsta-tools&cache-autopurge=disable' ), 'kinsta-autopurge-toggle', 'kinsta_nonce' ); ?>"><?php esc_html_e( 'Disable Autopurge', 'kinsta-mu-plugins' ); ?></a>
 				<?php endif; ?>
 			</div>
 		</div>

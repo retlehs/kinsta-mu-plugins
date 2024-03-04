@@ -100,7 +100,7 @@ class KMP_Admin {
 			return;
 		}
 
-		wp_enqueue_style( 'kinsta-shared', $this->shared_resource_url( 'admin/assets/css/common.css' ), array(), '3.0.1' );
+		wp_enqueue_style( 'kinsta-shared', $this->shared_resource_url( 'admin/assets/css/common.css' ), array(), KINSTAMU_VERSION );
 	}
 
 	/**
@@ -151,7 +151,7 @@ class KMP_Admin {
 			return;
 		}
 
-		$icon = ( KINSTAMU_WHITELABEL === false ) ? 'none' : 'dashicons-admin-generic';
+		$icon = ( KINSTAMU_WHITELABEL === false ) ? 'dashicons-cloud' : 'dashicons-cloud';
 		$title = ( KINSTAMU_WHITELABEL === false ) ? __( 'Kinsta Cache', 'kinsta-mu-plugins' ) : __( 'Server Cache', 'kinsta-mu-plugins' );
 
 		add_menu_page(
@@ -290,14 +290,14 @@ class KMP_Admin {
 	public function menu_icon_style() {
 		?>
 	<style>
-	#adminmenu .toplevel_page_kinsta-tools .wp-menu-image {
+	/* #adminmenu .toplevel_page_kinsta-tools .wp-menu-image {
 		background-repeat:no-repeat;
 		background-position: 50% -28px;
 		background-image: url( '<?php echo esc_url( KMP_Admin::shared_resource_url( 'admin/assets' ) ); ?>/images/menu-icon.svg' )
 	}
 	#adminmenu .toplevel_page_kinsta-tools:hover .wp-menu-image,  #adminmenu .toplevel_page_kinsta-tools.wp-has-current-submenu .wp-menu-image, #adminmenu .toplevel_page_kinsta-tools.current .wp-menu-image {
 		background-position: 50% 6px;
-	}
+	} */
 	</style>
 		<?php
 	}

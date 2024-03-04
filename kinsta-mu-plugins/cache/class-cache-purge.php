@@ -347,10 +347,10 @@ class Cache_Purge {
 		$purge_list['immediate']['group']['singular_post'] = get_permalink( $post_id );
 
 		if ( ! empty( $this->posts_page_url ) ) {
-			$purge_list['immediate']['single']['home_page'] = home_url() . '/';
+			$purge_list['immediate']['single']['home_page'] = home_url( '/' );
 			$purge_list['immediate']['single']['blog_page'] = $this->posts_page_url;
 		} else {
-			$purge_list['immediate']['single']['home_blog_page'] = home_url() . '/';
+			$purge_list['immediate']['single']['home_blog_page'] = home_url( '/' );
 		}
 
 		if ( ! empty( $purge_list['throttled']['single']['post_type'] ) ) {
@@ -363,18 +363,18 @@ class Cache_Purge {
 		if ( ! empty( $custom_paths ) ) {
 			foreach ( $custom_paths as $i => $item ) {
 				if ( 'single' === $item['type'] ) {
-					$purge_list['immediate']['single'][ 'custom|' . $i ] = home_url() . '/' . $item['path'];
+					$purge_list['immediate']['single'][ 'custom|' . $i ] = home_url( '/' ) . $item['path'];
 				}
 				if ( 'group' === $item['type'] ) {
-					$purge_list['immediate']['group'][ 'custom|' . $i ] = home_url() . '/' . $item['path'];
+					$purge_list['immediate']['group'][ 'custom|' . $i ] = home_url( '/' ) . $item['path'];
 				}
 			}
 		}
 
 		// Add related sitemaps.
-		$purge_list['throttled']['group']['sitemap'] = home_url() . '/sitemap';
+		$purge_list['throttled']['group']['sitemap'] = home_url( '/' ) . 'sitemap';
 		// Add feed purging.
-		$purge_list['immediate']['group']['feed'] = home_url() . '/feed/';
+		$purge_list['immediate']['group']['feed'] = home_url( '/' ) . 'feed/';
 
 		// Add AMP immediate single requests.
 		foreach ( $purge_list['immediate']['single'] as $key => $value ) {
@@ -406,7 +406,8 @@ class Cache_Purge {
 		do_action( 'kinsta_initiate_purge_happened' );
 
 		if ( defined( 'KINSTA_CACHE_DEBUG' ) && KINSTA_CACHE_DEBUG === true ) {
-			$testing = file_put_contents( 'request-debug.log', json_encode( $purge_request ), FILE_APPEND );
+			$msg = current_time( 'Y-m-d H:i:s' ) . ' - ' . json_encode( $purge_request ) . PHP_EOL;
+			$testing = file_put_contents( __DIR__ . '/request-debug.log', $msg, FILE_APPEND );
 		}
 		return $result;
 	}

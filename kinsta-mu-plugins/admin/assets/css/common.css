@@ -27,17 +27,6 @@
 	}
 }
 
-.kinsta-content-section-header {
-	margin-bottom: 24px;
-}
-
-.kinsta-content-section-body {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    justify-content: space-between;
-    grid-gap: 24px;
-}
-
 @media screen and (max-width: 700px) {
 	.kinsta-content-section-body {
 		grid-template-columns: 2fr;
@@ -48,44 +37,6 @@
 	display: block;
 }
 
-.kinsta-button {
-	box-shadow: 0 4px 12px 0 rgb(83 51 237 / 32%), 0 0 0 2px #2a0fab;
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	border-radius: 12px;
-	height: 40px;
-	padding: 0 32px;
-	outline: none;
-	border: none;
-	white-space: nowrap;
-	cursor: pointer;
-	transition: all .25s;
-	background-image: linear-gradient(99deg, #336aed 0%, #5333ED 50%, #5333ED 100%);
-	background-position: center center;
-	background-size: 200% auto;
-	color: white;
-	justify-self: end;
-	text-decoration: none;
-}
-
-.kinsta-button:hover {
-	background-position: left center;
-    box-shadow: 0 4px 8px 0 rgb(83 51 237 / 32%);
-	color: white;
-}
-
-.kinsta-button-disabled {
-	border: 1px solid #D1D6DF;
-	color: #8f97a3;
-	cursor: not-allowed;
-	box-shadow: none !important;
-	background: transparent !important;
-}
-
-.kinsta-checkbox {
-
-}
 
 .kinsta-content-section-split {
 	width: calc(100% + 2 * 32px);
@@ -94,6 +45,22 @@
     box-sizing: border-box;
 	height: 0;
 	overflow: visible;
+}
+
+.kinsta-content-section-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+}
+
+.kinsta-content-section-body p {
+    flex-grow: 1;
+}
+
+.kinsta-content-section-body .kinsta-button {
+    margin-left: auto;
+	margin-left: 20px;
 }
 
 #kinsta-custom-url-form-fields {
