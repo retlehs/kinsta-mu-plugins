@@ -21,6 +21,6 @@ if ( ! defined( 'ABSPATH' ) ) { // If this file is called directly.
 	</div>
 	<div class="kinsta-content-section-body">
 		<p><?php esc_html_e( 'If you need some help contact us through your MyKinsta Dashboard', 'kinsta-mu-plugins' ); ?></p>
-		<a class="kinsta-button" href="https://my.kinsta.com"><?php esc_html_e( 'Go To Dashboard', 'kinsta-mu-plugins' ); ?></a>
+		<a class="button button-secondary kinsta-button" href="https://my.kinsta.com"><?php esc_html_e( 'Go To Dashboard', 'kinsta-mu-plugins' ); ?></a>
 	</div>
 </div>
