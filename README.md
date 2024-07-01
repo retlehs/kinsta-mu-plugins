@@ -2,7 +2,7 @@
 
 A simple mirror of the official Kinsta Mu Plugin with added Composer/[Bedrock](https://github.com/roots/bedrock) support.
 
-For latest version/info please see the official [Kinsta MU Plugin page](https://kinsta.com/help/kinsta-mu-plugin/).
+For latest version/info please see the official [Kinsta MU Plugin page](https://kinsta.com/docs/wordpress-hosting/kinsta-mu-plugin).
 
 ## Installing with Composer (for Bedrock)
 
@@ -49,7 +49,7 @@ define('KINSTAMU_WHITELABEL', true);
 define('KINSTAMU_LOGO', 'https://mylogo.com/mylogo.jpg');
 ```
 
-For more info, refer to the [official docs here](https://kinsta.com/help/white-label-kinsta-wordpress-admin/)
+For more info, refer to the [official docs here](https://kinsta.com/docs/wordpress-hosting/kinsta-mu-plugin#white-label-and-customize-the-kinsta-mu-plugin)
 
 
 ## Bedrock + Kinsta
