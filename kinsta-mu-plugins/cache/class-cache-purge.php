@@ -99,6 +99,7 @@ class Cache_Purge {
 		add_action( 'wp_ajax_kinsta_clear_all_cache', array( $this, 'action_kinsta_clear_all_cache' ) );
 		add_action( 'wp_ajax_kinsta_clear_site_cache', array( $this, 'action_kinsta_clear_site_cache' ) );
 		add_action( 'wp_ajax_kinsta_clear_object_cache', array( $this, 'action_kinsta_clear_object_cache' ) );
+		add_action( 'wp_ajax_kinsta_clear_cdn_cache', array( $this, 'action_kinsta_clear_cdn_cache' ) );
 
 		// Cache clear for Admin Toolbar.
 		add_action( 'admin_init', array( $this, 'clear_cache_admin_bar' ) );
@@ -257,7 +258,16 @@ class Cache_Purge {
 	 */
 	public function purge_complete_object_cache() {
 		$response = wp_cache_flush();
-		opcache_reset();
+
+		/**
+		 * Ensure that the opcache_reset() function is only executed when it exists,
+		 * preventing errors in environments where OPCache is not installed,
+		 * such as in the local development, or test environments.
+		 */
+		if ( function_exists( 'opcache_reset' ) ) {
+			opcache_reset();
+		}
+
 		return $response;
 	}
 
@@ -576,26 +586,41 @@ class Cache_Purge {
 		}
 		check_admin_referer( 'kinsta-clear-cache-admin-bar', 'kinsta_nonce' );
 
-		if ( 'kinsta-clear-all-cache' === $_GET['clear-cache'] ) {
+		$clear_cache_type = $_GET['clear-cache'];
+		$query_vars = array(
+			'kinsta-cache-cleared' => 'true',
+		);
+
+		/**
+		 * When clearing the cache, we set a query variable to indicate which type of cache was cleared.
+		 * This allows us to display a relevant success message on the admin page.
+		 *
+		 * @see Kinsta\KMP_Admin::cleared_cache_notice
+		 */
+		if ( 'kinsta-clear-all-cache' === $clear_cache_type ) {
 			$this->purge_complete_caches();
-		} elseif ( 'kinsta-clear-object-cache' === $_GET['clear-cache'] ) {
+			$query_vars['kinsta-cache-cleared'] = 'all-cache';
+		} elseif ( 'kinsta-clear-object-cache' === $clear_cache_type ) {
 			$this->purge_complete_object_cache();
-		} elseif ( 'kinsta-clear-site-cache' === $_GET['clear-cache'] ) {
+			$query_vars['kinsta-cache-cleared'] = 'object-cache';
+		} elseif ( 'kinsta-clear-site-cache' === $clear_cache_type ) {
 			$this->purge_complete_site_cache();
-		} elseif ( 'kinsta-clear-cdn-cache' === $_GET['clear-cache'] ) {
+			$query_vars['kinsta-cache-cleared'] = 'site-cache';
+		} elseif ( 'kinsta-clear-cdn-cache' === $clear_cache_type ) {
 			$this->purge_complete_cdn_cache();
+			$query_vars['kinsta-cache-cleared'] = 'cdn-cache';
 		} else {
 			return;
 		}
 
-		if ( empty( wp_get_referer() ) ) {
-			$query_vars = array(
-				'page' => 'kinsta-tools',
-				'kinsta-cache-cleared' => 'true',
-			);
+		$referrer = wp_get_referer();
+
+		if ( empty( $referrer ) ) {
+			// If the referrer is empty, we set the target page to the Kinsta Tools page.
+			$query_vars['page'] = 'kinsta-tools';
 			$redirect_url = add_query_arg( $query_vars, admin_url( 'admin.php' ) );
 		} else {
-			$redirect_url = add_query_arg( 'kinsta-cache-cleared', 'true', wp_get_referer() );
+			$redirect_url = add_query_arg( $query_vars, $referrer );
 		}
 
 		wp_safe_redirect( $redirect_url );
@@ -638,6 +663,7 @@ class Cache_Purge {
 		wp_safe_redirect( $redirect_url );
 		exit;
 	}
+
 	/**
 	 * * Function to handle Admin Bar cache clear requests.
 	 * *

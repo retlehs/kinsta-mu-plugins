@@ -3,7 +3,7 @@
  * Link styles to match the website
 */
 
-.kinsta-wrap {
+#kinsta-wrap {
 	padding: 24px 16px 16px 16px;
 }
 
@@ -60,7 +60,6 @@
 
 .kinsta-content-section-body .kinsta-button {
     margin-left: auto;
-	margin-left: 20px;
 }
 
 #kinsta-custom-url-form-fields {
@@ -129,4 +128,14 @@
 .kinsta-table td:first-of-type {
 	border-radius: 12px 0 0 12px;
 	padding-left: 24px;
+}
+
+.kinsta-button-wrapper {
+    display: flex;
+    margin-top: 1rem;
+    margin-left: 2rem;
+}
+
+.kinsta-cache-settings .kinsta-button-wrapper {
+  margin-left: 0;
 }

@@ -1,416 +1,302 @@
+# Copyright (C) 2025 Kinsta Team
+# This file is distributed under the same license as the Kinsta Must-use Plugins plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Kinsta Must-use Plugins\n"
-"POT-Creation-Date: 2022-12-07 07:46-0500\n"
-"PO-Revision-Date: 2022-12-07 10:03-0500\n"
+"Project-Id-Version: kinsta-cache-plugin\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/mu-plugins\n"
 "Last-Translator: \n"
-"Language-Team: \n"
-"Language: es_ES\n"
+"Language-Team: Spanish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-05-20T15:55:22+00:00\n"
+"PO-Revision-Date: 2025-05-22 12:33\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: kinsta-mu-plugins\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2.2\n"
-"X-Poedit-Basepath: ../../../..\n"
-"X-Poedit-WPHeader: kinsta-mu-plugins.php\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
-"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
-"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
-"X-Poedit-SearchPath-0: .\n"
-"X-Poedit-SearchPath-1: kinsta-mu-plugins\n"
-"X-Poedit-SearchPathExcluded-0: *.js\n"
+"X-Crowdin-Project: kinsta-cache-plugin\n"
+"X-Crowdin-Project-ID: 758875\n"
+"X-Crowdin-Language: es-ES\n"
+"X-Crowdin-File: kinsta-mu-plugins.pot\n"
+"X-Crowdin-File-ID: 987\n"
+"Language: es_ES\n"
 
-#: kinsta-mu-plugins/admin/class-kmp-admin.php:134
+#. Plugin Name of the plugin
+#: kinsta-mu-plugins.php
+msgid "Kinsta Must-use Plugins"
+msgstr "Plugins Must-use de Kinsta"
+
+#. Plugin URI of the plugin
+#: kinsta-mu-plugins.php
+msgid "https://kinsta.com/knowledgebase/kinsta-mu-plugin/"
+msgstr "https://kinsta.com/es/docs/alojamiento-wordpress/plugin-kinsta-mu/"
+
+#. Description of the plugin
+#: kinsta-mu-plugins.php
+msgid "The plugin designed to work on Kinsta's managed WordPress hosting platform."
+msgstr "El plugin está diseñado para funcionar en la plataforma de alojamiento administrado para WordPress de Kinsta."
+
+#. Author of the plugin
+#: kinsta-mu-plugins.php
+msgid "Kinsta Team"
+msgstr "Equipo Kinsta"
+
+#. Author URI of the plugin
+#: kinsta-mu-plugins.php
+msgid "https://kinsta.com/about-us/"
+msgstr "https://kinsta.com/es/sobre-nosotros/"
+
+#. Translators: %1$s WordPress, %2$s Kinsta URL.
+#: kinsta-mu-plugins/admin/class-kmp-admin.php:139
 #, php-format
 msgid "Thanks for creating with %1$s and hosting with %2$s"
-msgstr "Gracias por crear con %1$s y por hospedar tu sitio web con %2$s"
+msgstr "Gracias por crear con %1$s y alojar con %2$s"
 
-#: kinsta-mu-plugins/admin/class-kmp-admin.php:151
+#: kinsta-mu-plugins/admin/class-kmp-admin.php:156
 msgid "Kinsta Cache"
 msgstr "Caché de Kinsta"
 
-#: kinsta-mu-plugins/admin/class-kmp-admin.php:151
+#: kinsta-mu-plugins/admin/class-kmp-admin.php:156
 msgid "Server Cache"
-msgstr "Caché del servidor"
+msgstr "Caché del Servidor"
 
-#: kinsta-mu-plugins/admin/class-kmp-admin.php:209
-#: kinsta-mu-plugins/admin/class-kmp-admin.php:211
+#: kinsta-mu-plugins/admin/class-kmp-admin.php:213
+#: kinsta-mu-plugins/admin/class-kmp-admin.php:215
 msgid "Clear Caches"
-msgstr "Eliminar Caché"
+msgstr "Eliminar Caches"
 
-#: kinsta-mu-plugins/admin/class-kmp-admin.php:221
-#: kinsta-mu-plugins/admin/pages/cache.php:25
+#: kinsta-mu-plugins/admin/class-kmp-admin.php:225
+#: kinsta-mu-plugins/admin/pages/cache.php:32
 msgid "Clear All Caches"
-msgstr "Eliminar Todos Los Cachés"
+msgstr "Borrar Todos los Cachés"
 
-#: kinsta-mu-plugins/admin/class-kmp-admin.php:230
-#: kinsta-mu-plugins/admin/pages/cache.php:35
+#: kinsta-mu-plugins/admin/class-kmp-admin.php:234
+#: kinsta-mu-plugins/admin/pages/cache.php:47
 msgid "Clear Site Cache"
-msgstr "Eliminar el Caché del Sitio"
+msgstr "Eliminar Cache del Sitio"
 
-#: kinsta-mu-plugins/admin/class-kmp-admin.php:240
-#: kinsta-mu-plugins/admin/class-kmp-admin.php:250
+#: kinsta-mu-plugins/admin/class-kmp-admin.php:243
+#: kinsta-mu-plugins/admin/pages/cache.php:79
 msgid "Clear CDN Cache"
-msgstr "Eliminar el caché del CDN"
+msgstr "Borrar Caché CDN"
 
-#: kinsta-mu-plugins/admin/class-kmp-admin.php:316
-msgid "Cache cleared successfully"
-msgstr "Caché borrado correctamente"
+#: kinsta-mu-plugins/admin/class-kmp-admin.php:252
+#: kinsta-mu-plugins/admin/pages/cache.php:62
+msgid "Clear Object Cache"
+msgstr "Borrar Caché de Objetos"
 
-#: kinsta-mu-plugins/admin/class-kmp-admin.php:322
-#, fuzzy
-#| msgid "Cache cleared successfully"
-msgid "Autopurge disabled successfully"
-msgstr "Caché borrado correctamente"
+#: kinsta-mu-plugins/admin/class-kmp-admin.php:415
+msgid "All caches were cleared. Changes usually appear globally within a few minutes."
+msgstr "Se han limpiado todas las cachés. Los cambios deberían verse reflejados en todo el sitio en unos minutos."
 
-#: kinsta-mu-plugins/admin/class-kmp-admin.php:326
-#, fuzzy
-#| msgid "Cache cleared successfully"
-msgid "Autopurge enabled successfully"
-msgstr "Caché borrado correctamente"
+#: kinsta-mu-plugins/admin/class-kmp-admin.php:416
+msgid "Site cache was cleared. Changes usually appear globally within a few minutes."
+msgstr "Se ha borrado el caché del sitio. Los cambios deberían verse reflejados en todo el sitio en unos minutos."
 
-#: kinsta-mu-plugins/admin/pages/cache.php:21
+#: kinsta-mu-plugins/admin/class-kmp-admin.php:417
+msgid "Object cache was cleared. Changes usually appear globally within a few minutes."
+msgstr "Se ha borrado el caché de objetos. Los cambios deberían verse reflejados en todo el sitio en unos minutos."
+
+#: kinsta-mu-plugins/admin/class-kmp-admin.php:418
+msgid "CDN cache was cleared. Changes usually appear globally within a few minutes."
+msgstr "Se ha borrado el caché de la CDN. Los cambios deberían verse reflejados en todo el sitio en unos minutos."
+
+#: kinsta-mu-plugins/admin/class-kmp-admin.php:419
+#: kinsta-mu-plugins/admin/pages/cache.php:225
+msgid "Settings saved."
+msgstr "Configuración guardada."
+
+#: kinsta-mu-plugins/admin/class-kmp-admin.php:422
+msgid "Cache clearing has been initiated."
+msgstr "Se ha iniciado el borrado del caché."
+
+#: kinsta-mu-plugins/admin/pages/cache.php:19
+msgid "Dismiss this notice."
+msgstr "Descartar este aviso."
+
+#: kinsta-mu-plugins/admin/pages/cache.php:26
 msgid "Cache Control"
 msgstr "Control del Caché"
 
-#: kinsta-mu-plugins/admin/pages/cache.php:24
-msgid ""
-"Your site uses our full page and object caching technology to load lightning "
-"fast. We purge single pages and key pages such as the home page immediately "
-"and impose a minimal throttle time on archive pages. This ensures high "
-"availability at all times."
-msgstr ""
-"Su sitio utiliza nuestra tecnología de caché de página completa y de objetos "
-"para permanecer extremadamente rápido. Purgamos inmediatamente del caché "
-"páginas individuales y páginas clave como la página de inicio y luego "
-"imponemos un tiempo mínimo de de espera en las páginas de archivo. Esto "
-"garantiza una alta disponibilidad en todo momento."
+#: kinsta-mu-plugins/admin/pages/cache.php:29
+msgid "Your site uses our full page and object caching technology to load lightning fast. We purge single pages and key pages such as the home page immediately and impose a minimal throttle time on archive pages. This ensures high availability at all times."
+msgstr "Tu sitio utiliza nuestra tecnología de página completa y caché de objetos para cargar a la velocidad del rayo. Depuramos inmediatamente páginas individuales y páginas clave, como la página de inicio, e imponemos un tiempo de aceleración mínimo en las páginas de archivo. Esto garantiza una alta disponibilidad en todo momento."
 
-#: kinsta-mu-plugins/admin/pages/cache.php:31
+#: kinsta-mu-plugins/admin/pages/cache.php:41
 msgid "Site Caching"
 msgstr "Caché del Sitio"
 
-#: kinsta-mu-plugins/admin/pages/cache.php:34
-msgid ""
-"Cache makes your site load faster by storing site data. Clear it to make "
-"sure your site shows the most recent version."
-msgstr ""
-"El caché hace que su sitio cargue más rápido al almacenar los datos del "
-"sitio. Puede borrarlo para asegurarse de que se muestre la versión más "
-"reciente."
-
-#: kinsta-mu-plugins/admin/pages/cache.php:41
-msgid "Object Caching"
-msgstr "El Caché de Objetos"
-
 #: kinsta-mu-plugins/admin/pages/cache.php:44
-msgid ""
-"The WordPress Object Cache is used to save on trips to the database. The "
-"Object Cache stores all of the cache data to memory and makes the cache "
-"contents available by using a key, which is used to name and later retrieve "
-"the cache contents."
-msgstr ""
+msgid "Site cache makes your site load faster by storing site data. Clear it if you want to make sure your site shows the most recent version."
+msgstr "El caché del sitio hace que tu sitio se cargue más rápido al almacenar los datos del sitio. Bórralo si quieres asegurarte de que tu sitio muestra la versión más reciente."
 
-#: kinsta-mu-plugins/admin/pages/cache.php:45
-msgid "Clear Object Cache"
-msgstr "Eliminar El Caché de Objetos"
+#: kinsta-mu-plugins/admin/pages/cache.php:56
+msgid "Object Caching"
+msgstr "Caché de Objetos"
 
-#: kinsta-mu-plugins/admin/pages/cache.php:51
-#, fuzzy
-#| msgid "Custom URLs To Purge"
+#: kinsta-mu-plugins/admin/pages/cache.php:59
+msgid "The WordPress Object Cache is used to save on trips to the database. The Object Cache stores all of the cache data to memory and makes the cache contents available by using a key, which is used to name and later retrieve the cache contents."
+msgstr "El Caché de Objetos de WordPress se utiliza para ahorrar en viajes a la base de datos. El Caché de Objetos almacena todos los datos de caché en la memoria y hace que el contenido del caché esté disponible mediante el uso de una clave, que se utiliza para nombrar y recuperar posteriormente el contenido del caché."
+
+#: kinsta-mu-plugins/admin/pages/cache.php:75
+msgid "When CDN is enabled, all static content (such as images, CSS, and JavaScript files) is served through our Content Delivery Network. The limit is 5 GB per file. Clearing CDN cache purges the assigned CDN zone. If you replace static files and the new content has the same filename as the old content, you should clear the cache. The process may take up to five minutes."
+msgstr "Cuando la CDN está activada, todo el contenido estático (como imágenes, CSS y archivos JavaScript) se sirve a través de nuestra red de entrega de contenido. El límite es de 5 GB por archivo. Al borrar el caché de la CDN, se purga la zona CDN asignada. Si reemplazas archivos estáticos y el nuevo contenido tiene el mismo nombre que el antiguo, debes borrar el caché. El proceso puede tardar hasta cinco minutos."
+
+#: kinsta-mu-plugins/admin/pages/cache.php:88
 msgid "Custom URLs to purge"
-msgstr "Direcciones URLs Personalizadas A Limpiar"
+msgstr "URLs personalizadas a purgar"
 
-#: kinsta-mu-plugins/admin/pages/cache.php:58
+#. translators: %s Kinsta Cache URL.
+#: kinsta-mu-plugins/admin/pages/cache.php:95
 #, php-format
-msgid ""
-"You can add custom paths to purge whenever your site is updated. Please see "
-"our %s for more information on how to use this feature effectively."
-msgstr ""
-"Usted puede agregar rutas personalizadas para limpiar cada vez que su sitio "
-"sea actualizado. Por favor vea nuestra %s para más información sobre como "
-"usar esta característica efectivamente."
+msgid "You can add custom paths to purge whenever your site is updated. Please see our %s for more information on how to use this feature effectively."
+msgstr "Puedes añadir rutas personalizadas para purgar siempre que se actualice tu sitio. Consulta nuestro %s para obtener más información sobre cómo utilizar esta funcionalidad de forma eficaz."
 
-#: kinsta-mu-plugins/admin/pages/cache.php:70
+#: kinsta-mu-plugins/admin/pages/cache.php:107
 msgid "documentation"
 msgstr "documentación"
 
-#: kinsta-mu-plugins/admin/pages/cache.php:73
+#: kinsta-mu-plugins/admin/pages/cache.php:110
 msgid "You can add custom paths to purge whenever your site is updated."
-msgstr ""
-"Usted puede agregar rutas personalizadas para limpiar del caché cuando su "
-"sitio sea actualizado."
+msgstr "Puedes añadir rutas personalizadas para purgar siempre que se actualice tu sitio."
 
-#: kinsta-mu-plugins/admin/pages/cache.php:78
+#: kinsta-mu-plugins/admin/pages/cache.php:115
 msgid "Add A Custom URL"
-msgstr ""
+msgstr "Añadir una URL Personalizada"
 
-#: kinsta-mu-plugins/admin/pages/cache.php:177
-msgid "Cache Autopurge"
-msgstr ""
+#: kinsta-mu-plugins/admin/pages/cache.php:213
+msgid "Settings"
+msgstr "Ajustes"
 
-#: kinsta-mu-plugins/admin/pages/cache.php:180
-msgid ""
-"We purge the full page cache on every page and post update. If you are "
-"importing posts, you can disable the autopurge temporarily to avoid site "
-"slowdowns."
-msgstr ""
-
-#: kinsta-mu-plugins/admin/pages/cache.php:182
+#: kinsta-mu-plugins/admin/pages/cache.php:219
 msgid "Enable Autopurge"
-msgstr ""
+msgstr "Activar Autopurga"
 
-#: kinsta-mu-plugins/admin/pages/cache.php:184
-msgid "Disable Autopurge"
-msgstr ""
+#: kinsta-mu-plugins/admin/pages/cache.php:221
+msgid "We purge the full page cache on every page and post update. If you are importing posts, you can disable the autopurge temporarily to avoid site slowdowns."
+msgstr "Purgamos el caché de página completa en cada página y publicación actualizada. Si estás importando publicaciones, puedes desactivar temporalmente la purga automática para evitar ralentizaciones del sitio."
+
+#: kinsta-mu-plugins/admin/pages/cache.php:226
+msgid "Save Settings"
+msgstr "Guardar Configuraciones"
 
 #: kinsta-mu-plugins/admin/pages/cdn.php:23
-msgid ""
-"CDN is enabled. All static content (such as images, CSS, and JavaScript "
-"files) is loaded through our CDN. We serve all the folders of your website. "
-"The limit is 5 GB per file."
-msgstr ""
-"La CDN está activada. Todo el contenido estático (como imágenes, CSS y "
-"archivos JavaScript) se carga a través de nuestra CDN. Servimos todas las "
-"carpetas de tu sitio web. El límite es de 5 GB por archivo."
+msgid "CDN is enabled. All static content (such as images, CSS, and JavaScript files) is loaded through our CDN. We serve all the folders of your website. The limit is 5 GB per file."
+msgstr "La CDN está activada. Todo el contenido estático (como imágenes, CSS y archivos JavaScript) se carga a través de nuestra CDN. Servimos todas las carpetas de tu sitio web. El límite es de 5 GB por archivo."
 
 #: kinsta-mu-plugins/admin/pages/cdn.php:24
-#, fuzzy
-#| msgid "Clearing Cache..."
 msgid "Clearing CDN..."
-msgstr "Limpiando Caché…"
+msgstr "Borrando CDN..."
 
 #: kinsta-mu-plugins/admin/pages/cdn.php:24
-#, fuzzy
-#| msgid "Cache Cleared"
 msgid "CDN Cleared"
-msgstr "Caché borrado"
+msgstr "CDN Vaciada"
 
 #: kinsta-mu-plugins/admin/pages/cdn.php:24
-#, fuzzy
-#| msgid "Clear Cache"
 msgid "Clear CDN"
-msgstr "Limpiar Caché"
+msgstr "Vaciar CDN"
 
 #: kinsta-mu-plugins/admin/pages/cdn.php:33
-msgid ""
-"Manage your CDN settings, including minification and exclusions, on the "
-"MyKinsta CDN settings page"
-msgstr ""
+msgid "Manage your CDN settings, including minification and exclusions, on the MyKinsta CDN settings page"
+msgstr "Gestiona tu configuración de CDN, incluyendo la minificación y las exclusiones, en la página de configuración de CDN de MyKinsta"
 
 #: kinsta-mu-plugins/admin/pages/partials/sidebar-support.php:20
 msgid "Need Help?"
-msgstr "Necesita Ayuda?"
+msgstr "¿Necesitas Ayuda?"
 
 #: kinsta-mu-plugins/admin/pages/partials/sidebar-support.php:23
 msgid "If you need some help contact us through your MyKinsta Dashboard"
-msgstr ""
-"Si necesita ayuda, por favor contactarnos a través de su Escritorio MyKinsta"
+msgstr "Si necesitas ayuda, ponte en contacto con nosotros a través de tu panel de control MyKinsta"
 
 #: kinsta-mu-plugins/admin/pages/partials/sidebar-support.php:24
 msgid "Go To Dashboard"
-msgstr "Escritorio MyKinsta"
+msgstr "Ir al Panel de Control"
 
 #: kinsta-mu-plugins/admin/pages/settings.php:26
 msgid "Disable Cache Autopurge"
-msgstr ""
+msgstr "Desactivar Autopurga de Caché"
 
 #: kinsta-mu-plugins/admin/pages/settings.php:33
-#, fuzzy
-#| msgid "Clear Caches"
 msgid "Clear Cache For AMP Pages"
-msgstr "Limpiar Caché"
+msgstr "Borrar Caché para Páginas AMP"
 
 #: kinsta-mu-plugins/admin/pages/settings.php:40
-#, fuzzy
-#| msgid "Learn more about banned plugins"
 msgid "Allow banned plugins"
-msgstr "Aprenda más sobre los plugins prohibidos"
+msgstr "Permitir plugins prohibidos"
 
 #: kinsta-mu-plugins/compat/third-party/swift-performance.php:27
-msgid ""
-"We've detected that the <code>SWIFT_PERFORMANCE_DISABLE_CACHE</code> "
-"constant has been set to <code>false</code>. This can cause cache issues for "
-"your site. Please remove this constant from your site's wp-config.php file "
-"or from the plugin or theme file where it has been defined."
-msgstr ""
+msgid "We've detected that the <code>SWIFT_PERFORMANCE_DISABLE_CACHE</code> constant has been set to <code>false</code>. This can cause cache issues for your site. Please remove this constant from your site's wp-config.php file or from the plugin or theme file where it has been defined."
+msgstr "Hemos detectado que la constante <code>SWIFT_PERFORMANCE_DISABLE_CACHE</code> se ha establecido en <code>false</code>. Esto puede causar problemas de caché en tu sitio. Elimina esta constante del archivo wp-config.php de tu sitio o del archivo del plugin o tema donde se haya definido."
 
 #: kinsta-mu-plugins/compat/third-party/wordfence.php:26
-msgid ""
-"We've detected that the <code>WORDFENCE_DISABLE_LIVE_TRAFFIC</code> constant "
-"has been set to <code>false</code>. This can cause significant performance "
-"issues for your site. Please remove this constant from your site's wp-config."
-"php file or from the plugin or theme file where it has been defined."
-msgstr ""
+msgid "We've detected that the <code>WORDFENCE_DISABLE_LIVE_TRAFFIC</code> constant has been set to <code>false</code>. This can cause significant performance issues for your site. Please remove this constant from your site's wp-config.php file or from the plugin or theme file where it has been defined."
+msgstr "Hemos detectado que la constante <code>WORDFENCE_DISABLE_LIVE_TRAFFIC</code> se ha establecido en <code>false</code>. Esto puede causar problemas de rendimiento significativos en tu sitio. Elimina esta constante del archivo wp-config.php de tu sitio o del archivo del plugin o tema donde se haya definido."
 
-#: kinsta-mu-plugins/compat/third-party/wp-rocket.php:32
+#: kinsta-mu-plugins/compat/third-party/wp-rocket.php:56
 #, php-format
-msgid ""
-"Your WP Rocket version is out-of-date and not fully compatible with Kinsta. "
-"%s"
-msgstr ""
+msgid "Your WP Rocket version is out-of-date and not fully compatible with Kinsta. %s"
+msgstr "Tu versión de WP Rocket está desactualizada y no es totalmente compatible con Kinsta. %s"
 
-#: kinsta-mu-plugins/compat/third-party/wp-rocket.php:44
+#: kinsta-mu-plugins/compat/third-party/wp-rocket.php:68
 msgid "Please update WP Rocket on the Plugins page"
-msgstr ""
+msgstr "Actualiza WP Rocket en la página de plugins"
 
-#: kinsta-mu-plugins/security/class-banned-plugins.php:242
-#: kinsta-mu-plugins/security/class-banned-plugins.php:278
-#: kinsta-mu-plugins/security/class-banned-plugins.php:367
-#: kinsta-mu-plugins/security/class-banned-plugins.php:370
+#: kinsta-mu-plugins/security/class-banned-plugins.php:241
+#: kinsta-mu-plugins/security/class-banned-plugins.php:277
+#: kinsta-mu-plugins/security/class-banned-plugins.php:366
+#: kinsta-mu-plugins/security/class-banned-plugins.php:369
 msgid "Banned"
 msgstr "Prohibido"
 
-#: kinsta-mu-plugins/security/class-banned-plugins.php:332
+#: kinsta-mu-plugins/security/class-banned-plugins.php:331
 msgid "Kinsta detected a banned plugin"
 msgid_plural "Kinsta detected banned plugins"
-msgstr[0] "Kinsta detectó un plugin prohibido"
-msgstr[1] "Kinsta detectó unos plugins prohibidos"
+msgstr[0] "Kinsta ha detectado un plugin prohibido"
+msgstr[1] "Kinsta ha detectado plugins prohibidos"
 
-#: kinsta-mu-plugins/security/class-banned-plugins.php:338
+#. Translators: %s "this plugin" if singular, "these plugins" if plural.
+#: kinsta-mu-plugins/security/class-banned-plugins.php:337
 #, php-format
-msgid ""
-"Please deactivate %s as soon as possible. Using a banned plugin can cause "
-"performance issues for your site or compatibility issues with our hosting "
-"platform."
-msgstr ""
-"Por favor desactive %s lo más pronto posible. Usar un plugin prohibido puede "
-"causar problemas de rendimiento en tu sitio ó problemas de compatibilidad "
-"con nuestra plataforma de alojamiento."
+msgid "Please deactivate %s as soon as possible. Using a banned plugin can cause performance issues for your site or compatibility issues with our hosting platform."
+msgstr "Desactiva %s lo antes posible. El uso de un plugin prohibido puede causar problemas de rendimiento en tu sitio o problemas de compatibilidad con nuestra plataforma de alojamiento."
 
-#: kinsta-mu-plugins/security/class-banned-plugins.php:338
-#: kinsta-mu-plugins/security/class-banned-plugins.php:354
+#. Translators: %s "this plugin" if singular, "these plugins" if plural.
+#: kinsta-mu-plugins/security/class-banned-plugins.php:337
+#: kinsta-mu-plugins/security/class-banned-plugins.php:353
 msgid "this plugin"
 msgid_plural "these plugins"
 msgstr[0] "este plugin"
 msgstr[1] "estos plugins"
 
-#: kinsta-mu-plugins/security/class-banned-plugins.php:341
+#: kinsta-mu-plugins/security/class-banned-plugins.php:340
 msgid "Learn more about banned plugins"
-msgstr "Aprenda más sobre los plugins prohibidos"
+msgstr "Más información sobre los plugins prohibidos"
 
-#: kinsta-mu-plugins/security/class-banned-plugins.php:346
+#: kinsta-mu-plugins/security/class-banned-plugins.php:345
 msgid "Banned plugin detected"
 msgid_plural "Banned plugins detected"
-msgstr[0] "Se ha detectado un Plugin Prohibido"
-msgstr[1] "Se han detectado unos Plugins Prohibidos"
+msgstr[0] "Se ha detectado un plugin prohibido"
+msgstr[1] "Se han detectado plugins prohibidos"
 
-#: kinsta-mu-plugins/security/class-banned-plugins.php:351
-msgid ""
-"Using a banned plugin can cause performance issues for your site or "
-"compatibility issues with the hosting platform."
-msgstr ""
-"Usar un plugin prohibido puede causar problemas de rendimiento en tu sitio o "
-"problemas de compatibilidad con nuestra plataforma de alojamiento."
+#: kinsta-mu-plugins/security/class-banned-plugins.php:350
+msgid "Using a banned plugin can cause performance issues for your site or compatibility issues with the hosting platform."
+msgstr "El uso de un plugin prohibido puede causar problemas de rendimiento en tu sitio o problemas de compatibilidad con la plataforma de alojamiento."
 
-#: kinsta-mu-plugins/security/class-banned-plugins.php:354
+#. Translators: %s "this plugin" if singular, "these plugins" if plural.
+#: kinsta-mu-plugins/security/class-banned-plugins.php:353
 #, php-format
 msgid "Please deactivate %s as soon as possible."
-msgstr "Por favor desactive %s lo más pronto posible."
+msgstr "Desactiva %s lo antes posible."
 
-#: kinsta-mu-plugins/security/class-banned-plugins.php:383
+#: kinsta-mu-plugins/security/class-banned-plugins.php:382
 msgid "Why?"
-msgstr "Por qué?"
+msgstr "¿Por qué?"
 
-#: kinsta-mu-plugins/wp-cli/commands/class-cache-purge-command.php:109
-msgid "The Object Cache was purged."
-msgstr ""
+#: kinsta-mu-plugins/wp-cli/commands/class-cache-purge-command.php:151
+msgid "Object Cache has been cleared."
+msgstr "Se ha borrado el caché de objetos."
 
-#: kinsta-mu-plugins/wp-cli/commands/class-cache-purge-command.php:111
+#: kinsta-mu-plugins/wp-cli/commands/class-cache-purge-command.php:153
 msgid "Something went wrong! The Object Cache was not purged."
-msgstr ""
+msgstr "Algo salió mal. El caché de objetos no se ha purgado."
 
-#. Plugin Name of the plugin/theme
-msgid "Kinsta Must-use Plugins"
-msgstr "Los Plugins de uso obligado en Kinsta"
-
-#. Plugin URI of the plugin/theme
-msgid "https://kinsta.com/knowledgebase/kinsta-mu-plugin/"
-msgstr "https://kinsta.com/es/ayuda/kinsta-mu-plugin/"
-
-#. Description of the plugin/theme
-msgid ""
-"The plugin designed to work on Kinsta's managed WordPress hosting platform."
-msgstr ""
-
-#. Author of the plugin/theme
-msgid "Kinsta Team"
-msgstr "El Equipo Kinsta"
-
-#. Author URI of the plugin/theme
-msgid "https://kinsta.com/about-us/"
-msgstr "https://kinsta.com/es/sobre-nosotros/"
-
-#~ msgid "Custom URLs To Purge"
-#~ msgstr "Direcciones URLs Personalizadas A Limpiar"
-
-#~ msgid "Clearing Caches..."
-#~ msgstr "Limpiando Caché…"
-
-#~ msgid "Caches Cleared"
-#~ msgstr "Caché borrado"
-
-#~ msgid "Clearing Full Page Cache..."
-#~ msgstr "Limpiando El Caché De Página Completa…"
-
-#~ msgid "Cache Cleared"
-#~ msgstr "Caché borrado"
-
-#~ msgid "Clear Full Page Cache Only"
-#~ msgstr "Únicamente Limpiar El Caché De Página Completa"
-
-#~ msgid "Clearing Object Cache..."
-#~ msgstr "Limpiando El Caché De Página Completa…"
-
-#~ msgid "Clear Object Cache Only"
-#~ msgstr "Únicamente Limpiar El Caché de Objetos"
-
-#~ msgid "Clearing Cache..."
-#~ msgstr "Limpiando Caché…"
-
-#~ msgid "Cache Settings"
-#~ msgstr "Configuración de Caché"
-
-#~ msgid "Cache"
-#~ msgstr "Caché"
-
-#~ msgid ""
-#~ "Your site uses our full page caching technology to remain lightning fast. "
-#~ "We purge single pages and key pages such as the home page immediately and "
-#~ "impose a minimal throttle time on archive pages. This ensures high "
-#~ "availability at all times."
-#~ msgstr ""
-#~ "Su sitio utiliza nuestra tecnología de caché de página completa para "
-#~ "permanecer extremadamente rápido. Purgamos inmediatamente del caché "
-#~ "páginas individuales y páginas clave como la página de inicio y luego "
-#~ "imponemos un tiempo mínimo de de espera en las páginas de archivo. Esto "
-#~ "garantiza una alta disponibilidad en todo momento."
-
-#~ msgid "Automatic cache purging has been disabled."
-#~ msgstr "Se ha desactivado el borrado automático del caché."
-
-#, php-format
-#~ msgid ""
-#~ "This means that the page cache stored on the server will not be cleared "
-#~ "automatically after a post or page is updated, deleted, or published. If "
-#~ "you would like to enable automatic cache purging please remove the %1$s "
-#~ "constant from your site's wp-config.php file or set its value to %2$s."
-#~ msgstr ""
-#~ "Esto significa que el caché de página que está almacenado en el servidor "
-#~ "no se borrará automáticamente después de que un mensaje o página se "
-#~ "actualice, elimine o publique. Si desea habilitar el borrado automático "
-#~ "del caché, por favor remueva la constante %1$s del archivo wp-config.php "
-#~ "de su sitio o establezca su valor a %2$s."
-
-#, php-format
-#~ msgid ""
-#~ "Kinsta CDN enabler is optimized for WordPress %1$s. Please disable CDN "
-#~ "via %2$s or upgrade your WordPress installation (recommended)."
-#~ msgstr ""
-#~ "El activador del Kinsta CDN está optimizado para WordPress %1$s. Por "
-#~ "favor desactive el CDN via %2$s o actualize su instalación de Wordpress "
-#~ "(recomendado)."
-
-#~ msgid "Handles the purge of the server level caching."
-#~ msgstr "Maneja el borrado del caché a nivel de servidor."

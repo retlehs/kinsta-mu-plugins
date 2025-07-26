@@ -7,65 +7,76 @@
 
 namespace Kinsta;
 
+use WP_Screen;
+
 if ( ! defined( 'ABSPATH' ) ) { // If this file is called directly.
 	die( 'No script kiddies please!' );
 }
 
 /**
- * Add admin notice for outdated WP Rocket installs
+ * Add admin notice for outdated WP Rocket installs.
  */
 function wprocket_upgrade_notice() {
-	if ( ! function_exists( 'get_plugins' ) ) {
-		require_once ABSPATH . 'wp-admin/includes/plugin.php';
-	}
-	// Make sure the get_current_screen function exists.
-	if ( ! function_exists( 'get_current_screen' ) ) {
-		require_once ABSPATH . 'wp-admin/includes/screen.php';
-	}
-	if ( get_current_screen()->id !== 'dashboard' ) {
+	if ( defined( 'KINSTAMU_DISABLE_WPROCKET_NOTICE' ) && KINSTAMU_DISABLE_WPROCKET_NOTICE === true ) {
 		return;
 	}
-	?>
-	<div id="kinsta-banned-plugins-nag" class="notice notice-kinsta notice-error is-dismissible">
-		<p>
-		<?php
-			$message_format = __( 'Your WP Rocket version is out-of-date and not fully compatible with Kinsta. %s', 'kinsta-mu-plugins' );
 
-			echo sprintf(
-				wp_kses(
-					$message_format,
-					array(
-						'a' => array(
-							'href' => true,
-							'target' => '_blank',
-						),
-					)
+	if ( ! function_exists( 'get_current_screen' ) ) {
+		return;
+	}
+
+	$screen = get_current_screen();
+
+	/**
+	 * Make sure to show the notice only on the dashboard, and when the user have
+	 * the correct permissions.
+	 */
+	if (
+		! $screen instanceof WP_Screen
+		|| 'dashboard' !== $screen->id
+		|| ! current_user_can( set_view_role_or_capability() )
+	) {
+		return;
+	}
+
+	$version = get_plugins()['wp-rocket/wp-rocket.php']['Version'] ?? null;
+
+	/**
+	 * If the version installed is equal to or greater than 3.10.8,
+	 * don't show the notice.
+	 */
+	if ( ! is_string( $version ) || ! version_compare( $version, '3.10.8', '<' ) ) {
+		return;
+	}
+
+	?>
+	<div class="notice notice-kinsta notice-warning">
+		<p>
+	<?php
+	$message_format = __( 'Your WP Rocket version is out-of-date and not fully compatible with Kinsta. %s', 'kinsta-mu-plugins' );
+
+	echo sprintf(
+		wp_kses(
+			$message_format,
+			array(
+				'a' => array(
+					'href' => true,
+					'target' => '_blank',
 				),
-				'<a href="' . esc_url( admin_url( 'plugins.php' ) ) . '">' . esc_html__( 'Please update WP Rocket on the Plugins page', 'kinsta-mu-plugins' ) . '</a>'
-			);
-		?>
+			)
+		),
+		'<a href="' . esc_url( admin_url( 'plugins.php' ) ) . '">' . esc_html__( 'Please update WP Rocket on the Plugins page', 'kinsta-mu-plugins' ) . '</a>'
+	);
+	?>
 		</p>
 	</div>
 	<?php
 }
-/**
- * Check WP Rocket version
- */
-function check_wp_rocket_version() {
-	if ( defined( 'KINSTAMU_DISABLE_WPROCKET_NOTICE' ) && KINSTAMU_DISABLE_WPROCKET_NOTICE === true ) {
-		return false;
-	}
-	if ( ! function_exists( 'get_plugins' ) ) {
-		require_once ABSPATH . 'wp-admin/includes/plugin.php';
-	}
-	if ( array_key_exists( 'wp-rocket/wp-rocket.php', get_plugins() ) ) {
-		if ( version_compare( get_plugins()['wp-rocket/wp-rocket.php']['Version'], '3.10.8', '<' ) ) {
-			if ( function_exists( 'add_action' ) && current_user_can( set_view_role_or_capability() ) ) {
-				add_action( 'admin_notices', __NAMESPACE__ . '\\wprocket_upgrade_notice', PHP_INT_MAX );
-			}
-		}
-		add_filter( 'do_rocket_generate_caching_files', '__return_false', 999 ); // Disable WP rocket caching.
-	}
-}
 
-add_action( 'plugins_loaded', __NAMESPACE__ . '\\check_wp_rocket_version' );
+/**
+ * Disable WP Rocket caching.
+ *
+ * @see https://github.com/wp-media/wp-rocket/blob/develop/inc/classes/Buffer/class-cache.php#L514-L523
+ */
+add_filter( 'do_rocket_generate_caching_files', '__return_false', PHP_INT_MAX );
+add_action( 'admin_notices', __NAMESPACE__ . '\\wprocket_upgrade_notice', PHP_INT_MAX );
