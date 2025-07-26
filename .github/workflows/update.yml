@@ -1,0 +1,38 @@
+name: Update Kinsta MU Plugin
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * 0" # Run once a week on Sunday at 00:00
+
+jobs:
+  update-kinsta-mu-plugin:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Download and extract ZIP
+        run: |
+          curl -L "https://kinsta.com/kinsta-tools/kinsta-mu-plugins.zip" -o plugin.zip
+          unzip -d ./ -o plugin.zip
+          rm plugin.zip
+
+      - name: Get plugin version
+        id: get_version
+        run: |
+          version=$(grep -oP '(?<=Version: ).*' kinsta-mu-plugins.php | tr -cd '[:alnum:]._-')
+          echo "version=$version" >> $GITHUB_OUTPUT
+          echo $version
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update to v${{ steps.get_version.outputs.version }}"
+          tagging_message: "v${{ steps.get_version.outputs.version }}"
