@@ -72,6 +72,7 @@ class KMP_Admin {
 		// Ajax actions for cache exclusion path management.
 		add_action( 'wp_ajax_kinsta_save_custom_path', array( $this, 'action_kinsta_save_custom_path' ) );
 		add_action( 'wp_ajax_kinsta_remove_custom_path', array( $this, 'action_kinsta_remove_custom_path' ) );
+		add_action( 'wp_ajax_kinsta_cache_save_settings', array( $this, 'action_kinsta_cache_save_settings' ) );
 
 		/**
 		 * Filter the page cache supported cache headers
@@ -79,7 +80,7 @@ class KMP_Admin {
 		 */
 		add_filter(
 			'site_status_page_cache_supported_cache_headers',
-			function( $cache_headers ) {
+			function ( $cache_headers ) {
 				// Add new header to the existing list.
 				$cache_headers['x-kinsta-cache'] = static function ( $header_value ) {
 					return false !== strpos( strtolower( $header_value ), 'hit' );
@@ -311,24 +312,18 @@ class KMP_Admin {
 	 * @return void
 	 */
 	public function cleared_cache_notice() {
-		$output = '';
-		if ( ! empty( $_GET['kinsta-cache-cleared'] ) && 'true' === $_GET['kinsta-cache-cleared'] ) {
-			$output .= '<div class="notice notice-success is-dismissible">';
-			$output .= '<p>' . esc_html__( 'Cache cleared successfully', 'kinsta-mu-plugins' ) . '</p>';
-			$output .= '</div>';
+		$key = sanitize_key( $_GET['kinsta-cache-cleared'] ?? '' );
+
+		if ( ! in_array( $key, array( 'all-cache', 'site-cache', 'object-cache', 'cdn-cache', 'true' ), true ) ) {
+			return;
 		}
-		if ( ! empty( $_GET['kinsta-autopurge-updated'] ) ) {
-			if ( 'disabled' === $_GET['kinsta-autopurge-updated'] ) {
-				$output .= '<div class="notice notice-success is-dismissible">';
-				$output .= '<p>' . esc_html__( 'Autopurge disabled successfully', 'kinsta-mu-plugins' ) . '</p>';
-				$output .= '</div>';
-			} else {
-				$output .= '<div class="notice notice-success is-dismissible">';
-				$output .= '<p>' . esc_html__( 'Autopurge enabled successfully', 'kinsta-mu-plugins' ) . '</p>';
-				$output .= '</div>';
-			}
-		}
-		echo $output;
+
+		$key = 'kinsta-clear-' . $key;
+		?>
+		<div class="notice kinsta-notice notice-success settings-error is-dismissible">
+			<p><strong><?php echo esc_html( self::get_done_messages( $key ) ); ?></strong></p>
+		</div>
+		<?php
 	}
 
 	/**
@@ -380,5 +375,50 @@ class KMP_Admin {
 		}
 
 		die();
+	}
+
+	/**
+	 * Action to save settings from the Kinsta Cache settings page.
+	 */
+	public function action_kinsta_cache_save_settings() {
+		check_ajax_referer( 'kinsta_nonce', 'kinsta_nonce' );
+
+		$values = $_POST['values'];
+
+		/**
+		 * Handle the autopurge status.
+		 *
+		 * The value of `kinsta-autopurge-status` is derived from the checkbox
+		 * in the settings page. If the checkbox is checked, the value will
+		 * be 'on', otherwise it will be excluded in the submitted data,
+		 * so we can assume that the checkbox is unchecked.
+		 */
+		update_option(
+			'kinsta-autopurge-status',
+			! isset( $values['kinsta-autopurge-status'] ) ? 'disabled' : 'enabled'
+		);
+
+		die();
+	}
+
+	/**
+	 * Retrieve the message after the cache clearing has been initiated,
+	 * or when the settings have been saved.
+	 *
+	 * @param string $key The key to retrieve the message.
+	 *
+	 * @return string The role or capability.
+	 */
+	public static function get_done_messages( string $key ): string {
+
+		$messages = array(
+			'kinsta-clear-all-cache' => __( 'All caches were cleared. Changes usually appear globally within a few minutes.', 'kinsta-mu-plugins' ),
+			'kinsta-clear-site-cache' => __( 'Site cache was cleared. Changes usually appear globally within a few minutes.', 'kinsta-mu-plugins' ),
+			'kinsta-clear-object-cache' => __( 'Object cache was cleared. Changes usually appear globally within a few minutes.', 'kinsta-mu-plugins' ),
+			'kinsta-clear-cdn-cache' => __( 'CDN cache was cleared. Changes usually appear globally within a few minutes.', 'kinsta-mu-plugins' ),
+			'kinsta-cache-save-settings' => __( 'Settings saved.', 'kinsta-mu-plugins' ),
+		);
+
+		return $messages[ $key ] ?? __( 'Cache clearing has been initiated.', 'kinsta-mu-plugins' );
 	}
 }

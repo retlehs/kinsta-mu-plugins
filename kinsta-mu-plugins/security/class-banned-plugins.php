@@ -25,7 +25,6 @@ class Banned_Plugins {
 		'all-in-one-wp-migration/all-in-one-wp-migration.php',
 		'allow-php-execute/allow-php-execute.php',
 		'cache-enabler/cache-enabler.php',
-		'dynamic-widgets/dynamic-widgets.php',
 		'inactive-user-deleter/inactive-user-deleter.php',
 		'jch-optimize/jch-optimize.php',
 		'p3-profiler/p3-profiler.php',
