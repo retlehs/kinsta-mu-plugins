@@ -38,6 +38,9 @@ jobs:
           commit-message: "Update Kinsta MU Plugin to v${{ steps.get_version.outputs.version }}"
           branch: update/kinsta-mu-plugin-${{ steps.get_version.outputs.version }}
           delete-branch: true
+          reviewers: |
+            retlehs
+            mike-sheppard
           title: "Update Kinsta MU Plugin to v${{ steps.get_version.outputs.version }}"
           body: |
             ## Kinsta MU Plugin Update
