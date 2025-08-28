@@ -60,5 +60,14 @@ class KMP_WPCLI {
 		);
 		WP_CLI::add_command( 'kinsta plugin list', new Plugin_List_Command( $banned_plugins_args ) );
 		WP_CLI::add_command( 'kinsta cache purge', new Cache_Purge_Command( $this->kmp->kinsta_cache_purge ) );
+		WP_CLI::add_hook(
+			'after_invoke:cache flush',
+			function () {
+				( new Cache_Purge_Command( $this->kmp->kinsta_cache_purge ) )(
+					array(),
+					array( 'all' => true )
+				);
+			}
+		);
 	}
 }

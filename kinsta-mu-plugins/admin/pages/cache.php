@@ -147,7 +147,7 @@ if ( ! defined( 'ABSPATH' ) ) { // If this file is called directly.
 							echo '<tr>';
 							echo '<td>' . esc_html( $additional_path['type'] ) . '</td>';
 							echo '<td>/' . esc_html( $additional_path['path'] ) . '</td>';
-							echo '<td><a class="removePath" href="#">Remove</a></td>';
+							echo '<td><button class="removePath button-link">Remove</button></td>';
 							echo '</tr>';
 						}
 					}
@@ -159,26 +159,38 @@ if ( ! defined( 'ABSPATH' ) ) { // If this file is called directly.
 
 					<script type="text/javascript">
 						jQuery(document).on('click', '#addURLSubmit', function() {
-							var path = jQuery('#addURLField').val();
-							var type = jQuery('select[name="custom-url-type"]').val()
-							if( path === '' || path === null || typeof path === 'undefined' ) {
+							var path = jQuery('#addURLField').val()
+								.trim()
+								.replace(/^(\.\/+|\.\.\/+)/g, '')
+								.replace(/^\/+|\/+$/g, '')
+								.replace(/\/{2,}/g, '/');
+							var type = jQuery('select[name="custom-url-type"]').val();
+							var url = new URL(path, '<?php echo esc_url( home_url( '/' ) ); ?>');
+							var urlPath = url.pathname.replace(/^\/+/, '');
+
+							if( urlPath === '' || urlPath === null || typeof urlPath === 'undefined' ) {
 								return false
 							}
+
+							if (jQuery('#addURLField').val().endsWith('/')) {
+								urlPath += '/';
+							}
+
 							jQuery.ajax({
 								url: ajaxurl,
 								method: 'post',
 								data: {
 									action: 'kinsta_save_custom_path',
 									kinsta_nonce: jQuery('#kinsta_nonce').val(),
-									path: path,
+									path: urlPath,
 									type: type
 								},
 								success: function( result ) {
 									jQuery('#addURLField').val('')
 									var row = jQuery('<tr></tr>');
 									row.append('<td>'+type+'</td>')
-									row.append('<td>/'+path.replace(/</g,"&lt;").replace(/>/g,"&gt;")+'</td>')
-									row.append('<td><a class="removePath" href="#">Remove</a></td>')
+									row.append('<td>/'+urlPath+'</td>')
+									row.append('<td><button class="removePath button-link">Remove</button></td>')
 									jQuery('#additionalURLTable').append(row)
 								}
 							})
