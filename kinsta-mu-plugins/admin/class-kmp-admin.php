@@ -9,6 +9,8 @@
 
 namespace Kinsta;
 
+use Kinsta\KMP\Cache\CustomPaths;
+
 if ( ! defined( 'ABSPATH' ) ) { // If this file is called directly.
 	die( 'No script kiddies please!' );
 }
@@ -334,18 +336,12 @@ class KMP_Admin {
 	public function action_kinsta_save_custom_path() {
 		check_ajax_referer( 'save_plugin_options', 'kinsta_nonce' );
 
-		$paths = get_option( 'kinsta-cache-additional-paths' );
-		if ( empty( $paths ) ) {
-			$paths = array();
-		}
-
-		$paths[] = array(
-			'path' => sanitize_text_field( $_POST['path'] ),
-			'type' => sanitize_text_field( wp_unslash( $_POST['type'] ) ),
+		( new CustomPaths() )->update(
+			array(
+				'path' => $_POST['path'] ?? '',
+				'type' => $_POST['type'] ?? '',
+			)
 		);
-		$paths = array_values( $paths );
-
-		update_option( 'kinsta-cache-additional-paths', $paths );
 
 		die();
 	}
@@ -357,22 +353,14 @@ class KMP_Admin {
 	 */
 	public function action_kinsta_remove_custom_path() {
 		check_ajax_referer( 'save_plugin_options', 'kinsta_nonce' );
+
 		if ( ! isset( $_POST['index'] ) || ( isset( $_POST['index'] ) && is_int( $_POST['index'] ) ) ) {
 			return;
 		}
 
-		$index = sanitize_text_field( wp_unslash( $_POST['index'] ) );
-		$paths = get_option( 'kinsta-cache-additional-paths' );
-		if ( ! empty( $paths[ $index ] ) ) {
-			unset( $paths[ $index ] );
-		}
-
-		if ( count( $paths ) === 0 ) {
-			delete_option( 'kinsta-cache-additional-paths' );
-		} else {
-			$paths = array_values( $paths );
-			update_option( 'kinsta-cache-additional-paths', $paths );
-		}
+		( new CustomPaths() )->remove(
+			absint( sanitize_text_field( $_POST['index'] ) ),
+		);
 
 		die();
 	}

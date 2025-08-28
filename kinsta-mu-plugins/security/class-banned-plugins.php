@@ -53,7 +53,6 @@ class Banned_Plugins {
 		'backupbuddy/backupbuddy.php',
 		'snapshot/snapshot.php',
 		'sg-cachepress/sg-cachepress.php',
-		'litespeed-cache/litespeed-cache.php',
 		'backwpup/backwpup.php',
 		'backwpup-pro/backwpup.php',
 		'p3/p3.php', // Pipdig Power Pack plugin.

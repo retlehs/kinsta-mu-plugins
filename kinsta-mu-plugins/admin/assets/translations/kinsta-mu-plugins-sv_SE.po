@@ -1,0 +1,302 @@
+# Copyright (C) 2025 Kinsta Team
+# This file is distributed under the same license as the Kinsta Must-use Plugins plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: kinsta-cache-plugin\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/mu-plugins\n"
+"Last-Translator: \n"
+"Language-Team: Swedish\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-05-20T15:55:22+00:00\n"
+"PO-Revision-Date: 2025-05-30 13:52\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: kinsta-mu-plugins\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Crowdin-Project: kinsta-cache-plugin\n"
+"X-Crowdin-Project-ID: 758875\n"
+"X-Crowdin-Language: sv-SE\n"
+"X-Crowdin-File: kinsta-mu-plugins.pot\n"
+"X-Crowdin-File-ID: 987\n"
+"Language: sv_SE\n"
+
+#. Plugin Name of the plugin
+#: kinsta-mu-plugins.php
+msgid "Kinsta Must-use Plugins"
+msgstr "Kinsta Måste-plugins"
+
+#. Plugin URI of the plugin
+#: kinsta-mu-plugins.php
+msgid "https://kinsta.com/knowledgebase/kinsta-mu-plugin/"
+msgstr "https://kinsta.com/docs/wordpress-hosting/kinsta-mu-plugin/"
+
+#. Description of the plugin
+#: kinsta-mu-plugins.php
+msgid "The plugin designed to work on Kinsta's managed WordPress hosting platform."
+msgstr "Pluginet som är designat för att fungera på Kinstas hanterade hosting-plattform på WordPress."
+
+#. Author of the plugin
+#: kinsta-mu-plugins.php
+msgid "Kinsta Team"
+msgstr "Kinsta's Team"
+
+#. Author URI of the plugin
+#: kinsta-mu-plugins.php
+msgid "https://kinsta.com/about-us/"
+msgstr "https://kinsta.com/se/om-oss/"
+
+#. Translators: %1$s WordPress, %2$s Kinsta URL.
+#: kinsta-mu-plugins/admin/class-kmp-admin.php:139
+#, php-format
+msgid "Thanks for creating with %1$s and hosting with %2$s"
+msgstr "Tack för att du skapade med %1$s och hostar med %2$s"
+
+#: kinsta-mu-plugins/admin/class-kmp-admin.php:156
+msgid "Kinsta Cache"
+msgstr "Kinsta Cache"
+
+#: kinsta-mu-plugins/admin/class-kmp-admin.php:156
+msgid "Server Cache"
+msgstr "Server Cache"
+
+#: kinsta-mu-plugins/admin/class-kmp-admin.php:213
+#: kinsta-mu-plugins/admin/class-kmp-admin.php:215
+msgid "Clear Caches"
+msgstr "Rensa Cache"
+
+#: kinsta-mu-plugins/admin/class-kmp-admin.php:225
+#: kinsta-mu-plugins/admin/pages/cache.php:32
+msgid "Clear All Caches"
+msgstr "Rensa All Cache"
+
+#: kinsta-mu-plugins/admin/class-kmp-admin.php:234
+#: kinsta-mu-plugins/admin/pages/cache.php:47
+msgid "Clear Site Cache"
+msgstr "Rensa Hemsidans Cache"
+
+#: kinsta-mu-plugins/admin/class-kmp-admin.php:243
+#: kinsta-mu-plugins/admin/pages/cache.php:79
+msgid "Clear CDN Cache"
+msgstr "Rensa CDN Cache"
+
+#: kinsta-mu-plugins/admin/class-kmp-admin.php:252
+#: kinsta-mu-plugins/admin/pages/cache.php:62
+msgid "Clear Object Cache"
+msgstr "Rensa Objekt Cache"
+
+#: kinsta-mu-plugins/admin/class-kmp-admin.php:415
+msgid "All caches were cleared. Changes usually appear globally within a few minutes."
+msgstr "Alla cacher rensades. Förändringar visas vanligtvis globalt inom några minuter."
+
+#: kinsta-mu-plugins/admin/class-kmp-admin.php:416
+msgid "Site cache was cleared. Changes usually appear globally within a few minutes."
+msgstr "Webbplats-cache rensades. Förändringar visas vanligtvis globalt inom några minuter."
+
+#: kinsta-mu-plugins/admin/class-kmp-admin.php:417
+msgid "Object cache was cleared. Changes usually appear globally within a few minutes."
+msgstr "Objekt-cache rensades. Förändringar visas vanligtvis globalt inom några minuter."
+
+#: kinsta-mu-plugins/admin/class-kmp-admin.php:418
+msgid "CDN cache was cleared. Changes usually appear globally within a few minutes."
+msgstr "CDN-cache rensades. Förändringar visas vanligtvis globalt inom några minuter."
+
+#: kinsta-mu-plugins/admin/class-kmp-admin.php:419
+#: kinsta-mu-plugins/admin/pages/cache.php:225
+msgid "Settings saved."
+msgstr "Inställningarna är sparade."
+
+#: kinsta-mu-plugins/admin/class-kmp-admin.php:422
+msgid "Cache clearing has been initiated."
+msgstr "Cacherensning har påbörjats."
+
+#: kinsta-mu-plugins/admin/pages/cache.php:19
+msgid "Dismiss this notice."
+msgstr "Avvisa detta meddelande."
+
+#: kinsta-mu-plugins/admin/pages/cache.php:26
+msgid "Cache Control"
+msgstr "Cache Kontroll"
+
+#: kinsta-mu-plugins/admin/pages/cache.php:29
+msgid "Your site uses our full page and object caching technology to load lightning fast. We purge single pages and key pages such as the home page immediately and impose a minimal throttle time on archive pages. This ensures high availability at all times."
+msgstr "Din webbplats använder vår helsides- och objektcacheteknik för att ladda blixtsnabbt. Vi rensar enstaka sidor och nyckelsidor som startsidan omedelbart och pålägger en minimal spärrtid på arkivsidor. Detta säkerställer hög tillgänglighet hela tiden."
+
+#: kinsta-mu-plugins/admin/pages/cache.php:41
+msgid "Site Caching"
+msgstr "Webbplats Cachelagring"
+
+#: kinsta-mu-plugins/admin/pages/cache.php:44
+msgid "Site cache makes your site load faster by storing site data. Clear it if you want to make sure your site shows the most recent version."
+msgstr "Webbplatscache gör att din webbplats laddas snabbare genom att lagra webbplatsdata. Rensa den om du vill se till att din webbplats visar den senaste versionen."
+
+#: kinsta-mu-plugins/admin/pages/cache.php:56
+msgid "Object Caching"
+msgstr "Objekt Cachelagring"
+
+#: kinsta-mu-plugins/admin/pages/cache.php:59
+msgid "The WordPress Object Cache is used to save on trips to the database. The Object Cache stores all of the cache data to memory and makes the cache contents available by using a key, which is used to name and later retrieve the cache contents."
+msgstr "WordPress Objek Cache används för att spara på resor till databasen. Objektcachen lagrar all cachedata i minnet och gör cacheinnehållet tillgängligt genom att använda en nyckel, som används för att namnge och senare hämta cacheinnehållet."
+
+#: kinsta-mu-plugins/admin/pages/cache.php:75
+msgid "When CDN is enabled, all static content (such as images, CSS, and JavaScript files) is served through our Content Delivery Network. The limit is 5 GB per file. Clearing CDN cache purges the assigned CDN zone. If you replace static files and the new content has the same filename as the old content, you should clear the cache. The process may take up to five minutes."
+msgstr "När CDN är aktiverat serveras allt statiskt innehåll (som bilder, CSS och JavaScript-filer) via vårt nätverk för innehållsleverans. Gränsen är 5 GB per fil. Rensning av CDN-cache rensar den tilldelade CDN-zonen. Om du ersätter statiska filer och det nya innehållet har samma filnamn som det gamla innehållet, bör du rensa cachen. Processen kan ta upp till fem minuter."
+
+#: kinsta-mu-plugins/admin/pages/cache.php:88
+msgid "Custom URLs to purge"
+msgstr "Anpassade webbadresser att rensa"
+
+#. translators: %s Kinsta Cache URL.
+#: kinsta-mu-plugins/admin/pages/cache.php:95
+#, php-format
+msgid "You can add custom paths to purge whenever your site is updated. Please see our %s for more information on how to use this feature effectively."
+msgstr "Du kan lägga till anpassade sökvägar för att rensa när din webbplats uppdateras. Se vår %s för mer information om hur du använder den här funktionen effektivt."
+
+#: kinsta-mu-plugins/admin/pages/cache.php:107
+msgid "documentation"
+msgstr "dokumentation"
+
+#: kinsta-mu-plugins/admin/pages/cache.php:110
+msgid "You can add custom paths to purge whenever your site is updated."
+msgstr "Du kan lägga till anpassade sökvägar för att rensa när din webbplats uppdateras."
+
+#: kinsta-mu-plugins/admin/pages/cache.php:115
+msgid "Add A Custom URL"
+msgstr "Lägg till en anpassad webbadress"
+
+#: kinsta-mu-plugins/admin/pages/cache.php:213
+msgid "Settings"
+msgstr "Inställningar"
+
+#: kinsta-mu-plugins/admin/pages/cache.php:219
+msgid "Enable Autopurge"
+msgstr "Aktivera Autorensning"
+
+#: kinsta-mu-plugins/admin/pages/cache.php:221
+msgid "We purge the full page cache on every page and post update. If you are importing posts, you can disable the autopurge temporarily to avoid site slowdowns."
+msgstr "Vi rensar hela sidcachen på varje sida och postar uppdateringar. Om du importerar inlägg kan du inaktivera automatisk rensning tillfälligt för att undvika nedgångar på webbplatsen."
+
+#: kinsta-mu-plugins/admin/pages/cache.php:226
+msgid "Save Settings"
+msgstr "Spara Inställningar"
+
+#: kinsta-mu-plugins/admin/pages/cdn.php:23
+msgid "CDN is enabled. All static content (such as images, CSS, and JavaScript files) is loaded through our CDN. We serve all the folders of your website. The limit is 5 GB per file."
+msgstr "CDN är aktiverat. Allt statiskt innehåll (t. ex. bilder, CSS och JavaScript-filer) laddas via Kinsta CDN. Vi betjänar alla mappar på din webbplats. Gränsen är 5 GB per fil."
+
+#: kinsta-mu-plugins/admin/pages/cdn.php:24
+msgid "Clearing CDN..."
+msgstr "Rensar CDN..."
+
+#: kinsta-mu-plugins/admin/pages/cdn.php:24
+msgid "CDN Cleared"
+msgstr "CDN Rensat"
+
+#: kinsta-mu-plugins/admin/pages/cdn.php:24
+msgid "Clear CDN"
+msgstr "Rensa CDN"
+
+#: kinsta-mu-plugins/admin/pages/cdn.php:33
+msgid "Manage your CDN settings, including minification and exclusions, on the MyKinsta CDN settings page"
+msgstr "Hantera dina CDN-inställningar, inklusive minifiering och uteslutningar, på MyKinsta CDN-inställningssidan"
+
+#: kinsta-mu-plugins/admin/pages/partials/sidebar-support.php:20
+msgid "Need Help?"
+msgstr "Behöver du hjälp?"
+
+#: kinsta-mu-plugins/admin/pages/partials/sidebar-support.php:23
+msgid "If you need some help contact us through your MyKinsta Dashboard"
+msgstr "Om du behöver lite hjälp kontakta oss via din MyKinsta Instrumentpanel"
+
+#: kinsta-mu-plugins/admin/pages/partials/sidebar-support.php:24
+msgid "Go To Dashboard"
+msgstr "Gå till Instrumentpanel"
+
+#: kinsta-mu-plugins/admin/pages/settings.php:26
+msgid "Disable Cache Autopurge"
+msgstr "Inaktivera Autorensning av Cache"
+
+#: kinsta-mu-plugins/admin/pages/settings.php:33
+msgid "Clear Cache For AMP Pages"
+msgstr "Rensa Cache för AMP-sidor"
+
+#: kinsta-mu-plugins/admin/pages/settings.php:40
+msgid "Allow banned plugins"
+msgstr "Tillåt förbjudna plugins"
+
+#: kinsta-mu-plugins/compat/third-party/swift-performance.php:27
+msgid "We've detected that the <code>SWIFT_PERFORMANCE_DISABLE_CACHE</code> constant has been set to <code>false</code>. This can cause cache issues for your site. Please remove this constant from your site's wp-config.php file or from the plugin or theme file where it has been defined."
+msgstr "Vi har upptäckt att konstanten <code>SWIFT_PERFORMANCE_DISABLE_CACHE</code> har satts till <code>false</code>. Detta kan orsaka cacheproblem för din webbplats. Ta bort denna konstant från din webbplats wp-config.php-fil eller från plugin- eller temafilen där den har definierats."
+
+#: kinsta-mu-plugins/compat/third-party/wordfence.php:26
+msgid "We've detected that the <code>WORDFENCE_DISABLE_LIVE_TRAFFIC</code> constant has been set to <code>false</code>. This can cause significant performance issues for your site. Please remove this constant from your site's wp-config.php file or from the plugin or theme file where it has been defined."
+msgstr "Vi har upptäckt att konstanten <code>WORDFENCE_DISABLE_LIVE_TRAFFIC</code> har satts till <code>false</code>. Detta kan orsaka betydande prestandaproblem för din webbplats. Ta bort denna konstant från din webbplats wp-config.php-fil eller från plugin- eller temafilen där den har definierats."
+
+#: kinsta-mu-plugins/compat/third-party/wp-rocket.php:56
+#, php-format
+msgid "Your WP Rocket version is out-of-date and not fully compatible with Kinsta. %s"
+msgstr "Din WP Rocket-version är inaktuell och inte helt kompatibel med Kinsta. %s"
+
+#: kinsta-mu-plugins/compat/third-party/wp-rocket.php:68
+msgid "Please update WP Rocket on the Plugins page"
+msgstr "Uppdatera WP Rocket på pluginssidan"
+
+#: kinsta-mu-plugins/security/class-banned-plugins.php:241
+#: kinsta-mu-plugins/security/class-banned-plugins.php:277
+#: kinsta-mu-plugins/security/class-banned-plugins.php:366
+#: kinsta-mu-plugins/security/class-banned-plugins.php:369
+msgid "Banned"
+msgstr "Förbjudet"
+
+#: kinsta-mu-plugins/security/class-banned-plugins.php:331
+msgid "Kinsta detected a banned plugin"
+msgid_plural "Kinsta detected banned plugins"
+msgstr[0] "Kinsta upptäckte ett förbjudet plugin"
+msgstr[1] "Kinsta upptäckte förbjudna plugins"
+
+#. Translators: %s "this plugin" if singular, "these plugins" if plural.
+#: kinsta-mu-plugins/security/class-banned-plugins.php:337
+#, php-format
+msgid "Please deactivate %s as soon as possible. Using a banned plugin can cause performance issues for your site or compatibility issues with our hosting platform."
+msgstr "Vänligen inaktivera %s så snart som möjligt. Att använda ett förbjudet plugin kan orsaka prestandaproblem för din webbplats eller kompatibilitetsproblem med vår hosting-plattform."
+
+#. Translators: %s "this plugin" if singular, "these plugins" if plural.
+#: kinsta-mu-plugins/security/class-banned-plugins.php:337
+#: kinsta-mu-plugins/security/class-banned-plugins.php:353
+msgid "this plugin"
+msgid_plural "these plugins"
+msgstr[0] "detta plugin"
+msgstr[1] "dessa plugins"
+
+#: kinsta-mu-plugins/security/class-banned-plugins.php:340
+msgid "Learn more about banned plugins"
+msgstr "Läs mer om förbjudna plugins"
+
+#: kinsta-mu-plugins/security/class-banned-plugins.php:345
+msgid "Banned plugin detected"
+msgid_plural "Banned plugins detected"
+msgstr[0] "Förbjudet plugin upptäcktes"
+msgstr[1] "Förbjudna plugins upptäcktes"
+
+#: kinsta-mu-plugins/security/class-banned-plugins.php:350
+msgid "Using a banned plugin can cause performance issues for your site or compatibility issues with the hosting platform."
+msgstr "Att använda ett förbjudet plugin kan orsaka prestandaproblem för din webbplats eller kompatibilitetsproblem med hosting-plattformen."
+
+#. Translators: %s "this plugin" if singular, "these plugins" if plural.
+#: kinsta-mu-plugins/security/class-banned-plugins.php:353
+#, php-format
+msgid "Please deactivate %s as soon as possible."
+msgstr "Vänligen inaktivera %s så snart som möjligt."
+
+#: kinsta-mu-plugins/security/class-banned-plugins.php:382
+msgid "Why?"
+msgstr "Varför?"
+
+#: kinsta-mu-plugins/wp-cli/commands/class-cache-purge-command.php:151
+msgid "Object Cache has been cleared."
+msgstr "Objekt Cache har rensats."
+
+#: kinsta-mu-plugins/wp-cli/commands/class-cache-purge-command.php:153
+msgid "Something went wrong! The Object Cache was not purged."
+msgstr "Något gick fel! Objekt Cache rensades inte."
+

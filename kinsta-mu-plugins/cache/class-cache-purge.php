@@ -64,12 +64,12 @@ class Cache_Purge {
 	 */
 	public $purge_single_happened;
 
-	/**
+    /**
 	 * Defines if the all purge action happened.
 	 *
 	 * @var boolean
 	 */
-	public $purge_all_happened;
+	public $purge_all_happened = false;
 
 	/**
 	 * Constructor.
@@ -93,7 +93,6 @@ class Cache_Purge {
 		$this->posts_page_url = ( ! empty( $this->posts_page_id ) && ! empty( $wp_rewrite ) && null !== $wp_rewrite ) ? get_permalink( $this->posts_page_id ) : false;
 		$this->immediate_depth = 3;
 		$this->purge_single_happened = false;
-		$this->purge_all_happened = false;
 
 		// Ajax actions for cache clearing.
 		add_action( 'wp_ajax_kinsta_clear_all_cache', array( $this, 'action_kinsta_clear_all_cache' ) );
