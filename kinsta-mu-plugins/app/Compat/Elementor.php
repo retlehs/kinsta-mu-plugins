@@ -4,40 +4,25 @@ namespace Kinsta\KMP\Compat;
 
 use Kinsta\Cache_Purge;
 use Kinsta\KMP;
+use Kinsta\KMP\Cache\Autopurge;
 
-class Elementor
+final class Elementor extends Autopurge\Controller
 {
-	private KMP $kmp;
+    protected string $name = 'elementor_controller';
 
-	public function __construct(KMP $kmp)
+	public function hook(): void
 	{
-		$this->kmp = $kmp;
-		$this->hook();
+		add_action('elementor/core/files/clear_cache', [$this, 'clear']);
+		add_action('elementor/maintenance_mode/mode_changed', [$this, 'clear']);
 	}
 
-	private function hook(): void
-	{
-		add_action('elementor/core/files/clear_cache', [$this, 'clearCache']);
-		add_action('elementor/maintenance_mode/mode_changed', [$this, 'clearCache']);
-	}
+    public function isSupported(): bool
+    {
+        return class_exists('\Elementor\Plugin');
+    }
 
-	public function clearCache(): void
-	{
-		/**
-		 * Filter to control whether the Elementor compatibility on Kinsta mu-plugins
-		 * should clear the cache. If it returns `false`, it will not clear the cache.
-		 */
-		if (! apply_filters('kinsta/kmp/compat/elementor/clear_cache', true)) {
-			return;
-		}
-
-        /**
-         * Ensure `kinsta_cache_purge` is an instance of `Cache_Purge` before clearing teh cache.
-         */
-        if (!($this->kmp->kinsta_cache_purge instanceof Cache_Purge)) {
-			return;
-		}
-
-        $this->kmp->kinsta_cache_purge->purge_complete_caches();
-	}
+    public function getDescription(): string
+    {
+        return __('Purge cache on Elementor updates that affect the front-end.', 'kinsta-mu-plugins');
+    }
 }

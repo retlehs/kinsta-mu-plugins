@@ -310,6 +310,10 @@ class Cache_Purge {
 	 * @return void
 	 */
 	public function purge_complete_caches() {
+        if ( ( defined( 'KINSTAMU_DISABLE_AUTOPURGE' ) && KINSTAMU_DISABLE_AUTOPURGE === true ) || get_option( 'kinsta-autopurge-status' ) === 'disabled' ) {
+			return;
+		}
+
 		if ( $this->purge_all_happened ) {
 			return;
 		}
@@ -333,6 +337,18 @@ class Cache_Purge {
 		if ( ( defined( 'KINSTAMU_DISABLE_AUTOPURGE' ) && KINSTAMU_DISABLE_AUTOPURGE === true ) || get_option( 'kinsta-autopurge-status' ) === 'disabled' ) {
 			return false;
 		}
+
+        $autopurge = get_option('kinsta_kmp_cache_autopurge');
+
+        /**
+         * If the post controller is disabled, do not proceed with the purge.
+         *
+         * @see kinsta-mu-plugins/app/Cache/Autopurge/WPPostController.php
+         * @todo Move this method to the `WPPostController`.
+         */
+        if (($autopurge['wp_post_controller'] ?? null) === false) {
+            return false;
+        }
 
 		$post = get_post( $post_id );
 		if ( false === is_post_type_viewable( $post->post_type ) ) {

@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Kinsta Must-use Plugins plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Kinsta Must-use Plugins 3.3.2\n"
+"Project-Id-Version: Kinsta Must-use Plugins 3.4.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/mu-plugins\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-07-28T07:06:22+00:00\n"
+"POT-Creation-Date: 2025-12-01T01:43:09+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: kinsta-mu-plugins\n"
@@ -218,6 +218,90 @@ msgstr ""
 msgid "Allow banned plugins"
 msgstr ""
 
+#: kinsta-mu-plugins/app/Cache/Autopurge/ACFController.php:33
+msgid "Purge cache when ACF options are updated."
+msgstr ""
+
+#: kinsta-mu-plugins/app/Cache/Autopurge/WooCommerceController.php:44
+msgid "Purge cache when WooCommerce product details (e.g. stocks) are updated."
+msgstr ""
+
+#: kinsta-mu-plugins/app/Cache/Autopurge/WPOptionController.php:47
+msgid "Purge cache when options are updated."
+msgstr ""
+
+#: kinsta-mu-plugins/app/Cache/Autopurge/WPPostController.php:30
+msgid "Purge cache when posts are updated."
+msgstr ""
+
+#: kinsta-mu-plugins/app/Cache/Autopurge/WPThemeController.php:34
+msgid "Purge cache when the theme is updated or switched."
+msgstr ""
+
+#: kinsta-mu-plugins/app/Cache/Autopurge/WPThemeHeaderController.php:40
+msgid "Purge cache when theme headers are updated."
+msgstr ""
+
+#: kinsta-mu-plugins/app/Cache/Autopurge/WPThemeWidgetController.php:56
+msgid "Purge cache when theme widgets are updated."
+msgstr ""
+
+#: kinsta-mu-plugins/app/Commands/Cache/AutopurgeCommand.php:40
+msgid "Autopurge is enabled."
+msgstr ""
+
+#: kinsta-mu-plugins/app/Commands/Cache/AutopurgeCommand.php:41
+msgid "Autopurge is disabled."
+msgstr ""
+
+#: kinsta-mu-plugins/app/Commands/Cache/AutopurgeCommand.php:60
+msgid "Autopurge is already disabled."
+msgstr ""
+
+#: kinsta-mu-plugins/app/Commands/Cache/AutopurgeCommand.php:65
+msgid "Autopurge is now disabled."
+msgstr ""
+
+#: kinsta-mu-plugins/app/Commands/Cache/AutopurgeCommand.php:67
+msgid "Failed to disable autopurge."
+msgstr ""
+
+#: kinsta-mu-plugins/app/Commands/Cache/AutopurgeCommand.php:86
+msgid "Autopurge is already enabled."
+msgstr ""
+
+#: kinsta-mu-plugins/app/Commands/Cache/AutopurgeCommand.php:91
+msgid "Autopurge is now enabled."
+msgstr ""
+
+#: kinsta-mu-plugins/app/Commands/Cache/AutopurgeCommand.php:93
+msgid "Failed to enable autopurge."
+msgstr ""
+
+#: kinsta-mu-plugins/app/Commands/Cache/AutopurgeCommand.php:165
+msgid "Please provide the setting to update."
+msgstr ""
+
+#: kinsta-mu-plugins/app/Commands/Cache/AutopurgeCommand.php:171
+msgid "Please provide the status to update on the setting."
+msgstr ""
+
+#: kinsta-mu-plugins/app/Commands/Cache/AutopurgeCommand.php:180
+msgid "Status value is invalid. Please use \"on\" or \"off\"."
+msgstr ""
+
+#: kinsta-mu-plugins/app/Commands/Cache/AutopurgeCommand.php:190
+msgid "Autopurge setting updated."
+msgstr ""
+
+#: kinsta-mu-plugins/app/Commands/Cache/AutopurgeCommand.php:192
+msgid "Autopurge setting is not updated."
+msgstr ""
+
+#: kinsta-mu-plugins/app/Compat/Elementor.php:26
+msgid "Purge cache on Elementor updates that affect the front-end."
+msgstr ""
+
 #: kinsta-mu-plugins/compat/third-party/swift-performance.php:27
 msgid "We've detected that the <code>SWIFT_PERFORMANCE_DISABLE_CACHE</code> constant has been set to <code>false</code>. This can cause cache issues for your site. Please remove this constant from your site's wp-config.php file or from the plugin or theme file where it has been defined."
 msgstr ""
@@ -235,7 +319,7 @@ msgstr ""
 msgid "Please update WP Rocket on the Plugins page"
 msgstr ""
 
-#: kinsta-mu-plugins/security/class-banned-plugins.php:240
+#: kinsta-mu-plugins/security/class-banned-plugins.php:239
 #: kinsta-mu-plugins/security/class-banned-plugins.php:276
 #: kinsta-mu-plugins/security/class-banned-plugins.php:365
 #: kinsta-mu-plugins/security/class-banned-plugins.php:368

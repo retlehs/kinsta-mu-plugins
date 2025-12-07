@@ -10,6 +10,17 @@
 
 namespace Kinsta;
 
+use Kinsta\KMP\Cache\Autopurge;
+use Kinsta\KMP\Cache\Autopurge\ACFController;
+use Kinsta\KMP\Cache\Autopurge\WPOptionController;
+use Kinsta\KMP\Cache\Autopurge\WPPostController;
+use Kinsta\KMP\Cache\Autopurge\WPThemeController;
+use Kinsta\KMP\Cache\Autopurge\WPThemeHeaderController;
+use Kinsta\KMP\Cache\Autopurge\WPThemeWidgetController;
+use Kinsta\KMP\Cache\Autopurge\WooCommerceController;
+use Kinsta\KMP\Compat\Elementor;
+use Kinsta\KMP\Plugin;
+
 if ( ! defined( 'ABSPATH' ) ) { // If this file is called directly.
 	die( 'No script kiddies please!' );
 }
@@ -97,7 +108,24 @@ class KMP {
 		$this->KinstaCachePurge = $this->kinsta_cache_purge; // phpcs:ignore
 		$this->kmp_admin = new KMP_Admin( $this );
 		$this->banned_plugins = new Banned_Plugins();
-		$this->wp_cli = new KMP_WPCLI( $this );
+
+        /**
+         * Initialize the autopurge manager and orchastrator.
+         */
+        $autopurge = new Autopurge();
+        $autopurge->hook();
+        $autopurge->add(
+            new WPPostController($this),
+            new WPOptionController($this),
+            new WPThemeController($this),
+            new WPThemeHeaderController($this),
+            new WPThemeWidgetController($this),
+            new WooCommerceController($this),
+            new ACFController($this),
+            new Elementor($this),
+        );
+
+		$this->wp_cli = new KMP_WPCLI( $this, $autopurge );
 	}
 
 	/**
