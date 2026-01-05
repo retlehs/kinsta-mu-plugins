@@ -13,6 +13,3 @@ global $KinstaCache; // phpcs:ignore
 $kinsta_muplugin = new KMP();
 $kinsta_cache = $kinsta_muplugin;
 $KinstaCache = $kinsta_muplugin; // phpcs:ignore
-
-/** Ensure Elementor is loaded before initializing the Elementor compatibility. */
-add_action('elementor/init', static fn () => new Elementor($kinsta_muplugin));

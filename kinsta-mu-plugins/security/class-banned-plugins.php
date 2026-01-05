@@ -53,8 +53,6 @@ class Banned_Plugins {
 		'backupbuddy/backupbuddy.php',
 		'snapshot/snapshot.php',
 		'sg-cachepress/sg-cachepress.php',
-		'backwpup/backwpup.php',
-		'backwpup-pro/backwpup.php',
 		'p3/p3.php', // Pipdig Power Pack plugin.
 	);
 
@@ -78,6 +76,7 @@ class Banned_Plugins {
 	 */
 	public function __construct() {
 		$this->check_server_banned_plugin_lists();
+		$this->recheck_disabled_list();
 
 		$this->banned_list = array_merge( $this->warning_list, $this->disabled_list );  // Full list of Banned Plugins.
 		$this->active_plugins = get_option( 'active_plugins', array() );
@@ -261,6 +260,7 @@ class Banned_Plugins {
 	 * @return array
 	 */
 	public function install_plugin_complete_actions( $install_actions, $api, $plugin_file ) {
+        $this->recheck_disabled_list();
 
 		if ( in_array( $plugin_file, $this->banned_list, true ) ) {
 
@@ -624,4 +624,31 @@ class Banned_Plugins {
 			}
 		}
 	}
+
+    /**
+     * Check and evaluate disabled list.
+     */
+    private function recheck_disabled_list(): void
+    {
+        /**
+         * Check for BackWPup installs.
+         */
+        $backwpup_plugins = [
+            'backwpup/backwpup.php' => WP_CONTENT_DIR . '/plugins/backwpup/backwpup.php',
+            'backwpup-pro/backwpup.php'  => WP_CONTENT_DIR . '/plugins/backwpup-pro/backwpup.php',
+        ];
+
+        foreach ($backwpup_plugins as $plugin_key => $plugin_path) {
+            if (is_file($plugin_path)) {
+                $plugin_data = get_plugin_data($plugin_path);
+                $plugin_ver = trim((string) ($plugin_data['Version'] ?? ''));
+
+                // Disable if version is less than 5.6.0, or version info cannot be determined.
+                if (! $plugin_ver || version_compare($plugin_ver, '5.6.0', '<')) {
+                    $this->disabled_list = array_merge($this->disabled_list, [$plugin_key]);
+                    $this->banned_list = array_unique(array_merge($this->banned_list, [$plugin_key]));
+                }
+            }
+        }
+    }
 }

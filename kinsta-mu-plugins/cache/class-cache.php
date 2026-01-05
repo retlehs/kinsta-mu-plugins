@@ -85,9 +85,17 @@ class Cache {
 			),
 			'rules' => array(),
 		);
+        $this->hook();
 		$this->set_settings();
 		$this->set_has_object_cache();
 	}
+
+    public function hook(): void
+    {
+        add_filter('default_option_' . $this->config['option_name'], function () {
+            return $this->default_settings;
+        });
+    }
 
 	/**
 	 * Check if the site has Object Caching enabled.

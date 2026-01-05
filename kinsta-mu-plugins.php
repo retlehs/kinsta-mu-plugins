@@ -4,7 +4,7 @@
  * Plugin Name: Kinsta Must-use Plugins
  * Plugin URI: https://kinsta.com/knowledgebase/kinsta-mu-plugin/
  * Description: The plugin designed to work on Kinsta's managed WordPress hosting platform.
- * Version: 3.3.2
+ * Version: 3.4.0
  * Author: Kinsta Team
  * Author URI: https://kinsta.com/about-us/
  * Text Domain: kinsta-mu-plugins
@@ -17,7 +17,7 @@ if (! defined('ABSPATH')) { // If this file is called directly.
 	die('No script kiddies please!');
 }
 
-define('KINSTAMU_VERSION', '3.3.2');
+define('KINSTAMU_VERSION', '3.4.0');
 define('KMP_DOCS_URL', 'https://kinsta.com/docs/wordpress-hosting/kinsta-mu-plugin');
 
 if (! defined('KINSTAMU_WHITELABEL')) {

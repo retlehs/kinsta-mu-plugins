@@ -9,6 +9,9 @@ use function preg_replace;
 use function substr;
 use function trim;
 
+/**
+ * The controller that manages custom paths for cache purging.
+ */
 class CustomPaths
 {
 	/**
