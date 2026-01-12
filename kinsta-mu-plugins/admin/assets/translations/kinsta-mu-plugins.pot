@@ -1,15 +1,15 @@
-# Copyright (C) 2025 Kinsta Team
+# Copyright (C) 2026 Kinsta Team
 # This file is distributed under the same license as the Kinsta Must-use Plugins plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Kinsta Must-use Plugins 3.4.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/mu-plugins\n"
+"Project-Id-Version: Kinsta Must-use Plugins 3.5.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/kinsta-mu-plugins\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-12-01T01:43:09+00:00\n"
+"POT-Creation-Date: 2026-01-05T06:30:05+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: kinsta-mu-plugins\n"
@@ -234,7 +234,7 @@ msgstr ""
 msgid "Purge cache when posts are updated."
 msgstr ""
 
-#: kinsta-mu-plugins/app/Cache/Autopurge/WPThemeController.php:34
+#: kinsta-mu-plugins/app/Cache/Autopurge/WPThemeController.php:22
 msgid "Purge cache when the theme is updated or switched."
 msgstr ""
 

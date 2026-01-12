@@ -466,7 +466,16 @@ class Cache_Purge {
 		$response_data['error_code'] = curl_errno( $post_request );
 		$response_data['error_message'] = curl_error( $post_request );
 		$response_data['response_code'] = curl_getinfo( $post_request, CURLINFO_HTTP_CODE );
-		curl_close( $post_request );
+
+        /**
+         * curl_close is deprecated in PHP 8.5.
+         *
+         * https://php.watch/versions/8.5/curl_close-curl_share_close-deprecated
+         */
+        if (PHP_VERSION_ID < 80500) {
+            curl_close( $post_request );
+        }
+
 		return $response_data;
 	}
 

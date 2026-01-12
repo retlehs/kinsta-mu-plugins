@@ -12,6 +12,8 @@ use PHPUnit\Runner\Hook;
 use RuntimeException;
 use Traversable;
 
+use function Kinsta\KMP\is_autopurge_enabled;
+
 /**
  * Manage the Autopurge controllers.
  */
@@ -126,9 +128,13 @@ final class Autopurge implements ArrayAccess, IteratorAggregate, Hookable
         return update_option('kinsta_kmp_cache_autopurge', $options);
     }
 
+    /**
+     * @return string|null
+     * @phpstan-return "enabled"|"disabled"|null
+     */
     public function status(): ?string
     {
-        return get_option('kinsta-autopurge-status');
+        return is_autopurge_enabled() ? 'enabled' : 'disabled';
     }
 
     public function disable(): bool

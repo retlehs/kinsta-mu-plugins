@@ -95,7 +95,7 @@ class AutopurgeCommand extends WP_CLI_Command {
 	}
 
     /**
-	 * Check the current autopurge status.
+	 * List the autopurge setting controllers and their status.
 	 *
      * ## OPTIONS
 	 *
@@ -113,7 +113,7 @@ class AutopurgeCommand extends WP_CLI_Command {
      *
 	 * ## EXAMPLES
 	 *
-	 *     # Check the current autopurge list.
+	 *     # List the autopurge setting controllers and their status.
 	 *     $ wp kinsta cache autopurge list
 	 *     +----------------------+-------------------------------------------------------------+---------+
 	 *     | name                 | description                                                 | status  |
@@ -144,7 +144,7 @@ class AutopurgeCommand extends WP_CLI_Command {
 	}
 
     /**
-	 * Check the current autopurge status.
+	 * Toggle the autopurge setting on or off.
 	 *
 	 * ## EXAMPLES
 	 *
