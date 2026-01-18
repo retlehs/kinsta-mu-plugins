@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Kinsta Must-use Plugins plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Kinsta Must-use Plugins 3.5.0\n"
+"Project-Id-Version: Kinsta Must-use Plugins 3.5.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/kinsta-mu-plugins\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-01-05T06:30:05+00:00\n"
+"POT-Creation-Date: 2026-01-15T00:44:55+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: kinsta-mu-plugins\n"
@@ -319,54 +319,54 @@ msgstr ""
 msgid "Please update WP Rocket on the Plugins page"
 msgstr ""
 
-#: kinsta-mu-plugins/security/class-banned-plugins.php:239
-#: kinsta-mu-plugins/security/class-banned-plugins.php:276
-#: kinsta-mu-plugins/security/class-banned-plugins.php:365
-#: kinsta-mu-plugins/security/class-banned-plugins.php:368
+#: kinsta-mu-plugins/security/class-banned-plugins.php:238
+#: kinsta-mu-plugins/security/class-banned-plugins.php:275
+#: kinsta-mu-plugins/security/class-banned-plugins.php:364
+#: kinsta-mu-plugins/security/class-banned-plugins.php:367
 msgid "Banned"
 msgstr ""
 
-#: kinsta-mu-plugins/security/class-banned-plugins.php:330
+#: kinsta-mu-plugins/security/class-banned-plugins.php:329
 msgid "Kinsta detected a banned plugin"
 msgid_plural "Kinsta detected banned plugins"
 msgstr[0] ""
 msgstr[1] ""
 
 #. Translators: %s "this plugin" if singular, "these plugins" if plural.
-#: kinsta-mu-plugins/security/class-banned-plugins.php:336
+#: kinsta-mu-plugins/security/class-banned-plugins.php:335
 #, php-format
 msgid "Please deactivate %s as soon as possible. Using a banned plugin can cause performance issues for your site or compatibility issues with our hosting platform."
 msgstr ""
 
 #. Translators: %s "this plugin" if singular, "these plugins" if plural.
-#: kinsta-mu-plugins/security/class-banned-plugins.php:336
-#: kinsta-mu-plugins/security/class-banned-plugins.php:352
+#: kinsta-mu-plugins/security/class-banned-plugins.php:335
+#: kinsta-mu-plugins/security/class-banned-plugins.php:351
 msgid "this plugin"
 msgid_plural "these plugins"
 msgstr[0] ""
 msgstr[1] ""
 
-#: kinsta-mu-plugins/security/class-banned-plugins.php:339
+#: kinsta-mu-plugins/security/class-banned-plugins.php:338
 msgid "Learn more about banned plugins"
 msgstr ""
 
-#: kinsta-mu-plugins/security/class-banned-plugins.php:344
+#: kinsta-mu-plugins/security/class-banned-plugins.php:343
 msgid "Banned plugin detected"
 msgid_plural "Banned plugins detected"
 msgstr[0] ""
 msgstr[1] ""
 
-#: kinsta-mu-plugins/security/class-banned-plugins.php:349
+#: kinsta-mu-plugins/security/class-banned-plugins.php:348
 msgid "Using a banned plugin can cause performance issues for your site or compatibility issues with the hosting platform."
 msgstr ""
 
 #. Translators: %s "this plugin" if singular, "these plugins" if plural.
-#: kinsta-mu-plugins/security/class-banned-plugins.php:352
+#: kinsta-mu-plugins/security/class-banned-plugins.php:351
 #, php-format
 msgid "Please deactivate %s as soon as possible."
 msgstr ""
 
-#: kinsta-mu-plugins/security/class-banned-plugins.php:381
+#: kinsta-mu-plugins/security/class-banned-plugins.php:380
 msgid "Why?"
 msgstr ""
 

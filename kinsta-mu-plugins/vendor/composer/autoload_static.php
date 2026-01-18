@@ -11,14 +11,14 @@ class ComposerStaticInit2cf20ea723fd7bd08289a44f36742029
     );
 
     public static $prefixLengthsPsr4 = array (
-        'K' => 
+        'K' =>
         array (
             'Kinsta\\KMP\\' => 11,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Kinsta\\KMP\\' => 
+        'Kinsta\\KMP\\' =>
         array (
             0 => __DIR__ . '/../../..' . '/kinsta-mu-plugins/app',
         ),

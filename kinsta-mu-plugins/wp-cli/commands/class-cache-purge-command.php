@@ -162,7 +162,7 @@ class Cache_Purge_Command extends WP_CLI_Command {
 	 * @return void
 	 */
 	private function purge_all_caches() {
-		$this->kinsta_cache_purge->purge_complete_caches();
+		$this->kinsta_cache_purge->purge_complete_caches( true );
 
 		WP_CLI::success( __( 'All caches were cleared. Changes usually appear globally within a few minutes.', 'kinsta-mu-plugins' ) );
 	}
