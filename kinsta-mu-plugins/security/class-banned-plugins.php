@@ -40,7 +40,6 @@ class Banned_Plugins {
 		'exec-php/exec-php.php',
 		'loginwall/loginwall.php',
 		'wp-rss-multi-importer/wp-rss-multi-importer.php',
-		'wp-db-backup-made/wpa-wp.php',
 		'duplicator-pro/duplicator-pro.php', // Duplicator Pro.
 	);
 
