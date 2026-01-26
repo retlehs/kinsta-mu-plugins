@@ -47,12 +47,22 @@ if ( ! defined( 'ABSPATH' ) ) { // If this file is called directly.
 				</div>
 				<div class='kinsta-box-content'>
 					<div class='content mb22'>
-						<?php if ( $this->kinsta_cache->has_object_cache ) : ?>
-						<p><?php esc_html_e( 'Your site uses our full page and object caching technology to remain lightning fast. We purge single pages and key pages such as the home page immediately and impose a minimal throttle time on archive pages. This ensures high availability at all times.', 'kinsta-mu-plugins' ); ?>
+						<?php if ( 'litespeed' === $this->kinsta_cache->cache_backend ) : ?>
+							<?php if ( $this->kinsta_cache->has_object_cache ) : ?>
+							<p><?php esc_html_e( 'Your site uses LiteSpeed Cache with full page and object caching technology to remain lightning fast. We purge single pages and key pages such as the home page immediately and impose a minimal throttle time on archive pages. This ensures high availability at all times.', 'kinsta-mu-plugins' ); ?>
+							<?php else : ?>
+							<p><?php esc_html_e( 'Your site uses LiteSpeed Cache with full page caching technology to remain lightning fast. We purge single pages and key pages such as the home page immediately and impose a minimal throttle time on archive pages. This ensures high availability at all times.', 'kinsta-mu-plugins' ); ?>
+							<?php endif; ?>
+							</p>
+							<p class="description"><span class="dashicons dashicons-info"></span> <?php esc_html_e( 'Cache Backend: LiteSpeed', 'kinsta-mu-plugins' ); ?></p>
 						<?php else : ?>
-						<p><?php esc_html_e( 'Your site uses our full page caching technology to remain lightning fast. We purge single pages and key pages such as the home page immediately and impose a minimal throttle time on archive pages. This ensures high availability at all times.', 'kinsta-mu-plugins' ); ?>
+							<?php if ( $this->kinsta_cache->has_object_cache ) : ?>
+							<p><?php esc_html_e( 'Your site uses our full page and object caching technology to remain lightning fast. We purge single pages and key pages such as the home page immediately and impose a minimal throttle time on archive pages. This ensures high availability at all times.', 'kinsta-mu-plugins' ); ?>
+							<?php else : ?>
+							<p><?php esc_html_e( 'Your site uses our full page caching technology to remain lightning fast. We purge single pages and key pages such as the home page immediately and impose a minimal throttle time on archive pages. This ensures high availability at all times.', 'kinsta-mu-plugins' ); ?>
+							<?php endif; ?>
+							</p>
 						<?php endif; ?>
-						</p>
 						<?php
 						if ( defined( 'KINSTAMU_DISABLE_AUTOPURGE' ) && KINSTAMU_DISABLE_AUTOPURGE === true ) {
 							$warning_msg = '<strong>' . __( 'Automatic cache purging has been disabled.', 'kinsta-mu-plugins' ) . '</strong>';

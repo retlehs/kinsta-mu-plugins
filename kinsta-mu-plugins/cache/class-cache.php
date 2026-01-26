@@ -80,6 +80,13 @@ class Cache {
 	public $has_object_cache;
 
 	/**
+	 * The cache backend type ('kinsta' or 'litespeed')
+	 *
+	 * @var string
+	 */
+	public $cache_backend;
+
+	/**
 	 * Class constructor
 	 *
 	 * @param array $config           The cache configuration.
@@ -89,6 +96,7 @@ class Cache {
 
 		$this->config = $config;
 		$this->default_settings = $default_settings;
+		$this->cache_backend = ! empty( $config['cache_backend'] ) ? $config['cache_backend'] : 'kinsta';
 		$this->set_settings();
 		$this->set_has_object_cache();
 
@@ -117,7 +125,13 @@ class Cache {
 	 */
 	public function init_cache() {
 
-		$this->kinsta_cache_purge = new Cache_Purge( $this );
+		// Use LiteSpeed purge handler if configured.
+		if ( ! empty( $this->config['cache_backend'] ) && 'litespeed' === $this->config['cache_backend'] ) {
+			$this->kinsta_cache_purge = new LiteSpeed_Purge( $this );
+		} else {
+			$this->kinsta_cache_purge = new Cache_Purge( $this );
+		}
+
 		$this->kinsta_cache_admin = new Cache_Admin( $this );
 
 		$this->KinstaCachePurge = $this->kinsta_cache_purge; // phpcs:ignore
