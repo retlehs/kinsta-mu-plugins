@@ -13,7 +13,7 @@ For latest version/info please see the official [Kinsta MU Plugin page](https://
     ```sh
     composer config repositories.kinsta-mu-plugins vcs git@github.com:retlehs/kinsta-mu-plugins
     ```
-1. Require the plugin with a specific version (or `*` for latest):
+1. Require the plugin:
     ```sh
     composer require kinsta/kinsta-mu-plugins
     ```
