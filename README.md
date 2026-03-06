@@ -3,9 +3,9 @@
 A simple mirror of the official Kinsta Mu Plugin with added Composer/[Bedrock](https://github.com/roots/bedrock) support.
 
 > [!NOTE]
-> Kinsta now includes [Composer installation instructions](https://kinsta.com/help/kinsta-mu-plugin/#installing-via-composer) in their official docs. However, this package is still useful as it supports versioning, allowing you to pin specific releases in your `composer.json`.
+> Kinsta now includes [Composer installation instructions]([https://kinsta.com/help/kinsta-mu-plugin/#installing-via-composer](https://kinsta.com/docs/wordpress-hosting/kinsta-mu-plugin/?kaid=OFDHAJIXUDIV#installing-via-composer)) in their official docs. However, this package is still useful as it supports versioning, allowing you to pin specific releases in your `composer.json`.
 
-For latest version/info please see the official [Kinsta MU Plugin page](https://kinsta.com/docs/wordpress-hosting/kinsta-mu-plugin).
+For latest version/info please see the official [Kinsta MU Plugin page](https://kinsta.com/docs/wordpress-hosting/kinsta-mu-plugin/?kaid=OFDHAJIXUDIV#installing-via-composer).
 
 ## Installing with Composer (for Bedrock)
 
@@ -33,7 +33,7 @@ define('KINSTAMU_WHITELABEL', true);
 define('KINSTAMU_LOGO', 'https://mylogo.com/mylogo.jpg');
 ```
 
-For more info, refer to the [official docs here](https://kinsta.com/docs/wordpress-hosting/kinsta-mu-plugin#white-label-and-customize-the-kinsta-mu-plugin)
+For more info, refer to the [official docs here](https://kinsta.com/docs/wordpress-hosting/kinsta-mu-plugin/?kaid=OFDHAJIXUDIV#white-label-and-customize-the-kinsta-mu-plugin)
 
 
 ## Bedrock + Kinsta
@@ -54,4 +54,4 @@ Config::define('KINSTAMU_CUSTOM_MUPLUGIN_URL', "{$mu_plugins_url}/kinsta-mu-plug
 
 ## Changelog
 
-https://kinsta.com/changelog/mu-plugin-changelog/
+[https://kinsta.com/changelog/mu-plugin-changelog/](https://kinsta.com/changelog/mu-plugin-changelog/?kaid=OFDHAJIXUDIV)
