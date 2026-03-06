@@ -2,37 +2,21 @@
 
 A simple mirror of the official Kinsta Mu Plugin with added Composer/[Bedrock](https://github.com/roots/bedrock) support.
 
+> [!NOTE]
+> Kinsta now includes [Composer installation instructions](https://kinsta.com/help/kinsta-mu-plugin/#installing-via-composer) in their official docs. However, this package is still useful as it supports versioning, allowing you to pin specific releases in your `composer.json`.
+
 For latest version/info please see the official [Kinsta MU Plugin page](https://kinsta.com/docs/wordpress-hosting/kinsta-mu-plugin).
 
 ## Installing with Composer (for Bedrock)
 
-1. Add this plugin repo to `repositories`in your Bedrock `composer.json` file:
-    ```diff
-      "repositories": {
-        "wpackagist": {
-          "type": "composer",
-          "url": "https://wpackagist.org",
-          "only": [
-            "wpackagist-plugin/*",
-            "wpackagist-theme/*"
-          ]
-        },
-    +   "kinsta-mu-plugins": {
-    +     "type": "vcs",
-    +     "url": "git@github.com:retlehs/kinsta-mu-plugins"
-    +   },
+1. Add this plugin repo from the Bedrock directory:
+    ```sh
+    composer config repositories.kinsta-mu-plugins vcs git@github.com:retlehs/kinsta-mu-plugins
     ```
-1. Add the plugin requirement with specific version number (or `*` for latest) to `composer.json`:
-    ```diff
-      "require": {
-        "php": ">=7.4",
-        "composer/installers": "^2.0",
-        ...
-    +   "kinsta/kinsta-mu-plugins": "*",
-        ...
-      }
+1. Require the plugin with a specific version (or `*` for latest):
+    ```sh
+    composer require kinsta/kinsta-mu-plugins
     ```
-1. Run `composer update` from the Bedrock directory.
 
 
 ## White label
@@ -59,13 +43,13 @@ The following constants may be required to fix issues with CDN paths + shared pl
 /**
  * Kinsta CDN fix for Bedrock
  */
-define('KINSTA_CDN_USERDIRS', 'app');
+Config::define('KINSTA_CDN_USERDIRS', 'app');
 
 /**
  * Fix Kinsta MU Plugins URL path with Bedrock
  */
 $mu_plugins_url = Config::get('WP_CONTENT_URL') . '/mu-plugins';
-define('KINSTAMU_CUSTOM_MUPLUGIN_URL', "{$mu_plugins_url}/kinsta-mu-plugins");
+Config::define('KINSTAMU_CUSTOM_MUPLUGIN_URL', "{$mu_plugins_url}/kinsta-mu-plugins");
 ```
 
 ## Changelog
