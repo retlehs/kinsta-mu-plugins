@@ -7,16 +7,11 @@ A simple mirror of the official Kinsta Mu Plugin with added Composer/[Bedrock](h
 
 For latest version/info please see the official [Kinsta MU Plugin page](https://kinsta.com/docs/wordpress-hosting/kinsta-mu-plugin/?kaid=OFDHAJIXUDIV#installing-via-composer).
 
-## Installing with Composer (for Bedrock)
+## Installing with Composer
 
-1. Add this plugin repo from the Bedrock directory:
-    ```sh
-    composer config repositories.kinsta-mu-plugins vcs git@github.com:retlehs/kinsta-mu-plugins
-    ```
-1. Require the plugin:
-    ```sh
-    composer require kinsta/kinsta-mu-plugins
-    ```
+```sh
+composer require retlehs/kinsta-mu-plugins
+```
 
 
 ## White label
