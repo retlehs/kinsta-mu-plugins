@@ -1,4 +1,7 @@
 {
-  "name": "kinsta/kinsta-mu-plugins",
-  "type": "wordpress-muplugin"
+  "name": "retlehs/kinsta-mu-plugins",
+  "type": "wordpress-muplugin",
+  "replace": {
+    "kinsta/kinsta-mu-plugins": "self.version"
+  }
 }
