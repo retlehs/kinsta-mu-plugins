@@ -27,20 +27,6 @@ class Plugin_List_Command extends WP_CLI_Command {
 	private $installed_plugins = array();
 
 	/**
-	 * List of plugins that we encourage our users to deactivate.
-	 *
-	 * @var array
-	 */
-	private $warning_plugins = array();
-
-	/**
-	 * List of plugins that will be forcibly disabled.
-	 *
-	 * @var array
-	 */
-	private $disabled_plugins = array();
-
-	/**
 	 * List of plugins in the Banned category.
 	 *
 	 * @var array
@@ -48,11 +34,11 @@ class Plugin_List_Command extends WP_CLI_Command {
 	private $banned_plugins = array();
 
 	/**
-	 * List of plugins with updates.
+	 * Plugin updates transient value.
 	 *
-	 * @var array
+	 * @var object|false
 	 */
-	private $update_plugins = array();
+	private $update_plugins = false;
 
 	/**
 	 * The Constructor.
@@ -74,10 +60,10 @@ class Plugin_List_Command extends WP_CLI_Command {
 		);
 
 		$this->installed_plugins = get_plugins();
-		$this->update_plugins = get_site_transient( 'update_plugins' );
 
-		$this->warning_plugins  = $args['warning_list'];
-		$this->disabled_plugins = $args['disabled_list'];
+		$update_plugins = get_site_transient( 'update_plugins' );
+		$this->update_plugins = is_object( $update_plugins ) ? $update_plugins : false;
+
 		$this->banned_plugins = $args['banned_list'];
 	}
 
@@ -213,6 +199,10 @@ class Plugin_List_Command extends WP_CLI_Command {
 	 * @return string
 	 */
 	private function is_update_available( $plugin_file ) {
+		if ( ! is_object( $this->update_plugins ) || ! isset( $this->update_plugins->response ) || ! is_array( $this->update_plugins->response ) ) {
+			return 'none';
+		}
+
 		return array_key_exists( $plugin_file, $this->update_plugins->response ) ? 'available' : 'none';
 	}
 

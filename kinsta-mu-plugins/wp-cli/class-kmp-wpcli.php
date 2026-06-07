@@ -27,9 +27,9 @@ class KMP_WPCLI {
 	/**
 	 * The kmp class.
 	 *
-	 * @var \Kinsta\KMP
+	 * @var KMP
 	 */
-	public $kmp;
+	public KMP $kmp;
 
 	/**
 	 * The Banned_Plugins class instance.
@@ -37,16 +37,17 @@ class KMP_WPCLI {
 	 * This instance will provide access to the plugins registered on the
 	 * Banned list.
 	 *
-	 * @var \Kinsta\Security\Banned_Plugins
+	 * @var Banned_Plugins
 	 */
-	private $banned_plugins;
+	private Banned_Plugins $banned_plugins;
 
 	/**
 	 * The Constructor.
 	 *
-	 * @param \Kinsta\KMP $kmp The KMP object.
+	 * @param KMP       $kmp       The KMP object.
+	 * @param Autopurge $autopurge The Autopurge controller used to register the cache autopurge WP-CLI command.
 	 */
-	public function __construct( \Kinsta\KMP $kmp, Autopurge $autopurge ) {
+	public function __construct( KMP $kmp, Autopurge $autopurge ) {
 		$this->kmp = $kmp;
 		$this->banned_plugins = $kmp->banned_plugins;
 

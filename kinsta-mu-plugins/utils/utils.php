@@ -7,6 +7,8 @@
 
 namespace Kinsta;
 
+use Kinsta\KMP\Helpers\Whitelabel;
+
 if ( ! defined( 'ABSPATH' ) ) { // If this file is called directly.
 	die( 'No script kiddies please!' );
 }
@@ -36,20 +38,13 @@ add_filter( 'wp_is_mobile', __NAMESPACE__ . '\\kinsta_is_mobile' );
 function get_server_var( $server_key, $response_key ) {
 
 	$response = null;
-	if ( isset( $_SERVER ) && isset( $_SERVER[ $server_key ] ) ) {
-		$response = json_decode( $_SERVER[ $server_key ], true );
+
+	if ( isset( $_SERVER[ $server_key ] ) ) {
+		$value    = sanitize_text_field( wp_unslash( $_SERVER[ $server_key ] ) );
+		$response = json_decode( $value, true );
 	}
 
 	return isset( $response[ $response_key ] ) ? $response[ $response_key ] : $response;
-}
-
-/**
- * A helper function to check if the Whitelable is enabled.
- *
- * @return bool
- */
-function is_whitelabel_enabled() {
-	return defined( 'KINSTAMU_WHITELABEL' ) && true === KINSTAMU_WHITELABEL;
 }
 
 /**

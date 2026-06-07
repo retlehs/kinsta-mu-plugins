@@ -7,4 +7,23 @@ $baseDir = dirname(dirname($vendorDir));
 
 return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
+    'Kinsta\\KMP\\AdminPage' => $baseDir . '/kinsta-mu-plugins/app/AdminPage.php',
+    'Kinsta\\KMP\\Cache\\Autopurge' => $baseDir . '/kinsta-mu-plugins/app/Cache/Autopurge.php',
+    'Kinsta\\KMP\\Cache\\Autopurge\\ACFController' => $baseDir . '/kinsta-mu-plugins/app/Cache/Autopurge/ACFController.php',
+    'Kinsta\\KMP\\Cache\\Autopurge\\Controller' => $baseDir . '/kinsta-mu-plugins/app/Cache/Autopurge/Controller.php',
+    'Kinsta\\KMP\\Cache\\Autopurge\\ElementorController' => $baseDir . '/kinsta-mu-plugins/app/Cache/Autopurge/ElementorController.php',
+    'Kinsta\\KMP\\Cache\\Autopurge\\WPOptionController' => $baseDir . '/kinsta-mu-plugins/app/Cache/Autopurge/WPOptionController.php',
+    'Kinsta\\KMP\\Cache\\Autopurge\\WPPostController' => $baseDir . '/kinsta-mu-plugins/app/Cache/Autopurge/WPPostController.php',
+    'Kinsta\\KMP\\Cache\\Autopurge\\WPThemeController' => $baseDir . '/kinsta-mu-plugins/app/Cache/Autopurge/WPThemeController.php',
+    'Kinsta\\KMP\\Cache\\Autopurge\\WPThemeHeaderController' => $baseDir . '/kinsta-mu-plugins/app/Cache/Autopurge/WPThemeHeaderController.php',
+    'Kinsta\\KMP\\Cache\\Autopurge\\WPThemeWidgetController' => $baseDir . '/kinsta-mu-plugins/app/Cache/Autopurge/WPThemeWidgetController.php',
+    'Kinsta\\KMP\\Cache\\Autopurge\\WooCommerceController' => $baseDir . '/kinsta-mu-plugins/app/Cache/Autopurge/WooCommerceController.php',
+    'Kinsta\\KMP\\Cache\\CustomPaths' => $baseDir . '/kinsta-mu-plugins/app/Cache/CustomPaths.php',
+    'Kinsta\\KMP\\Commands\\Cache\\AutopurgeCommand' => $baseDir . '/kinsta-mu-plugins/app/Commands/Cache/AutopurgeCommand.php',
+    'Kinsta\\KMP\\Contracts\\Autopurgable' => $baseDir . '/kinsta-mu-plugins/app/Contracts/Autopurgable.php',
+    'Kinsta\\KMP\\Contracts\\Describable' => $baseDir . '/kinsta-mu-plugins/app/Contracts/Describable.php',
+    'Kinsta\\KMP\\Contracts\\Hookable' => $baseDir . '/kinsta-mu-plugins/app/Contracts/Hookable.php',
+    'Kinsta\\KMP\\Contracts\\Nameable' => $baseDir . '/kinsta-mu-plugins/app/Contracts/Nameable.php',
+    'Kinsta\\KMP\\Contracts\\Purgeable' => $baseDir . '/kinsta-mu-plugins/app/Contracts/Purgeable.php',
+    'Kinsta\\KMP\\Helpers\\Whitelabel' => $baseDir . '/kinsta-mu-plugins/app/Helpers/Whitelabel.php',
 );

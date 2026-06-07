@@ -85,17 +85,26 @@ class Cache {
 			),
 			'rules' => array(),
 		);
-        $this->hook();
+		$this->hook();
 		$this->set_settings();
 		$this->set_has_object_cache();
 	}
 
-    public function hook(): void
-    {
-        add_filter('default_option_' . $this->config['option_name'], function () {
-            return $this->default_settings;
-        });
-    }
+	/**
+	 * Register hooks.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return void
+	 */
+	public function hook(): void {
+		add_filter(
+			'default_option_' . $this->config['option_name'],
+			function () {
+				return $this->default_settings;
+			}
+		);
+	}
 
 	/**
 	 * Check if the site has Object Caching enabled.
@@ -125,7 +134,7 @@ class Cache {
 		$settings = get_option( $this->config['option_name'] );
 
 		// If there are no settings yet, save the default ones.
-		if ( empty( $settings ) || gettype( $settings ) !== 'object' ) {
+		if ( empty( $settings ) || ! is_array( $settings ) ) {
 			// Make the settings available to the class.
 			$this->settings = $this->default_settings;
 			// Save initial settings.
@@ -135,7 +144,7 @@ class Cache {
 		}
 
 		// If there has been a version change, scan settings for changes.
-		if ( empty( $settings['version'] ) || ( ! empty( $settings['version'] ) && version_compare( $settings['version'], $this->default_settings['version'], '!=' ) ) ) {
+		if ( empty( $settings['version'] ) || version_compare( $settings['version'], $this->default_settings['version'], '!=' ) ) {
 			foreach ( $this->default_settings['rules'] as $group => $rules ) {
 				// If there is a new rule group, add it with the default values.
 				if ( ! isset( $settings['rules'][ $group ] ) ) {

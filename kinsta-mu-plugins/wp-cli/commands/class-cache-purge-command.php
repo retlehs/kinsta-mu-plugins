@@ -94,7 +94,6 @@ class Cache_Purge_Command extends WP_CLI_Command {
 
 		if ( is_wp_error( $response ) ) {
 			WP_CLI::error( $response->get_error_message() );
-			return;
 		}
 
 		$body = wp_remote_retrieve_body( $response );
@@ -120,7 +119,6 @@ class Cache_Purge_Command extends WP_CLI_Command {
 
 		if ( is_wp_error( $response ) ) {
 			WP_CLI::error( $response->get_error_message() );
-			return;
 		}
 
 		$body = wp_remote_retrieve_body( $response );
