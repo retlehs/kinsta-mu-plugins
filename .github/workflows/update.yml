@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: master
 
@@ -33,7 +33,7 @@ jobs:
           echo $version
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           commit-message: "Update Kinsta MU Plugin to v${{ steps.get_version.outputs.version }}"
           branch: update/kinsta-mu-plugin-${{ steps.get_version.outputs.version }}
