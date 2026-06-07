@@ -4,111 +4,121 @@ namespace Kinsta\KMP\Cache\Autopurge;
 
 use Kinsta\Cache_Purge;
 use Kinsta\KMP;
-use Kinsta\KMP\Cache\Autopurge;
 use Kinsta\KMP\Contracts\Autopurgable;
 
+use function in_array;
+use function is_bool;
 use function Kinsta\KMP\debug_log;
 use function Kinsta\KMP\is_autopurge_enabled;
+
+use const PHP_INT_MAX;
 
 abstract class Controller implements Autopurgable
 {
 	protected KMP $kmp;
 
-    /**
-     * @var bool|null|string Set the behavior of the autopurge.
-     */
-    protected $status = null;
+	/** @var bool|string|null Set the behavior of the autopurge. */
+	protected $status = null;
 
-    /**
-     * Default value.
-     *
-     * @var boolean|null
-     */
-    protected ?bool $default = null;
+	/**
+	 * Default value.
+	 */
+	protected ?bool $default = null;
 
-    /**
-     * Unique name of the autopurge controller.
-     */
-    protected string $name;
+	/**
+	 * Unique name of the autopurge controller.
+	 */
+	protected string $name;
 
-    public function __construct(KMP $kmp)
-    {
-        $this->kmp = $kmp;
-
-        /**
-         * Filter to control whether autopurge is enabled for ACF updates.
-         *
-         * @param bool|null|string $status Whether to enable the option update autopurge. Default `null`.
-         * @param string $name The name of the autopurge controller..
-         */
-        $this->status = apply_filters('kinsta/kmp/cache/autopurge', $this->status, $this->name);
-
-        /**
-         * Force the value from the filter into the option as it should take precedence
-         * over the value stored in the option table.
-         */
-        add_filter('option_kinsta_kmp_cache_autopurge', function($value) {
-            if ($this->status !== null && is_bool($this->status)) {
-                $value[$this->name] = $this->status;
-            }
-
-            return $value;
-        }, PHP_INT_MAX);
-    }
-
-    public function clear(): void
+	public function __construct(KMP $kmp)
 	{
-        if (! $this->isOn()) {
-            debug_log('Autopurge is disabled, skipping cache clear.', ['controller' => $this->name]);
+		$this->kmp = $kmp;
 
-            return;
-        }
+		/**
+		 * Filter to control whether autopurge is enabled for ACF updates.
+		 *
+		 * @param bool|string|null $status Whether to enable the option update autopurge. Default `null`.
+		 * @param string $name The name of the autopurge controller..
+		 */
+		$this->status = apply_filters('kinsta/kmp/cache/autopurge', $this->status, $this->name);
 
-        if (! $this->kmp->kinsta_cache_purge instanceof Cache_Purge) {
-            return;
-        }
+		/**
+		 * Force the value from the filter into the option as it should take precedence
+		 * over the value stored in the option table.
+		 */
+		add_filter('option_kinsta_kmp_cache_autopurge', function ($value) {
+			if ($this->status !== null && is_bool($this->status)) {
+				$value[$this->name] = $this->status;
+			}
 
-        $this->kmp->kinsta_cache_purge->purge_complete_caches();
-
-        debug_log('All caches were cleared.', ['controller' => $this->name]);
+			return $value;
+		}, PHP_INT_MAX);
 	}
 
-    public function isOn(): bool
-    {
-        if (! is_autopurge_enabled()) {
-            return false;
-        }
+	public function purge(): void
+	{
+		if (! $this->isOn()) {
+			debug_log('Autopurge is disabled, skipping cache clear.', ['controller' => $this->name]);
 
-        /**
-         * The filter should take precedence over the option setting. If the filter
-         * explicitly return `false`, do not proceed with the cache purge.
-         */
-        if ($this->status === false) {
-            return false;
-        }
+			return;
+		}
 
-        $options = get_option( 'kinsta_kmp_cache_autopurge' );
-        $value = $options[$this->name] ?? $this->default ?? null;
+		if (! $this->kmp->kinsta_cache_purge instanceof Cache_Purge) {
+			return;
+		}
 
-        /**
-         * When the value is `null`, it means the option is not set, so we should
-         * treat it as if it is enabled.
-         */
-        return in_array( $value, [true, 1, '1', null], true );
-    }
+		$this->kmp->kinsta_cache_purge->purge_complete_caches();
 
-    public function isSupported(): bool
-    {
-        return true;
-    }
+		debug_log('All caches were cleared.', ['controller' => $this->name]);
+	}
 
-    public function getName(): string
-    {
-        return $this->name;
-    }
+	public function isOn(): bool
+	{
+		if (! is_autopurge_enabled()) {
+			return false;
+		}
 
-    public function getDefault(): ?bool
-    {
-        return $this->default;
-    }
+		/**
+		 * The filter should take precedence over the option setting. If the filter
+		 * explicitly return `false`, do not proceed with the cache purge.
+		 */
+		if ($this->status === false) {
+			return false;
+		}
+
+		$options = get_option('kinsta_kmp_cache_autopurge');
+		$value = $options[$this->name] ?? $this->default ?? null;
+
+		/**
+		 * When the value is `null`, it means the option is not set, so we should
+		 * treat it as if it is enabled.
+		 */
+		return in_array($value, [true, 1, '1', null], true);
+	}
+
+	public function isSupported(): bool
+	{
+		return true;
+	}
+
+	public function getName(): string
+	{
+		return $this->name;
+	}
+
+	public function getDefault(): ?bool
+	{
+		return $this->default;
+	}
+
+	protected function shouldProceed(): bool
+	{
+		// Do not proceed purging the cache if object is not properly set up.
+		if (! $this->kmp->kinsta_cache_purge instanceof Cache_Purge) {
+			return false;
+		}
+
+		// Avoid multiple purges on the same request.
+		return (bool) $this->kmp->kinsta_cache_purge->purge_single_happened === false;
+	}
 }

@@ -2,26 +2,24 @@
 
 namespace Kinsta\KMP\Contracts;
 
-interface Autopurgable extends Nameable, Describable, Clearable, Hookable
+interface Autopurgable extends Nameable, Describable, Purgeable, Hookable
 {
-    /**
-     * Whether should perform clearing (purging).
-     *
-     * @return bool True if on/enabled, false otherwise.
-     */
-    public function isOn(): bool;
+	/**
+	 * Whether should perform clearing (purging).
+	 *
+	 * @return bool True if on/enabled, false otherwise.
+	 */
+	public function isOn(): bool;
 
-    /**
-     * Whether this feature is supported in the current site/setup.
-     *
-     * @return bool True if supported, false otherwise.
-     */
-    public function isSupported(): bool;
+	/**
+	 * Whether this feature is supported in the current site/setup.
+	 *
+	 * @return bool True if supported, false otherwise.
+	 */
+	public function isSupported(): bool;
 
-    /**
-     * Retrieve the default setting.
-     *
-     * @return bool|null
-     */
-    public function getDefault(): ?bool;
+	/**
+	 * Retrieve the default setting.
+	 */
+	public function getDefault(): ?bool;
 }

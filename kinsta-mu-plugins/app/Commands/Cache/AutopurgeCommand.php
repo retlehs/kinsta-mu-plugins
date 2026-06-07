@@ -1,103 +1,104 @@
 <?php
 /**
  * Compat: WP_CLI class
- *
- * @package KinstaMUPlugins/Compat
  */
 
 namespace Kinsta\KMP\Commands\Cache;
 
 use Kinsta\KMP\Cache\Autopurge;
 use Kinsta\KMP\Contracts\Autopurgable;
+use Throwable;
 use WP_CLI;
 use WP_CLI_Command;
 
-class AutopurgeCommand extends WP_CLI_Command {
+class AutopurgeCommand extends WP_CLI_Command
+{
+	private Autopurge $autopurge;
 
-    private Autopurge $autopurge;
-
-    public function __construct(Autopurge $autopurge)
-    {
-        $this->autopurge = $autopurge;
-    }
+	public function __construct(Autopurge $autopurge)
+	{
+		$this->autopurge = $autopurge;
+	}
 
 	/**
 	 * Check the current global autopurge status.
 	 *
-     * ## EXAMPLES
+	 * ## EXAMPLES
 	 *
 	 *     # Check the current global autopurge status.
 	 *     $ wp kinsta cache autopurge status
 	 *     Success: Autopurge is enabled.
-     *
-	 * @param array $args The command arguments. Unused.
-     * @param array $assoc_args The command associative arguments. Unused.
-	 * @return void
+	 *
+	 * @param array<string>        $args      The command arguments. Unused.
+	 * @param array<string,string> $assocArgs The command associative arguments. Unused.
 	 */
-	public function status( array $args, array $assoc_args ) {
-        WP_CLI::log(
-            $this->autopurge->status() === 'enabled' ?
-            __( 'Autopurge is enabled.', 'kinsta-mu-plugins' ) :
-            __( 'Autopurge is disabled.', 'kinsta-mu-plugins' )
-        );
+	public function status(array $args, array $assocArgs): void
+	{
+		WP_CLI::log(
+			$this->autopurge->status() === 'enabled' ?
+			__('Autopurge is enabled.', 'kinsta-mu-plugins') :
+			__('Autopurge is disabled.', 'kinsta-mu-plugins'),
+		);
 	}
 
 	/**
 	 * Disable global autopurge.
 	 *
-     * ## EXAMPLES
+	 * ## EXAMPLES
 	 *
 	 *     # Disable the global autopurge.
-     *     $ wp kinsta cache autopurge disable
+	 *     $ wp kinsta cache autopurge disable
 	 *     Success: Autopurge is now disabled.
-     *
-	 * @param array $args The command arguments. Unused.
-     * @param array $assoc_args The command associative arguments. Unused.
-	 * @return void
+	 *
+	 * @param array<string>        $args      The command arguments. Unused.
+	 * @param array<string,string> $assocArgs The command associative arguments. Unused.
 	 */
-	public function disable( array $args, array $assoc_args ) {
-        if ($this->autopurge->status() === 'disabled') {
-            WP_CLI::warning( __( 'Autopurge is already disabled.', 'kinsta-mu-plugins' ) );
-            return;
-        }
+	public function disable(array $args, array $assocArgs): void
+	{
+		if ($this->autopurge->status() === 'disabled') {
+			WP_CLI::warning(__('Autopurge is already disabled.', 'kinsta-mu-plugins'));
 
-        if ($this->autopurge->disable()) {
-            WP_CLI::success( __( 'Autopurge is now disabled.', 'kinsta-mu-plugins' ) );
-        } else {
-            WP_CLI::warning( __( 'Failed to disable autopurge.', 'kinsta-mu-plugins' ) );
-        }
+			return;
+		}
+
+		if ($this->autopurge->disable()) {
+			WP_CLI::success(__('Autopurge is now disabled.', 'kinsta-mu-plugins'));
+		} else {
+			WP_CLI::warning(__('Failed to disable autopurge.', 'kinsta-mu-plugins'));
+		}
 	}
 
 	/**
 	 * Enable global autopurge.
 	 *
-     * ## EXAMPLES
+	 * ## EXAMPLES
 	 *
 	 *     # Enable global autopurge.
-     *     $ wp kinsta cache autopurge enable
+	 *     $ wp kinsta cache autopurge enable
 	 *     Success: Autopurge is now enabled.
-     *
-	 * @param array $args The command arguments. Unused.
-     * @param array $assoc_args The command associative arguments. Unused.
-	 * @return void
+	 *
+	 * @param array<string>        $args      The command arguments. Unused.
+	 * @param array<string,string> $assocArgs The command associative arguments. Unused.
 	 */
-	public function enable( array $args, array $assoc_args ) {
-        if ($this->autopurge->status() === 'enabled') {
-            WP_CLI::warning( __( 'Autopurge is already enabled.', 'kinsta-mu-plugins' ) );
-            return;
-        }
+	public function enable(array $args, array $assocArgs): void
+	{
+		if ($this->autopurge->status() === 'enabled') {
+			WP_CLI::warning(__('Autopurge is already enabled.', 'kinsta-mu-plugins'));
 
-        if ($this->autopurge->enable()) {
-            WP_CLI::success( __( 'Autopurge is now enabled.', 'kinsta-mu-plugins' ) );
-        } else {
-            WP_CLI::warning( __( 'Failed to enable autopurge.', 'kinsta-mu-plugins' ) );
-        }
+			return;
+		}
+
+		if ($this->autopurge->enable()) {
+			WP_CLI::success(__('Autopurge is now enabled.', 'kinsta-mu-plugins'));
+		} else {
+			WP_CLI::warning(__('Failed to enable autopurge.', 'kinsta-mu-plugins'));
+		}
 	}
 
-    /**
+	/**
 	 * List the autopurge setting controllers and their status.
 	 *
-     * ## OPTIONS
+	 * ## OPTIONS
 	 *
 	 * [--format=<format>]
 	 * : Render output in a particular format.
@@ -110,7 +111,7 @@ class AutopurgeCommand extends WP_CLI_Command {
 	 *   - json
 	 *   - yaml
 	 * ---
-     *
+	 *
 	 * ## EXAMPLES
 	 *
 	 *     # List the autopurge setting controllers and their status.
@@ -122,77 +123,70 @@ class AutopurgeCommand extends WP_CLI_Command {
 	 *     | elementor_controller | Purge cache on Elementor updates that affect the front-end. | off     |
 	 *     +----------------------+-------------------------------------------------------------+---------+
 	 *
-	 * @param array $args The command arguments.
-     * @param array $assoc_args The command associative arguments.
-	 * @return void
+	 * @param array<string>        $args      The command arguments.
+	 * @param array<string,string> $assocArgs The command associative arguments.
 	 */
-	public function list( array $args, array $assoc_args ) {
-        $list = [];
-        $format = $assoc_args['format'] ?? 'table';
+	public function list(array $args, array $assocArgs): void
+	{
+		$list = [];
+		$format = $assocArgs['format'] ?? 'table';
 
-        foreach ( $this->autopurge as $item ) {
-            if ($item instanceof Autopurgable) {
-                $list[] = [
-                    'name'        => $item->getName(),
-                    'description' => $item->getDescription(),
-                    'status'      => $item->isOn() ? 'on' : 'off',
-                ];
-            }
-        }
+		foreach ($this->autopurge as $item) {
+			if (! ($item instanceof Autopurgable)) {
+				continue;
+			}
 
-        WP_CLI\Utils\format_items( $format, $list, [ 'name', 'description', 'status' ] );
+			$list[] = [
+				'name'        => $item->getName(),
+				'description' => $item->getDescription(),
+				'status'      => $item->isOn() ? 'on' : 'off',
+			];
+		}
+
+		WP_CLI\Utils\format_items($format, $list, ['name', 'description', 'status']);
 	}
 
-    /**
+	/**
 	 * Toggle the autopurge setting on or off.
 	 *
 	 * ## EXAMPLES
 	 *
 	 *     # Enable an autopurge setting.
 	 *     $ wp kinsta cache autopurge toggle wp_option_controller on
-     *     Success: Autopurge setting updated.
-     *
-	 *     # Enable or disable an autopurge setting.
-	 *     $ wp kinsta cache autopurge toggle wp_option_controller on
-     *     Success: Autopurge setting updated.
+	 *     Success: Autopurge setting updated.
 	 *
-	 * @param array $args The command arguments.
-     * @param array $assoc_args The command associative arguments.
-	 * @return void
+	 * @param array<string>        $args      The command arguments.
+	 * @param array<string,string> $assocArgs The command associative arguments.
 	 */
-	public function toggle( array $args, array $assoc_args ) {
-        if (!isset($args[0])) {
-            WP_CLI::error( __( 'Please provide the setting to update.', 'kinsta-mu-plugins' ) );
+	public function toggle(array $args, array $assocArgs): void
+	{
+		if (! isset($args[0])) {
+			WP_CLI::error(__('Please provide the setting to update.', 'kinsta-mu-plugins'));
+		}
 
-            return;
-        }
+		if (! isset($args[1])) {
+			WP_CLI::error(__('Please provide the status to update on the setting.', 'kinsta-mu-plugins'));
+		}
 
-        if (!isset($args[1])) {
-            WP_CLI::error( __( 'Please provide the status to update on the setting.', 'kinsta-mu-plugins' ) );
+		$key = $args[0];
+		$status = $args[1];
 
-            return;
-        }
+		if ($status !== 'on' && $status !== 'off') {
+			WP_CLI::error(__('Status value is invalid. Please use "on" or "off".', 'kinsta-mu-plugins'));
+		}
 
-        $key = $args[0];
-        $status = $args[1];
+		$status = $status === 'on';
 
-        if ($status !== 'on' && $status !== 'off') {
-            WP_CLI::error( __( 'Status value is invalid. Please use "on" or "off".', 'kinsta-mu-plugins' ) );
-            return;
-        }
+		try {
+			$updated = $this->autopurge->update($key, $status);
 
-        $status = $status === 'on' ? true : false;
-
-        try {
-            $updated = $this->autopurge->update($key, $status);
-
-            if ($updated) {
-                WP_CLI::success( __( 'Autopurge setting updated.', 'kinsta-mu-plugins' ) );
-            } else {
-                WP_CLI::warning( __( 'Autopurge setting is not updated.', 'kinsta-mu-plugins' ) );
-            }
-        } catch (\Throwable $th) {
-            WP_CLI::error( $th->getMessage() );
-        }
+			if ($updated) {
+				WP_CLI::success(__('Autopurge setting updated.', 'kinsta-mu-plugins'));
+			} else {
+				WP_CLI::warning(__('Autopurge setting is not updated.', 'kinsta-mu-plugins'));
+			}
+		} catch (Throwable $th) {
+			WP_CLI::error($th->getMessage());
+		}
 	}
 }

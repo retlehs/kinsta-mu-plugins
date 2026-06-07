@@ -7,4 +7,5 @@ $baseDir = dirname(dirname($vendorDir));
 
 return array(
     'a85931c634369cf8d575431fc971d732' => $baseDir . '/kinsta-mu-plugins/inc/functions.php',
+    '14779a0a4371cc3c5646af3e045db44e' => $baseDir . '/kinsta-mu-plugins/inc/versions.php',
 );

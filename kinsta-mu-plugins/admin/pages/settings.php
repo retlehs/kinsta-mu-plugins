@@ -9,6 +9,8 @@
 
 namespace Kinsta;
 
+use function Kinsta\KMP\is_whitelabel_enabled;
+
 if ( ! defined( 'ABSPATH' ) ) { // If this file is called directly.
 	die( 'No script kiddies please!' );
 }
@@ -45,7 +47,7 @@ if ( ! defined( 'ABSPATH' ) ) { // If this file is called directly.
 		</div>
 
 		<?php
-		if ( KINSTAMU_WHITELABEL === false ) {
+		if ( ! is_whitelabel_enabled() ) {
 			include plugin_dir_path( __FILE__ ) . 'partials/sidebar-support.php';
 		}
 		?>

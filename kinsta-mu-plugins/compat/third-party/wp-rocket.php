@@ -53,9 +53,11 @@ function wprocket_upgrade_notice() {
 	<div class="notice notice-kinsta notice-warning">
 		<p>
 	<?php
+
+	/* Translators: %s links to Plugins page in WP Admin. */
 	$message_format = __( 'Your WP Rocket version is out-of-date and not fully compatible with Kinsta. %s', 'kinsta-mu-plugins' );
 
-	echo sprintf(
+	printf(
 		wp_kses(
 			$message_format,
 			array(

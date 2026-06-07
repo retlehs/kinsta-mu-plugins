@@ -53,4 +53,4 @@ class CDN_Enabler {
  */
 class CDNEnabler extends CDN_Enabler {} // phpcs:ignore
 
-$cdn_enabler = new CDN_Enabler();
+$cdn_enabler = new CDN_Enabler(); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

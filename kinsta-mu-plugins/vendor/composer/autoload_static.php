@@ -4,10 +4,11 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit2cf20ea723fd7bd08289a44f36742029
+class ComposerStaticInit160d03279b19443a3a37c02319c7a86d
 {
     public static $files = array (
         'a85931c634369cf8d575431fc971d732' => __DIR__ . '/../../..' . '/kinsta-mu-plugins/inc/functions.php',
+        '14779a0a4371cc3c5646af3e045db44e' => __DIR__ . '/../../..' . '/kinsta-mu-plugins/inc/versions.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -26,14 +27,33 @@ class ComposerStaticInit2cf20ea723fd7bd08289a44f36742029
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'Kinsta\\KMP\\AdminPage' => __DIR__ . '/../../..' . '/kinsta-mu-plugins/app/AdminPage.php',
+        'Kinsta\\KMP\\Cache\\Autopurge' => __DIR__ . '/../../..' . '/kinsta-mu-plugins/app/Cache/Autopurge.php',
+        'Kinsta\\KMP\\Cache\\Autopurge\\ACFController' => __DIR__ . '/../../..' . '/kinsta-mu-plugins/app/Cache/Autopurge/ACFController.php',
+        'Kinsta\\KMP\\Cache\\Autopurge\\Controller' => __DIR__ . '/../../..' . '/kinsta-mu-plugins/app/Cache/Autopurge/Controller.php',
+        'Kinsta\\KMP\\Cache\\Autopurge\\ElementorController' => __DIR__ . '/../../..' . '/kinsta-mu-plugins/app/Cache/Autopurge/ElementorController.php',
+        'Kinsta\\KMP\\Cache\\Autopurge\\WPOptionController' => __DIR__ . '/../../..' . '/kinsta-mu-plugins/app/Cache/Autopurge/WPOptionController.php',
+        'Kinsta\\KMP\\Cache\\Autopurge\\WPPostController' => __DIR__ . '/../../..' . '/kinsta-mu-plugins/app/Cache/Autopurge/WPPostController.php',
+        'Kinsta\\KMP\\Cache\\Autopurge\\WPThemeController' => __DIR__ . '/../../..' . '/kinsta-mu-plugins/app/Cache/Autopurge/WPThemeController.php',
+        'Kinsta\\KMP\\Cache\\Autopurge\\WPThemeHeaderController' => __DIR__ . '/../../..' . '/kinsta-mu-plugins/app/Cache/Autopurge/WPThemeHeaderController.php',
+        'Kinsta\\KMP\\Cache\\Autopurge\\WPThemeWidgetController' => __DIR__ . '/../../..' . '/kinsta-mu-plugins/app/Cache/Autopurge/WPThemeWidgetController.php',
+        'Kinsta\\KMP\\Cache\\Autopurge\\WooCommerceController' => __DIR__ . '/../../..' . '/kinsta-mu-plugins/app/Cache/Autopurge/WooCommerceController.php',
+        'Kinsta\\KMP\\Cache\\CustomPaths' => __DIR__ . '/../../..' . '/kinsta-mu-plugins/app/Cache/CustomPaths.php',
+        'Kinsta\\KMP\\Commands\\Cache\\AutopurgeCommand' => __DIR__ . '/../../..' . '/kinsta-mu-plugins/app/Commands/Cache/AutopurgeCommand.php',
+        'Kinsta\\KMP\\Contracts\\Autopurgable' => __DIR__ . '/../../..' . '/kinsta-mu-plugins/app/Contracts/Autopurgable.php',
+        'Kinsta\\KMP\\Contracts\\Describable' => __DIR__ . '/../../..' . '/kinsta-mu-plugins/app/Contracts/Describable.php',
+        'Kinsta\\KMP\\Contracts\\Hookable' => __DIR__ . '/../../..' . '/kinsta-mu-plugins/app/Contracts/Hookable.php',
+        'Kinsta\\KMP\\Contracts\\Nameable' => __DIR__ . '/../../..' . '/kinsta-mu-plugins/app/Contracts/Nameable.php',
+        'Kinsta\\KMP\\Contracts\\Purgeable' => __DIR__ . '/../../..' . '/kinsta-mu-plugins/app/Contracts/Purgeable.php',
+        'Kinsta\\KMP\\Helpers\\Whitelabel' => __DIR__ . '/../../..' . '/kinsta-mu-plugins/app/Helpers/Whitelabel.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit2cf20ea723fd7bd08289a44f36742029::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit2cf20ea723fd7bd08289a44f36742029::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit2cf20ea723fd7bd08289a44f36742029::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit160d03279b19443a3a37c02319c7a86d::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit160d03279b19443a3a37c02319c7a86d::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit160d03279b19443a3a37c02319c7a86d::$classMap;
 
         }, null, ClassLoader::class);
     }

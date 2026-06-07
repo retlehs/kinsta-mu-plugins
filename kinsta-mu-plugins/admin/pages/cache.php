@@ -9,6 +9,8 @@
 
 namespace Kinsta;
 
+use function Kinsta\KMP\is_whitelabel_enabled;
+
 if ( ! defined( 'ABSPATH' ) ) { // If this file is called directly.
 	die( 'No script kiddies please!' );
 }
@@ -28,7 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) { // If this file is called directly.
 			<div class="kinsta-content-section-body">
 				<p><?php esc_html_e( 'Your site uses our full page and object caching technology to load lightning fast. We purge single pages and key pages such as the home page immediately and impose a minimal throttle time on archive pages. This ensures high availability at all times.', 'kinsta-mu-plugins' ); ?></p>
 				<div class="kinsta-button-wrapper">
-					<button class="button button-primary kinsta-button" data-action="kinsta_clear_all_cache" data-nonce="<?php echo esc_attr( wp_create_nonce( 'kinsta-clear-all-cache' ) ); ?>" data-done-message="<?php echo esc_html( KMP_Admin::get_done_messages( 'kinsta-clear-all-cache' ) ); ?>" type="submit">
+					<button class="button button-primary kinsta-button" data-action="kinsta_clear_all_cache" data-nonce="<?php echo esc_attr( wp_create_nonce( 'kinsta-clear-all-cache' ) ); ?>" data-done-message="<?php echo esc_html( KMP_Admin::get_done_messages( 'all-cache' ) ); ?>" type="submit">
 						<?php esc_html_e( 'Clear All Caches', 'kinsta-mu-plugins' ); ?>
 					</button>
 					<img width="16" height="16" src="<?php echo esc_url( admin_url( 'images/spinner-2x.gif' ) ); ?>" alt="" class="spinner" />
@@ -43,7 +45,7 @@ if ( ! defined( 'ABSPATH' ) ) { // If this file is called directly.
 			<div class="kinsta-content-section-body">
 				<p><?php esc_html_e( 'Site cache makes your site load faster by storing site data. Clear it if you want to make sure your site shows the most recent version.', 'kinsta-mu-plugins' ); ?></p>
 				<div class="kinsta-button-wrapper">
-					<button class="button button-primary kinsta-button" data-action="kinsta_clear_site_cache" data-nonce="<?php echo esc_attr( wp_create_nonce( 'kinsta-clear-site-cache' ) ); ?>" data-done-message="<?php echo esc_html( KMP_Admin::get_done_messages( 'kinsta-clear-site-cache' ) ); ?>" type="submit">
+					<button class="button button-primary kinsta-button" data-action="kinsta_clear_site_cache" data-nonce="<?php echo esc_attr( wp_create_nonce( 'kinsta-clear-site-cache' ) ); ?>" data-done-message="<?php echo esc_html( KMP_Admin::get_done_messages( 'site-cache' ) ); ?>" type="submit">
 						<?php esc_html_e( 'Clear Site Cache', 'kinsta-mu-plugins' ); ?>
 					</button>
 					<img width="16" height="16" src="<?php echo esc_url( admin_url( 'images/spinner-2x.gif' ) ); ?>" alt="" class="spinner" />
@@ -58,7 +60,7 @@ if ( ! defined( 'ABSPATH' ) ) { // If this file is called directly.
 			<div class="kinsta-content-section-body">
 				<p><?php esc_html_e( 'The WordPress Object Cache is used to save on trips to the database. The Object Cache stores all of the cache data to memory and makes the cache contents available by using a key, which is used to name and later retrieve the cache contents.', 'kinsta-mu-plugins' ); ?></p>
 				<div class="kinsta-button-wrapper">
-					<button class="button button-primary kinsta-button" data-action="kinsta_clear_object_cache" data-nonce="<?php echo esc_attr( wp_create_nonce( 'kinsta-clear-object-cache' ) ); ?>" data-done-message="<?php echo esc_html( KMP_Admin::get_done_messages( 'kinsta-clear-object-cache' ) ); ?>" type="submit">
+					<button class="button button-primary kinsta-button" data-action="kinsta_clear_object_cache" data-nonce="<?php echo esc_attr( wp_create_nonce( 'kinsta-clear-object-cache' ) ); ?>" data-done-message="<?php echo esc_html( KMP_Admin::get_done_messages( 'object-cache' ) ); ?>" type="submit">
 						<?php esc_html_e( 'Clear Object Cache', 'kinsta-mu-plugins' ); ?>
 					</button>
 					<img width="16" height="16" src="<?php echo esc_url( admin_url( 'images/spinner-2x.gif' ) ); ?>" alt="" class="spinner" />
@@ -75,7 +77,7 @@ if ( ! defined( 'ABSPATH' ) ) { // If this file is called directly.
 					<p><?php esc_html_e( 'When CDN is enabled, all static content (such as images, CSS, and JavaScript files) is served through our Content Delivery Network. The limit is 5 GB per file. Clearing CDN cache purges the assigned CDN zone. If you replace static files and the new content has the same filename as the old content, you should clear the cache. The process may take up to five minutes.', 'kinsta-mu-plugins' ); ?></p>
 				</div>
 				<div class="kinsta-button-wrapper">
-					<button class="button button-primary kinsta-button" data-action="kinsta_clear_cdn_cache" data-nonce="<?php echo esc_attr( wp_create_nonce( 'kinsta-clear-cdn-cache' ) ); ?>" data-done-message="<?php echo esc_html( KMP_Admin::get_done_messages( 'kinsta-clear-cdn-cache' ) ); ?>" type="submit">
+					<button class="button button-primary kinsta-button" data-action="kinsta_clear_cdn_cache" data-nonce="<?php echo esc_attr( wp_create_nonce( 'kinsta-clear-cdn-cache' ) ); ?>" data-done-message="<?php echo esc_html( KMP_Admin::get_done_messages( 'cdn-cache' ) ); ?>" type="submit">
 						<?php esc_html_e( 'Clear CDN Cache', 'kinsta-mu-plugins' ); ?>
 					</button>
 					<img width="16" height="16" src="<?php echo esc_url( admin_url( 'images/spinner-2x.gif' ) ); ?>" alt="" class="spinner" />
@@ -90,13 +92,13 @@ if ( ! defined( 'ABSPATH' ) ) { // If this file is called directly.
 			<div class="kinsta-content-section-body no-grid">
 				<p>
 					<?php
-					if ( KINSTAMU_WHITELABEL === false ) :
+					if ( ! is_whitelabel_enabled() ) :
 						// translators: %s Kinsta Cache URL.
-						$message_format = __( 'You can add custom paths to purge whenever your site is updated. Please see our %s for more information on how to use this feature effectively.', 'kinsta-mu-plugins' );
+						$kinsta_message_format = __( 'You can add custom paths to purge whenever your site is updated. Please see our %s for more information on how to use this feature effectively.', 'kinsta-mu-plugins' );
 
-						echo sprintf(
+						printf(
 							wp_kses(
-								$message_format,
+								$kinsta_message_format,
 								array(
 									'a' => array(
 										'href' => true,
@@ -124,29 +126,29 @@ if ( ! defined( 'ABSPATH' ) ) { // If this file is called directly.
 							<input type='hidden' name='kinsta-nonce' value='<?php echo esc_attr( 'kinsta_select_field_' . wp_create_nonce( 'custom-url-type' ) ); ?>'>
 						</div>
 						<?php
-							$prefix_title = home_url( '/' );
-							$prefix_scheme = ( strpos( home_url(), 'https://' ) !== false ) ? 'https' : 'http';
-							$prefix_length = strlen( $prefix_title );
-							$prefix_islong = ( $prefix_length > 45 ) ? ' isLong' : '';
+							$kinsta_prefix_title = home_url( '/' );
+							$kinsta_prefix_scheme = ( strpos( home_url(), 'https://' ) !== false ) ? 'https' : 'http';
+							$kinsta_prefix_length = strlen( $kinsta_prefix_title );
+							$kinsta_prefix_islong = ( $kinsta_prefix_length > 45 ) ? ' isLong' : '';
 
-							$prefix_display = ( $prefix_length > 45 ) ? substr( $prefix_title, 0, 20 ) . '...' . substr( $prefix_title, -20 ) : $prefix_title;
+							$kinsta_prefix_display = ( $kinsta_prefix_length > 45 ) ? substr( $kinsta_prefix_title, 0, 20 ) . '...' . substr( $kinsta_prefix_title, -20 ) : $kinsta_prefix_title;
 
-							$prefix_extra_class = $prefix_islong;
+							$kinsta_prefix_extra_class = $kinsta_prefix_islong;
 						?>
-						<span onClick="jQuery('#addURLField').focus()" class="prefix<?php echo esc_attr( $prefix_extra_class ); ?>" title="<?php echo esc_attr( $prefix_title ); ?>"><?php echo esc_attr( $prefix_display ); ?></span><input id="addURLField" type="text" placeholder="Enter a Path" />
+						<span onClick="jQuery('#addURLField').focus()" class="prefix<?php echo esc_attr( $kinsta_prefix_extra_class ); ?>" title="<?php echo esc_attr( $kinsta_prefix_title ); ?>"><?php echo esc_attr( $kinsta_prefix_display ); ?></span><input id="addURLField" type="text" placeholder="Enter a Path" />
 						<input id="addURLSubmit" type="submit" class="button button-primary kinsta-button" value="Add URL">
 					</div>
 					<?php
-						$additional_paths = get_option( 'kinsta-cache-additional-paths' );
+						$kinsta_additional_paths = get_option( 'kinsta-cache-additional-paths' );
 						echo '<table id="additionalURLTable" class="kinsta-table">';
 						echo '<thead><tr><th>Type</th><th>Path</th><th>Action</th></tr></thead>';
 						echo '<tbody>';
 
-					if ( ! empty( $additional_paths ) ) {
-						foreach ( $additional_paths as $additional_path ) {
+					if ( ! empty( $kinsta_additional_paths ) ) {
+						foreach ( $kinsta_additional_paths as $kinsta_additional_path ) {
 							echo '<tr>';
-							echo '<td>' . esc_html( $additional_path['type'] ) . '</td>';
-							echo '<td>/' . esc_html( $additional_path['path'] ) . '</td>';
+							echo '<td>' . esc_html( $kinsta_additional_path['type'] ) . '</td>';
+							echo '<td>/' . esc_html( $kinsta_additional_path['path'] ) . '</td>';
 							echo '<td><button class="removePath button-link">Remove</button></td>';
 							echo '</tr>';
 						}
@@ -159,14 +161,28 @@ if ( ! defined( 'ABSPATH' ) ) { // If this file is called directly.
 
 					<script type="text/javascript">
 						jQuery(document).on('click', '#addURLSubmit', function() {
-							var path = jQuery('#addURLField').val()
-								.trim()
+							var input = jQuery('#addURLField').val().trim();
+							var parts = input.split('?');
+							var path = parts[0]
 								.replace(/^(\.\/+|\.\.\/+)/g, '')
 								.replace(/^\/+|\/+$/g, '')
 								.replace(/\/{2,}/g, '/');
+							var query = parts.slice(1).join('?');
+							var url = '/' + path + (query ? '?' + query : '');
+
 							var type = jQuery('select[name="custom-url-type"]').val();
-							var url = new URL(path, '<?php echo esc_url( home_url( '/' ) ); ?>');
-							var urlPath = url.pathname.replace(/^\/+/, '');
+							var urlObject = new URL(url, '<?php echo esc_url( home_url( '/' ) ); ?>');
+							var params = [];
+							urlObject.searchParams.forEach(function(value, key) {
+								if (value === '') {
+									params.push(encodeURIComponent(key));
+								} else {
+									params.push(encodeURIComponent(key) + '=' + encodeURIComponent(value));
+								}
+							});
+							var urlQuery = params.join('&');
+							var urlPath = urlObject.pathname.replace(/^\/+/,'');
+							urlPath = urlPath + (urlQuery ? '?' + urlQuery : '');
 
 							if( urlPath === '' || urlPath === null || typeof urlPath === 'undefined' ) {
 								return false
@@ -241,7 +257,7 @@ if ( ! defined( 'ABSPATH' ) ) { // If this file is called directly.
 			</div>
 		</form>
 		<?php
-		if ( KINSTAMU_WHITELABEL === false ) {
+		if ( ! is_whitelabel_enabled() ) {
 			include plugin_dir_path( __FILE__ ) . 'partials/sidebar-support.php';
 		}
 		?>
@@ -283,7 +299,7 @@ jQuery(document).on('click', '.kinsta-button.button-primary', function(e) {
 			url: '<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>',
 			type: 'post',
 			data: {
-				kinsta_nonce: nonce,
+				_wpnonce: nonce,
 				action: action,
 				values: Object.fromEntries(new FormData(button.closest('form')[0]))
 			}

@@ -18,7 +18,7 @@ use Kinsta\KMP\Cache\Autopurge\WPThemeController;
 use Kinsta\KMP\Cache\Autopurge\WPThemeHeaderController;
 use Kinsta\KMP\Cache\Autopurge\WPThemeWidgetController;
 use Kinsta\KMP\Cache\Autopurge\WooCommerceController;
-use Kinsta\KMP\Compat\Elementor;
+use Kinsta\KMP\Cache\Autopurge\ElementorController;
 use Kinsta\KMP\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) { // If this file is called directly.
@@ -33,6 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) { // If this file is called directly.
  * @since 1.0.0
  */
 class KMP {
+ // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.ShortPrefixPassed
 
 	/**
 	 * KMP_Admin instance.
@@ -73,7 +74,7 @@ class KMP {
 	/**
 	 * Banned Plugins instance
 	 *
-	 * @var WP_CLI
+	 * @var KMP_WPCLI
 	 */
 	public $wp_cli;
 
@@ -101,39 +102,50 @@ class KMP {
 	 * @return void
 	 */
 	public function init_kmp() {
-		// This doesn't work right now because we don't have the cacheid available yet.
-		$this->cdn_cacheid = '';
-		$this->kinsta_cache = new Cache( $this );
-		$this->kinsta_cache_purge = new Cache_Purge( $this );
-		$this->KinstaCachePurge = $this->kinsta_cache_purge; // phpcs:ignore
-		$this->kmp_admin = new KMP_Admin( $this );
-		$this->banned_plugins = new Banned_Plugins();
+		try {
+			// This doesn't work right now because we don't have the cacheid available yet.
+			$this->cdn_cacheid = '';
+			$this->kinsta_cache = new Cache( $this );
+			$this->kinsta_cache_purge = new Cache_Purge( $this );
+			$this->KinstaCachePurge = $this->kinsta_cache_purge; // phpcs:ignore
+			$this->kmp_admin = new KMP_Admin( $this );
+			$this->banned_plugins = new Banned_Plugins();
 
-        /**
-         * Initialize the autopurge manager and orchastrator.
-         */
-        $autopurge = new Autopurge();
-        $autopurge->hook();
-        $autopurge->add(
-            new WPPostController($this),
-            new WPOptionController($this),
-            new WPThemeController($this),
-            new WPThemeHeaderController($this),
-            new WPThemeWidgetController($this),
-            new WooCommerceController($this),
-            new ACFController($this),
-            new Elementor($this),
-        );
+			/**
+			 * Initialize the autopurge manager and orchastrator.
+			 */
+			$autopurge = new Autopurge();
+			$autopurge->hook();
+			$autopurge->add(
+				new WPPostController( $this ),
+				new WPOptionController( $this ),
+				new WPThemeController( $this ),
+				new WPThemeHeaderController( $this ),
+				new WPThemeWidgetController( $this ),
+				new WooCommerceController( $this ),
+				new ACFController( $this ),
+				new ElementorController( $this ),
+			);
 
-		$this->wp_cli = new KMP_WPCLI( $this, $autopurge );
+			$this->wp_cli = new KMP_WPCLI( $this, $autopurge );
+		} catch ( \Throwable $throwable ) {
+			error_log(
+				sprintf(
+					'[kinsta-mu-plugins.ERROR]: %s in %s:%d',
+					$throwable->getMessage(),
+					$throwable->getFile(),
+					$throwable->getLine()
+				)
+			);
+		}
 	}
 
 	/**
 	 * Sets the required capability to view and use the cache purging options.
 	 *
-	 * @return  string the required capability
+	 * @return bool
 	 */
-	public function is_cdn_enabled() {
+	public function is_cdn_enabled(): bool {
 		return '' !== $this->cdn_cacheid;
 	}
 }
