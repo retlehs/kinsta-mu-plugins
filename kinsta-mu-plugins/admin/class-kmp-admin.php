@@ -366,16 +366,15 @@ class KMP_Admin {
 	 */
 	public function cleared_cache_notice() {
 		$cache_cleared_key = $this->whitelabel->getMenuKey( 'cache-cleared' );
-		$cache_cleared_values = array_values( $this->clear_values );
 		$key = sanitize_key( $_GET[ $cache_cleared_key ] ?? ( $_GET['kinsta-cache-cleared'] ?? '' ) );
 
-		if ( ! in_array( $key, $cache_cleared_values, true ) ) {
+		if ( ! in_array( $key, array( 'all-cache', 'site-cache', 'object-cache', 'cdn-cache', 'true' ), true ) ) {
 			return;
 		}
 
 		?>
 		<div class="notice kinsta-notice notice-success settings-error is-dismissible">
-			<p><strong><?php echo esc_html( $this->get_done_messages( $key ) ); ?></strong></p>
+			<p><strong><?php echo esc_html( self::get_done_messages( $key ) ); ?></strong></p>
 		</div>
 		<?php
 	}

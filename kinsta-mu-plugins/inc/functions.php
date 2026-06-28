@@ -22,7 +22,7 @@ function whitelabel(): Whitelabel
 	static $instance = null;
 
 	if ($instance === null) {
-		$instance = new Whitelabel(KINSTAMU_WHITELABEL);
+		$instance = new Whitelabel(defined('KINSTAMU_WHITELABEL') ? KINSTAMU_WHITELABEL : false);
 	}
 
 	return $instance;

@@ -10,7 +10,7 @@ namespace Kinsta\KMP;
  * @example
  * if ( version_compare( Kinsta\KMP\VERSION, '3.6.0', '>=' ) ) {}
  */
-const VERSION = '3.6.0';
+const VERSION = '3.6.1';
 
 /**
  * Maintain backward compatibility by defining the `KINSTAMU_VERSION` constant.
