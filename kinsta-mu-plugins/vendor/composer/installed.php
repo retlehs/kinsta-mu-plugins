@@ -3,7 +3,7 @@
         'name' => 'kinsta/kinsta-mu-plugins',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '3f422eeca510b08594b0fde778321f62092f04d5',
+        'reference' => '598ea13900b14ae75db2b2dc31287daa558b8bc5',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'kinsta/kinsta-mu-plugins' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '3f422eeca510b08594b0fde778321f62092f04d5',
+            'reference' => '598ea13900b14ae75db2b2dc31287daa558b8bc5',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../../',
             'aliases' => array(),
